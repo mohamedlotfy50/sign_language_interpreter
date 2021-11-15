@@ -1,8 +1,7 @@
-import 'dart:ui';
-import 'package:sign_language_interpreter/asset_locations.dart';
-import 'package:sign_language_interpreter/boardScreen/widgets/Slide_item.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
+import '../../../asset_locations.dart';
+import '../widgets/slide_item.dart';
 
 class BoardScreen extends StatefulWidget {
   const BoardScreen({Key? key}) : super(key: key);
