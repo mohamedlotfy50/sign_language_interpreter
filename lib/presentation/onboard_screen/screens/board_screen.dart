@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_screen.dart';
 
 import '../../../asset_locations.dart';
 import '../widgets/slide_item.dart';
@@ -115,9 +116,11 @@ class _BoardScreenState extends State<BoardScreen> {
                             _pageController.animateToPage(curretIndex,
                                 duration: Duration(milliseconds: 300),
                                 curve: Curves.easeInOut);
+
                           }
-                        });
-                      },
+                        }
+                        );
+                        },
                       child: Text(
                         curretIndex == slidePages.length - 1
                             ? "GET STARTED"
