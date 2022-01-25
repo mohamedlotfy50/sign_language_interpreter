@@ -6,7 +6,6 @@ import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.da
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/toggle.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -15,7 +14,12 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  final bool toggleValue = false;
+  bool val = true;
+  onSwitchValueChanged(bool newval){
+    setState(() {
+      val = newval;
+    });
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,15 +62,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
           ),
           Container(
-            margin: EdgeInsets.only(top: 70),
+            margin: EdgeInsets.only(bottom: 25),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.65,
+                      height: MediaQuery.of(context).size.height * 0.72,
                       width: MediaQuery.of(context).size.width * 0.85,
                       child: TextFieldContainer(
                         child: Column(
@@ -93,28 +97,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                             Container(
                               width: double.infinity,
-                              margin: EdgeInsets.fromLTRB(20, 0, 20, 0),
-                              child: Expanded(
-
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        "Is Deaf",
-                                        style: TextStyle(
-                                          color: Colors.blueAccent,
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w700,
-                                        ),
-                                      ),
+                              margin: EdgeInsets.only(left: 20,),
+                                child:SwitchListTile.adaptive(
+                                  title: const Text(
+                                    "Is Deaf",
+                                    style: TextStyle(
+                                      color: Colors.blueAccent,
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w700,
                                     ),
-                                    // SizedBox(//width: 320,// ),
-                                     Expanded(child: Swittch()),
-
-                                  ],
+                                  ),
+                                    value: val,
+                                    activeColor: Colors.deepOrange,
+                                    onChanged: (newval) {
+                                      onSwitchValueChanged(newval);}
                                 ),
-                              ),
                             ),
+
+
                             RoundButton(
                               text: "Sign Up",
                               color: Colors.blueAccent,

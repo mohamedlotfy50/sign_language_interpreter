@@ -25,6 +25,7 @@ dependencies:
   flutter:
     sdk: flutter
 #  custom_switch: ^0.0.1
+  font_awesome_flutter: ^9.2.0
   text_to_speech: ^0.2.3
   speech_to_text: ^4.1.1-nullsafety
 
@@ -62,7 +63,7 @@ flutter:
   # https://flutter.dev/assets-and-images/#from-packages
   assets:
     - assets/images/
-    - assets/Icon/
+
   # To add custom fonts to your application, add a fonts section here,
   # in this "flutter" section. Each entry in this list should have a
   # "family" key with the font family name, and a "fonts" key with a

@@ -16,7 +16,6 @@ class RoundButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(top:30, bottom:25),
-      // margin: EdgeInsets.symmetric(vertical: 40),
       height: MediaQuery.of(context).size.height * 0.06,
       width: MediaQuery.of(context).size.width * 0.3,
       child: ClipRRect(

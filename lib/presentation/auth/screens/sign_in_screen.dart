@@ -1,10 +1,11 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -95,28 +96,19 @@ class _SignInScreenState extends State<SignInScreen> {
               mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Container(
-                  margin: EdgeInsets.symmetric(horizontal: 10,vertical: 25),
-                  width: 300,
-                  child: Row(
-
-                    children: [
-                      FloatingActionButton.extended(
-                        onPressed: (){},
-                        icon: Image.asset(
-                          'assets/images/google.svg',
-                          width: 32.0,
-                          height: 32.0,
-                        ),
-                        label: Text("Sign in with Google"),
-                        backgroundColor: Colors.deepOrange,
-                        foregroundColor: Colors.white,
-                      ),
-                    ],
+                    margin: EdgeInsets.only(top:25, bottom: 25,),
+                    height: 150,
+                    width: double.infinity,
+                    child: Column(
+                      // mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        SignIn(text1: "Sign In with Google", color1: Colors.deepOrangeAccent, icon1: FontAwesomeIcons.google),
+                        SignIn(text1: "Sign In With Facebook", color1: Colors.blueAccent, icon1: FontAwesomeIcons.facebook),
+                      ],
+                    ),
                   ),
-    ),
                 ],
             ),
-
         ],
       ),
     );
