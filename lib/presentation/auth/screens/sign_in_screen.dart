@@ -1,7 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/form_item.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
 
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
@@ -58,54 +61,62 @@ class _SignInScreenState extends State<SignInScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  ClipRRect(
-                    borderRadius: BorderRadius.all(
-                      Radius.circular(20),
-                    ),
-                    child: Container(
-                      height: MediaQuery.of(context).size.height * 0.5,
-                      width: MediaQuery.of(context).size.width * 0.8,
-                      decoration: BoxDecoration(
-                        color: Colors.white,
-                      ),
-                      child: Padding(
-                        padding: EdgeInsets.all(10),
-                        child: Column(
-                          children: [
-                            TextContainer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    Icons.person,
-                                    size: 30,
-                                  ),
-                                  hintText: 'User Name',
-                                ),
-                              ),
-                            ),
-                            SizedBox(
-                              height: 20,
-                            ),
-                            TextContainer(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  icon: Icon(
-                                    Icons.vpn_key_outlined,
-                                    size: 30,
-                                  ),
-                                  hintText: 'Password',
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                  Container(
+                    height: MediaQuery.of(context).size.height * 0.5,
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    child: TextFieldContainer(
+                      child: Column(
+                        children: [
+                          InputField(
+                            hintText: 'User Name',
+                            icon: Icons.person,
+                          ),
+                          SizedBox(
+                            height: 20,
+                          ),
+                          InputField(
+                            hintText: 'Password',
+                          ),
+                          RoundButton(
+                            text: "Sign In",
+                            color: Colors.blueAccent,
+                            textColor: Colors.white,
+                          ),
+                          HaveAccount(
+                              textColor1: Colors.blueAccent,
+                              textColor2: Colors.blueAccent)
+                        ],
                       ),
                     ),
                   ),
                 ],
               ),
             ],
-          )
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Container(
+                margin: EdgeInsets.symmetric(horizontal: 10, vertical: 25),
+                width: 300,
+                child: Row(
+                  children: [
+                    FloatingActionButton.extended(
+                      onPressed: () {},
+                      icon: Image.asset(
+                        'assets/images/google.svg',
+                        width: 32.0,
+                        height: 32.0,
+                      ),
+                      label: Text("Sign in with Google"),
+                      backgroundColor: Colors.deepOrange,
+                      foregroundColor: Colors.white,
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
