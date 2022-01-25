@@ -1,16 +1,18 @@
 import 'package:flutter/material.dart';
 
 class RoundButton extends StatelessWidget {
-  final String text;
+  final String text,page;
   // final Function press;
   final Color color, textColor;
+
   const RoundButton({
     Key? key,
     required this.text,
     // required this.press,
     required this.color,
-    required this.textColor,
+    required this.textColor, required this.page,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +23,9 @@ class RoundButton extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(15),
         child: TextButton(
-          onPressed: () => {},
+          onPressed: () => {
+          Navigator.pushNamed(context,page),
+          },
           child: Text(
             text,
             style: TextStyle(

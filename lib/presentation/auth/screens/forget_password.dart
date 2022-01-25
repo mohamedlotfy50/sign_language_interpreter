@@ -1,26 +1,16 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/constrant.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
+import '../../../asset_locations.dart';
 
-class SignUpScreen extends StatefulWidget {
-  const SignUpScreen({Key? key}) : super(key: key);
-  @override
-  _SignUpScreenState createState() => _SignUpScreenState();
-}
+class ForgetPassword extends StatelessWidget {
+  const ForgetPassword({Key? key}) : super(key: key);
 
-class _SignUpScreenState extends State<SignUpScreen> {
-  bool val = true;
-  onSwitchValueChanged(bool newval){
-    setState(() {
-      val = newval;
-    });
-  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -47,24 +37,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
           ),
           Container(
             width: double.infinity,
-            height: 200,
+            height: 250,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 Text(
-                  'Sign Up',
+                  'Forget Password',
                   style: TextStyle(
                     color: HeaderText,
                     fontSize: 44,
                   ),
                 ),
+                SizedBox(height: 8,),
+                Text(
+                  " Confirm your email and we will \n send the instructions.",
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: HeaderText,
+                    fontSize: 20,
+                  ),),
               ],
             ),
           ),
           Container(
-            margin: EdgeInsets.only(bottom: 25
-            ),
+            margin: EdgeInsets.only(bottom: 25),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
@@ -72,60 +69,26 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Container(
-                      height: MediaQuery.of(context).size.height * 0.72,
-                      width: MediaQuery.of(context).size.width * 0.85,
+                      height: MediaQuery.of(context).size.height * 0.65,
+                      width: MediaQuery.of(context).size.width * 0.8,
                       child: TextFieldContainer(
                         child: Column(
                           children: [
-                            InputField(
-                              hintText: ' User Name',
-                              icon: Icons.person,
-                            ),
                             SizedBox(
-                              height: 10,
+                              height: 20,
                             ),
+                           Image.asset(AseetForget.forget),
                             InputField(
                               hintText: ' Email',
                               icon: Icons.email,
                             ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hintText: ' Password',
-                            ),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(left: 20,),
-                                child:SwitchListTile.adaptive(
-                                  title: const Text(
-                                    "Is Deaf",
-                                    style: TextStyle(
-                                      color: SpanText,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                    value: val,
-                                    activeColor: Colors.deepOrange,
-                                    onChanged: (newval) {
-                                      onSwitchValueChanged(newval);}
-                                ),
-                            ),
                             RoundButton(
-                              text: "Sign Up",
+                              text: "Send",
                               color: BtnColor,
                               textColor: BtnText,
-                              page: '/home',
+                              page: '/otp',
+
                             ),
-                            HaveAccount(
-                              textColor1: SpanText,
-                              textColor2: SpanText,
-                              login: false,
-                            )
                           ],
                         ),
                       ),
@@ -135,6 +98,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ],
             ),
           ),
+
         ],
       ),
     );

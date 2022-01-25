@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sign_language_interpreter/constrant.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
+import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
@@ -8,8 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
-
+  const SignInScreen({Key? key,}) : super(key: key);
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -49,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Text(
                   'Sign In',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: HeaderText,
                     fontSize: 44,
                   ),
                 ),
@@ -78,12 +79,35 @@ class _SignInScreenState extends State<SignInScreen> {
                           InputField(
                             hintText: 'Password',
                           ),
+                          Container(
+                            width: double.infinity,
+                            margin: EdgeInsets.only(left: 20,top:12,right: 20,),
+                              child: GestureDetector(
+                                onTap: (){
+                                  Navigator.push(context,
+                                    MaterialPageRoute(builder: (context) => ForgetPassword()),
+                                  );
+                                },
+                                child: Text(
+                                  "Forget Password",
+                                  textDirection: TextDirection.rtl,
+                                  style: TextStyle(
+                                    color: SpanText,
+                                    fontWeight: FontWeight.bold,
+                                    letterSpacing: 0.8,
+                                    fontSize: 15,
+                                  ),
+                                ),
+                              ),
+                          ),
                           RoundButton(
                             text: "Sign In",
-                            color: Colors.blueAccent,
-                            textColor: Colors.white,
+                            color: BtnColor,
+                            textColor: BtnText,
+                            page: '/home',
+
                           ),
-                          HaveAccount(textColor1: Colors.blueAccent, textColor2: Colors.blueAccent)
+                          HaveAccount(textColor1: SpanText, textColor2: SpanText)
                         ],
                       ),
                     ),

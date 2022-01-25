@@ -4,10 +4,13 @@ import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.da
 class InputField extends StatelessWidget {
   final String hintText;
   final IconData icon;
+  final IconData? ConIcon;
   const InputField({
     Key? key,
     required this.hintText,
-    this.icon =Icons.vpn_key_rounded,}): super(key:key);
+    this.icon =Icons.vpn_key_rounded,
+    this.ConIcon,
+  }): super(key:key);
 
   @override
   Widget build(BuildContext context) {
@@ -24,6 +27,9 @@ class InputField extends StatelessWidget {
               icon,
               size: 30,
             ),
+          ),
+          suffixIcon: Icon(
+              ConIcon,
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12.0)),
