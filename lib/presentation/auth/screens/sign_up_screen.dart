@@ -15,23 +15,25 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
   bool val = true;
-  onSwitchValueChanged(bool newval){
+  onSwitchValueChanged(bool newval) {
     setState(() {
       val = newval;
     });
   }
+
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
-      body: Stack(
-        children: [
-          Container(
-            child: ClipPath(
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            ClipPath(
               clipper: MyClipper(),
               child: Container(
-                height: 500,
+                width: size.width,
+                height: size.height,
                 decoration: BoxDecoration(
-                  borderRadius: BorderRadius.only(bottomRight: Radius.zero),
                   gradient: LinearGradient(
                     begin: Alignment.topLeft,
                     end: Alignment.bottomLeft,
@@ -43,99 +45,118 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 200,
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text(
-                  'Sign Up',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 44,
-                  ),
+            Positioned(
+              right: 0,
+              bottom: size.height / 2,
+              child: Container(
+                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
                 ),
-              ],
-            ),
-          ),
-          Container(
-            margin: EdgeInsets.only(bottom: 25),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Container(
-                      height: MediaQuery.of(context).size.height * 0.72,
-                      width: MediaQuery.of(context).size.width * 0.85,
-                      child: TextFieldContainer(
-                        child: Column(
-                          children: [
-                            InputField(
-                              hintText: ' User Name',
-                              icon: Icons.person,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hintText: ' Email',
-                              icon: Icons.email,
-                            ),
-                            SizedBox(
-                              height: 10,
-                            ),
-                            InputField(
-                              hintText: ' Password',
-                            ),
-                            SizedBox(
-                              height: 7,
-                            ),
-                            Container(
-                              width: double.infinity,
-                              margin: EdgeInsets.only(left: 20,),
-                                child:SwitchListTile.adaptive(
-                                  title: const Text(
-                                    "Is Deaf",
-                                    style: TextStyle(
-                                      color: Colors.blueAccent,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.w700,
-                                    ),
-                                  ),
-                                    value: val,
-                                    activeColor: Colors.deepOrange,
-                                    onChanged: (newval) {
-                                      onSwitchValueChanged(newval);}
-                                ),
-                            ),
-
-
-                            RoundButton(
-                              text: "Sign Up",
-                              color: Colors.blueAccent,
-                              textColor: Colors.white,
-                            ),
-                            HaveAccount(
-                              textColor1: Colors.blueAccent,
-                              textColor2: Colors.blueAccent,
-                              login: false,
-                            )
-                          ],
-                        ),
-                      ),
-                    ),
-                  ],
+                child: Column(
+                  children: [TextField()],
                 ),
-              ],
-            ),
-          ),
-        ],
+              ),
+            )
+          ],
+        ),
       ),
     );
   }
 }
+// Container(
+//  
+//   ),
+//   Container(
+//     width: double.infinity,
+//     height: 200,
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.center,
+//       crossAxisAlignment: CrossAxisAlignment.center,
+//       children: [
+//         Text(
+//           'Sign Up',
+//           style: TextStyle(
+//             color: Colors.white,
+//             fontSize: 44,
+//           ),
+//         ),
+//       ],
+//     ),
+//   ),
+//   Container(
+//     // margin: EdgeInsets.only(bottom: 25),
+//     height: MediaQuery.of(context).size.height * 0.72,
+//     width: MediaQuery.of(context).size.width * 0.85,
+//   
+//     child: Column(
+//       mainAxisAlignment: MainAxisAlignment.end,
+//       children: [
+//         Row(
+//           mainAxisAlignment: MainAxisAlignment.center,
+//           children: [
+//             Container(
+
+//                 // child: TextFieldContainer(
+//                 //   child: Column(
+//                 //     children: [
+//                 //       InputField(
+//                 //         hintText: ' User Name',
+//                 //         icon: Icons.person,
+//                 //       ),
+//                 //       SizedBox(
+//                 //         height: 10,
+//                 //       ),
+//                 //       InputField(
+//                 //         hintText: ' Email',
+//                 //         icon: Icons.email,
+//                 //       ),
+//                 //       SizedBox(
+//                 //         height: 10,
+//                 //       ),
+//                 //       InputField(
+//                 //         hintText: ' Password',
+//                 //       ),
+//                 //       SizedBox(
+//                 //         height: 7,
+//                 //       ),
+//                 //       Container(
+//                 //         width: double.infinity,
+//                 //         margin: EdgeInsets.only(left: 20,),
+//                 //           child:SwitchListTile.adaptive(
+//                 //             title: const Text(
+//                 //               "Is Deaf",
+//                 //               style: TextStyle(
+//                 //                 color: Colors.blueAccent,
+//                 //                 fontSize: 20,
+//                 //                 fontWeight: FontWeight.w700,
+//                 //               ),
+//                 //             ),
+//                 //               value: val,
+//                 //               activeColor: Colors.deepOrange,
+//                 //               onChanged: (newval) {
+//                 //                 onSwitchValueChanged(newval);}
+//                 //           ),
+//                 //       ),
+
+//                 //       RoundButton(
+//                 //         text: "Sign Up",
+//                 //         color: Colors.blueAccent,
+//                 //         textColor: Colors.white,
+//                 //       ),
+//                 //       HaveAccount(
+//                 //         textColor1: Colors.blueAccent,
+//                 //         textColor2: Colors.blueAccent,
+//                 //         login: false,
+//                 //       )
+//                 //     ],
+//                 //   ),
+//                 // ),
+//                 ),
+//           ],
+//         ),
+//       ],
+//     ),
+//   ),
