@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_screen.dart';
+import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
 
 import '../../../asset_locations.dart';
 import '../widgets/slide_item.dart';
@@ -33,6 +33,7 @@ class _BoardScreenState extends State<BoardScreen> {
   int curretIndex = 0;
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Scaffold(
       body: Container(
         color: Colors.white,
@@ -88,7 +89,7 @@ class _BoardScreenState extends State<BoardScreen> {
                       width: curretIndex == index ? 50 : 15,
                       decoration: BoxDecoration(
                         color: curretIndex == index
-                            ? Color(0xFF448CF2)
+                            ? theme.accentColor
                             : Color(0xFFE1EDFD),
                         borderRadius: curretIndex == index
                             ? BorderRadius.circular(12)
@@ -116,16 +117,20 @@ class _BoardScreenState extends State<BoardScreen> {
                             _pageController.animateToPage(curretIndex,
                                 duration: Duration(milliseconds: 300),
                                 curve: Curves.easeInOut);
-
                           }
-                        }
-                        );
-                        },
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const SignUpScreen()),
+                          );
+                        });
+                      },
                       child: Text(
                         curretIndex == slidePages.length - 1
                             ? "GET STARTED"
                             : "NEXT",
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style:
+                            TextStyle(fontSize: 18, color: theme.accentColor),
                       ),
                     ),
                   ),

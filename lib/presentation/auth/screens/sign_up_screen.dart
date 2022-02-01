@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:sign_language_interpreter/constrant.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
@@ -24,6 +25,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -48,18 +50,35 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Positioned(
               right: 0,
               bottom: size.height / 2,
-              child: Container(
-                padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-                margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(20),
-                  color: Colors.white,
-                ),
-                child: Column(
-                  children: [TextField()],
+              child: Form(
+                key: formKey,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    children: [
+                      TextFormField(
+                        validator: (text) {
+                          if (text!.isEmpty) {
+                            return 'Please enter your name';
+                          }
+                          return null;
+                        },
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            )
+            ),
+            ElevatedButton(onPressed: (){
+              if(formKey.currentState!.validate()){
+            
+              }
+            }, child: Text('Sign Up'),),
           ],
         ),
       ),

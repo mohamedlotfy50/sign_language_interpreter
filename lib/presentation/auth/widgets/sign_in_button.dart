@@ -1,26 +1,32 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class SignIn extends StatelessWidget {
   final String text1;
   final Color color1;
   final IconData icon1;
-  const SignIn({Key? key,
+  final void Function()? onPressed;
+  const SignIn({
+    Key? key,
     required this.text1,
     required this.color1,
     required this.icon1,
+    this.onPressed,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final Size size = MediaQuery.of(context).size;
     return Container(
       margin: EdgeInsets.only(top: 20),
-      height: MediaQuery.of(context).size.height * 0.08,
+      height: size.height * 0.08,
       width: MediaQuery.of(context).size.width * 0.7,
       child: TextButton.icon(
-        onPressed: (){},
+        onPressed: onPressed,
         style: TextButton.styleFrom(
           backgroundColor: color1,
-          shape:RoundedRectangleBorder(
+          shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),
         ),
@@ -29,13 +35,17 @@ class SignIn extends StatelessWidget {
           size: 35,
           color: Colors.white,
         ),
-        label: Text(text1,
+        label: Text(
+          text1,
           style: TextStyle(
-            color:Colors.white,
-              fontSize: 20,
+            color: Colors.white,
+            fontSize: 20,
+
           ),
         ),
       ),
     );
   }
 }
+
+

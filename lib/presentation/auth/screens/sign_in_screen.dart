@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:sign_language_interpreter/constrant.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
+import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
@@ -8,8 +10,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/sign_in_button.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key}) : super(key: key);
-
+  const SignInScreen({Key? key,}) : super(key: key);
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -49,7 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
                 Text(
                   'Sign In',
                   style: TextStyle(
-                    color: Colors.white,
+                    color: HeaderText,
                     fontSize: 44,
                   ),
                 ),

@@ -1,4 +1,21 @@
 import 'package:flutter/material.dart';
+     ClipPath(
+              clipper: MyClipper(),
+              child: Container(
+                width: size.width,
+                height: size.height,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomLeft,
+                    colors: <Color>[
+                      Color(0xff23ccfc),
+                      Color(0xff7069fc),
+                    ],
+                  ),
+                ),
+              ),
+            ),
 
 class MyClipper extends CustomClipper<Path> {
   @override
