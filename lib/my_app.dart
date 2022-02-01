@@ -11,12 +11,31 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        primaryColor: Color(0xFF448CF2),
         textTheme: TextTheme(
           bodyText1: TextStyle(
             color: Colors.white,
           ),
         ),
-        accentColor: Color(0xFF448CF2),
+        elevatedButtonTheme: ElevatedButtonThemeData(
+          style: ButtonStyle(
+            backgroundColor: MaterialStateProperty.all<Color>(
+              Color(0xFF448CF2),
+            ),
+            padding: MaterialStateProperty.all<EdgeInsets>(
+              EdgeInsets.symmetric(
+                vertical: 10,
+                horizontal: 20,
+              ),
+            ),
+            shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+              RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(50),
+              ),
+            ),
+          ),
+        ),
+        colorScheme: ColorScheme.light(onSecondary: Color(0xFF448CF2)),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.all(Radius.circular(12.0)),

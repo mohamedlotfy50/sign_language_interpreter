@@ -4,34 +4,38 @@ import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_scre
 
 class HaveAccount extends StatelessWidget {
   final bool login;
-  final Color textColor1,textColor2;
 
   const HaveAccount({
     Key? key,
-    required this.textColor1,
-    required this.textColor2,
-    this.login=true,
+    this.login = true,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final ThemeData theme = Theme.of(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          login? "Don't have An Account ? ":"Already have an Account ? ",
-          style: TextStyle(color: textColor1,letterSpacing: 0.8,),
+          login ? "Don't have An Account ? " : "Already have an Account ? ",
+          style: TextStyle(
+            color: theme.primaryColor,
+            letterSpacing: 0.8,
+          ),
         ),
         GestureDetector(
-          onTap: (){
-            Navigator.push(context,
-              MaterialPageRoute(builder: (context) => login? SignUpScreen() : SignInScreen()),
+          onTap: () {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                  builder: (context) =>
+                      login ? SignUpScreen() : SignUpScreen()),
             );
           },
           child: Text(
-            login? "Sign Up" : "Sign In",
+            login ? "Sign Up" : "Sign In",
             style: TextStyle(
-              color: textColor2,
+              color: theme.primaryColor,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.8,
             ),

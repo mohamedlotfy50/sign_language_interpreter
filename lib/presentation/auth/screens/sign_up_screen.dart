@@ -1,12 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:sign_language_interpreter/constrant.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../widgets/icon_button.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/haveAccount.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -25,68 +20,97 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
+    final ThemeData theme = Theme.of(context);
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
+          alignment: Alignment.center,
           children: [
-            ClipPath(
-              clipper: MyClipper(),
-              child: Container(
-                width: size.width,
-                height: size.height,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomLeft,
-                    colors: <Color>[
-                      Color(0xff23ccfc),
-                      Color(0xff7069fc),
-                    ],
-                  ),
-                ),
+            BackgroundClip(),
+            Positioned(
+              top: 50,
+              child: Text(
+                'Sign Up',
+                style: TextStyle(fontSize: 30),
               ),
             ),
             Positioned(
               right: 0,
-              bottom: size.height / 2,
+              left: 0,
               child: Form(
                 key: formKey,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  width: size.width,
+                  height: size.height / 2,
+                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
                   margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        offset: Offset(0, 10),
+                        blurRadius: 20,
+                      ),
+                    ],
                     borderRadius: BorderRadius.circular(20),
                     color: Colors.white,
                   ),
                   child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      TextFormField(
-                        validator: (text) {
-                          if (text!.isEmpty) {
-                            return 'Please enter your name';
-                          }
-                          return null;
-                        },
+                      TextFormField(),
+                      TextFormField(),
+                      Container(
+                        height: 45,
+                        width: size.width / 2.5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {}
+                          },
+                          child: Text('Sign Up'),
+                        ),
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            ElevatedButton(onPressed: (){
-              if(formKey.currentState!.validate()){
-            
-              }
-            }, child: Text('Sign Up'),),
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    ThirdPartyButton(
+                      icon: FontAwesomeIcons.google,
+                      text: 'Sign Up with Google',
+                      color: Color(0xFFF86706),
+                    ),
+                    SizedBox(height: 20),
+                    ThirdPartyButton(
+                      icon: FontAwesomeIcons.facebookF,
+                      text: 'Sign Up with Facebook',
+                      color: theme.primaryColor,
+                    ),
+                  ],
+                ),
+              ),
+            )
           ],
         ),
       ),
     );
   }
 }
+
+
 // Container(
-//  
+//
 //   ),
 //   Container(
 //     width: double.infinity,
@@ -109,7 +133,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 //     // margin: EdgeInsets.only(bottom: 25),
 //     height: MediaQuery.of(context).size.height * 0.72,
 //     width: MediaQuery.of(context).size.width * 0.85,
-//   
+//
 //     child: Column(
 //       mainAxisAlignment: MainAxisAlignment.end,
 //       children: [
