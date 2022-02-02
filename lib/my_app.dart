@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
         textTheme: TextTheme(
           bodyText1: TextStyle(
             color: Colors.white,
+
           ),
         ),
         elevatedButtonTheme: ElevatedButtonThemeData(
@@ -33,8 +34,7 @@ class MyApp extends StatelessWidget {
                 borderRadius: BorderRadius.circular(50),
               ),
             ),
-          ),
-        ),
+          ),),
         colorScheme: ColorScheme.light(onSecondary: Color(0xFF448CF2)),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: OutlineInputBorder(
@@ -45,7 +45,11 @@ class MyApp extends StatelessWidget {
             borderRadius: BorderRadius.all(Radius.circular(10.0)),
             borderSide: BorderSide(color: Colors.lightBlue, width: 2),
           ),
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.circular(10.0),
+            borderSide: BorderSide(color: Color(0xFF448CF2),width: 1.5,),
         ),
+      ),
       ),
       home: SignUpScreen(),
     );

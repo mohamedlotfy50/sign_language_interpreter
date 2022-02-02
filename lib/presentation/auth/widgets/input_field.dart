@@ -1,6 +1,5 @@
 // import 'package:flutter/material.dart';
-// import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
-
+//
 // class InputField extends StatelessWidget {
 //   final String hintText;
 //   final IconData icon;
@@ -8,11 +7,10 @@
 //     Key? key,
 //     required this.hintText,
 //     this.icon =Icons.vpn_key_rounded,}): super(key:key);
-
+//
 //   @override
 //   Widget build(BuildContext context) {
-//     return TextFieldContainer(
-//       child:TextField(
+//     return TextFormField(
 //         decoration: InputDecoration(
 //           hintText: hintText,
 //           hintStyle: TextStyle(color: Colors.grey),
@@ -24,9 +22,16 @@
 //               size: 30,
 //             ),
 //           ),
-       
 //         ),
-//       ),
-//     );
+//       );
 //   }
+// }
+
+// import 'package:flutter/material.dart';
+//
+// InputDecoration buildInputDecoration(IconData icons,String hinttext) {
+//   return InputDecoration(
+//     hintText: hinttext,
+//     prefixIcon: Icon(icons),
+//   );
 // }
