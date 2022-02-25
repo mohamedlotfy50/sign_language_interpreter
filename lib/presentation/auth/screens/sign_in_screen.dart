@@ -1,3 +1,209 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sign_language_interpreter/domain/auth/validation.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/have_account.dart';
+import '../widgets/icon_button.dart';
+import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
+
+class SignInScreen extends StatefulWidget {
+  const SignInScreen({Key? key,}) : super(key: key);
+  @override
+  _SignInScreenState createState() => _SignInScreenState();
+}
+
+class _SignInScreenState extends State<SignInScreen> {
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  bool val = true;
+  bool _passwordVisible = true;
+  void userSignIn({
+    required String email,
+    required String password,}){
+    FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email, password: password).then((value) {
+      print(value.user?.email);
+      print(value.user?.uid);
+    });
+  }
+  onSwitchValueChanged() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
+
+  @override
+  // void initState() {
+  //   _passwordVisible = false;
+  // }
+  Widget build(BuildContext context) {
+    Firebase.initializeApp();
+    final Size size = MediaQuery.of(context).size;
+    final ThemeData theme = Theme.of(context);
+    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            const BackgroundClip(),
+            const Positioned(
+              top: 70,
+              child: Text(
+                'Sign In',
+                style: TextStyle(color: Colors.white,
+                  fontSize: 44,),
+              ),
+            ),
+            Positioned(
+              right: 0,
+              left: 0,
+              child: Form(
+                key: formKey,
+                // autovalidateMode: AutovalidateMode.onUserInteraction,
+                child: Container(
+                  width: size.width,
+                  height: size.height*0.45,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  decoration: BoxDecoration(
+                    boxShadow: <BoxShadow>[
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.2),
+                        offset: const Offset(0, 10),
+                        blurRadius: 20,
+                      ),
+                    ],
+                    borderRadius: BorderRadius.circular(20),
+                    color: Colors.white,
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      TextFormField(
+                        decoration: const InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
+                        controller: _emailController,
+                        validator: (value){
+                          final bool isvalidEmail = Validator.isValidEmail(value);
+                          if(isvalidEmail){
+                            return 'Please Enter Valid Email';
+                          }
+                          return null;
+                        },
+                        // onSaved: (value) => setState(() => email = value!),
+                      ),
+                      //   onSaved: (value) => setState(() => username = value!),
+                      // ),
+                      // const SizedBox(height: 0,),
+                      TextFormField(
+                          controller: _passwordController,
+                          obscureText: _passwordVisible,//This will obscure text dynamically
+                          decoration: InputDecoration(
+                            hintText: "Password",
+                            prefixIcon: Icon(Icons.vpn_key_rounded),
+                            suffixIcon: IconButton(
+                              icon: Icon(
+                                // Based on passwordVisible state choose the icon
+                                _passwordVisible
+                                    ? Icons.visibility
+                                    : Icons.visibility_off,
+                                color: Theme.of(context).primaryColorDark,
+                              ),
+                              onPressed: onSwitchValueChanged,
+                            ),
+                          ),
+                        // obscureText: true,
+                        // decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
+                        validator: (value){
+                          final bool isvalidPass = Validator.isValidPassword(value);
+                          if(isvalidPass){
+                            return null;
+                          }
+                          return 'Password must be at least 7 char';
+                        },
+                          // onSaved: (value) =>setState(() => password = value!,)// validator: Validator.isValidPassword,
+                      ),
+                      const SizedBox(height: 2,),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pushNamed(context, '/forget');
+                        },
+                        child: Align(
+                            alignment: Alignment.centerRight,
+                            child: Text(
+                            "Forget Password",
+                            style: TextStyle(
+                              color: theme.primaryColor,
+                              fontWeight: FontWeight.bold,
+                              letterSpacing: 0.8,
+                              fontSize: 15,
+                            ),
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(
+                        height: 45,
+                        width: size.width / 2.5,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            if (formKey.currentState!.validate()) {
+                              userSignIn(
+                                email: _emailController.text,
+                                password: _passwordController.text,);
+                              // const snackBar = SnackBar(content: Text("Successful",
+                              //   style: TextStyle(fontSize: 20,),),
+                              //   backgroundColor: Colors.green,);
+                              // ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              }},
+
+                          child: const Text('Sign In',
+                            style: TextStyle(fontSize: 20,),
+                          ),
+                        ),
+                      ),
+                      const HaveAccount(),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+
+            Positioned(
+              bottom: 0,
+              left: 0,
+              right: 0,
+              child: Padding(
+                padding:
+                const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
+                  children: [
+                    const ThirdPartyButton(
+                      icon: FontAwesomeIcons.google,
+                      text: 'Sign Up with Google',
+                      color: Color(0xFFF86706),
+                    ),
+                    const SizedBox(height: 20,),
+                    ThirdPartyButton(
+                      icon: FontAwesomeIcons.facebookF,
+                      text: 'Sign Up with Facebook',
+                      color: theme.primaryColor,
+                    ),
+                  ],
+                ),
+              ),
+            ),
+
+          ],
+        ),
+      ),
+    );
+  }
+}
+
 // import 'package:flutter/material.dart';
 // import 'package:sign_language_interpreter/constrant.dart';
 // import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';

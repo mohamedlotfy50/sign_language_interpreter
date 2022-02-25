@@ -21,6 +21,7 @@ class HaveAccount extends StatelessWidget {
           style: TextStyle(
             color: theme.primaryColor,
             letterSpacing: 0.8,
+            fontSize: 15,
           ),
         ),
         GestureDetector(
@@ -29,7 +30,7 @@ class HaveAccount extends StatelessWidget {
               context,
               MaterialPageRoute(
                   builder: (context) =>
-                      login ? SignUpScreen() : SignUpScreen()),
+                      login ? const SignUpScreen() : const SignInScreen())
             );
           },
           child: Text(
@@ -38,6 +39,7 @@ class HaveAccount extends StatelessWidget {
               color: theme.primaryColor,
               fontWeight: FontWeight.bold,
               letterSpacing: 0.8,
+              fontSize: 15,
             ),
           ),
         )

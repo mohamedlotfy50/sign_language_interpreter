@@ -1,4 +1,4 @@
-import 'dart:ffi';
+// import 'dart:ffi';
 
 import 'package:flutter/material.dart';
 
@@ -19,7 +19,7 @@ class SignIn extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     return Container(
-      margin: EdgeInsets.only(top: 20),
+      margin: const EdgeInsets.only(top: 20),
       height: size.height * 0.08,
       width: MediaQuery.of(context).size.width * 0.7,
       child: TextButton.icon(
@@ -37,10 +37,9 @@ class SignIn extends StatelessWidget {
         ),
         label: Text(
           text1,
-          style: TextStyle(
+          style: const TextStyle(
             color: Colors.white,
             fontSize: 20,
-
           ),
         ),
       ),

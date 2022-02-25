@@ -1,6 +1,8 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import '../widgets/icon_button.dart';
+import 'package:sign_language_interpreter/domain/auth/validation.dart';
+import 'package:sign_language_interpreter/presentation/auth/widgets/have_account.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -10,18 +12,45 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  String username='';
-  String email='';
-  String password='';
+  TextEditingController _userController = TextEditingController();
+  TextEditingController _emailController = TextEditingController();
+  TextEditingController _passwordController = TextEditingController();
+  // TextEditingController _ConPasswordController = TextEditingController();
+  bool _passwordVisible = true;
   bool val = true;
-  onSwitchValueChanged(bool newval) {
+  // final FirebaseAuth _auth = FirebaseAuth.instance;
+  // late String errorMessage;
+
+  void userRegister({
+  required String username,
+  required String email,
+  required String password,
+  // required String conPassword,
+  }){
+    FirebaseAuth.instance.createUserWithEmailAndPassword(
+        email: email, password: password).then((value) {
+      print(value.user?.email);
+      print(value.user?.uid);
+    })
+    .catchError((error){
+      print(error.toString());
+    });
+  }
+
+  onSwitchValueChange(bool newval) {
     setState(() {
       val = newval;
+    });
+  }
+  onSwitchValueChanged() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
     });
   }
 
   @override
   Widget build(BuildContext context) {
+    Firebase.initializeApp();
     final Size size = MediaQuery.of(context).size;
     final ThemeData theme = Theme.of(context);
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -30,8 +59,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
         child: Stack(
           alignment: Alignment.center,
           children: [
-            BackgroundClip(),
-            Positioned(
+            const BackgroundClip(),
+            const Positioned(
               top: 70,
               child: Text(
                 'Sign Up',
@@ -42,19 +71,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
             Positioned(
               right: 0,
               left: 0,
+              top: 150,
               child: Form(
                 key: formKey,
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                   width: size.width,
-                  height: size.height*0.54,
-                  padding: EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  height: size.height*0.65,
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
                         color: Colors.black.withOpacity(0.2),
-                        offset: Offset(0, 10),
+                        offset: const Offset(0, 10),
                         blurRadius: 20,
                       ),
                     ],
@@ -65,50 +95,86 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
-                        decoration: InputDecoration(hintText: "User Name", prefixIcon: Icon(Icons.person),),
-                        validator: (value){
-                          if(value!.isEmpty){
-                            return "Please enter name";
+                        decoration: const InputDecoration(hintText: "User Name", prefixIcon: Icon(Icons.person),),
+                        controller: _userController,
+                          validator: (value) {
+                          final bool isvalidName = Validator.isValidName(value);
+                          if(isvalidName){
+                            return null;
                           }
-                          if(value.length <4){
-                            return "Please at least 4 char";
-                          }
-                          return null;
+                          return 'Please Enter User Name';
                         },
-                        // maxLength: 30,
-                        onSaved: (value) => setState(() => username = value!),
+                        // onSaved: (value) =>setState(() => username = value!,)
                       ),
-                      SizedBox(height: 0,),
+
+                      const SizedBox(height: 0,),
                       TextFormField(
-                        decoration: InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
+                        decoration: const InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
+                        controller: _emailController,
                         validator: (value){
-                          if(value!.isEmpty){
-                            return "Please Enter Email";
-                          }
-                          if(!RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+\.[a-zA-z]+$').hasMatch(value!)){
-                            return "Please Enter Valid Email";
+                          final bool isvalidEmail = Validator.isValidEmail(value);
+                          if(isvalidEmail){
+                            return 'Please Enter Valid Email';
                           }
                           return null;
+                          // if(value!.isEmpty){
+                          //   return "Please Enter Email";
+                          // }
+                          // if(!RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+\.[a-zA-z]+$').hasMatch(value)){
+                          //   return "Please Enter Valid Email";
+                          // }
+                          // return null;
                         },
-                        onSaved: (value) => setState(() => email = value!),
+                         // onSaved: (value) => setState(() => email = value!),
                       ),
-                      SizedBox(height: 0),
+                      const SizedBox(height: 0),
                       TextFormField(
-                        obscureText: true,
-                        decoration: InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
+                        controller: _passwordController,
+                        obscureText: _passwordVisible,//This will obscure text dynamically
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(Icons.vpn_key_rounded),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
+                            ),
+                            onPressed: onSwitchValueChanged,
+                          ),
+                        ),
+                        // obscureText: true,
+                        // decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
                         validator: (value){
-                          if(value!.isEmpty){
-                            return "Please enter Password";
+                          final bool isvalidPass = Validator.isValidPassword(value);
+                          if(isvalidPass){
+                            return null;
                           }
-                          if(value.length <7){
-                            return "Password must be at least 7 char";
-                          }
-                          return null;
+                          return 'Password must be at least 7 char';
                         },
+                        // onSaved: (value) =>setState(() => password = value!,)// validator: Validator.isValidPassword,
                       ),
+                      // TextFormField(
+                      //   controller: _passwordController,
+                      //   obscureText: true,
+                      //   decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
+                      //   validator: (value){
+                      //     final bool isvalidPass = Validator.isValidPassword(value);
+                      //     if(isvalidPass){
+                      //       return null;
+                      //     }
+                      //     return 'Password must be at least 7 char';
+                      //     // if(value!.length <7){
+                      //     //   return "Please enter Password must be at least 7 char";
+                      //     // }
+                      //     // return null;
+                      //   },
+                      // ),
                       Container(
                         width: double.infinity,
-                        margin: EdgeInsets.only(left: 20,),
+                        margin: const EdgeInsets.only(left: 20,),
                           child:SwitchListTile.adaptive(
                             title: const Text(
                               "Is Deaf",
@@ -121,67 +187,124 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               value: val,
                               activeColor: Colors.deepOrange,
                               onChanged: (newval) {
-                                onSwitchValueChanged(newval);}
+                                onSwitchValueChange(newval);}
                           ),
                       ),
-                      Container(
+                      SizedBox(
                         height: 45,
                         width: size.width / 2.5,
                         child: ElevatedButton(
                           onPressed: () {
                             if (formKey.currentState!.validate()) {
-                              formKey.currentState!.save();
-                              final message='UserName: $username, \n Password: $password';
-                              final snackBar = SnackBar(content: Text(
-                                message,
-                                style: TextStyle(fontSize: 20,)
-                                ,),
-                                backgroundColor: Colors.green,
-                              );
-                              ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              userRegister(
+                                username: _userController.text,
+                                email: _emailController.text,
+                                password: _passwordController.text,);
+
+                            formKey.currentState!.save();
+                            // const snackBar = SnackBar(content: Text("Successful",
+                            //   style: TextStyle(fontSize: 20,),),
+                            //     backgroundColor: Colors.green,);
+                            //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                            //     Navigator.pushNamed(context,'/home');
                             }
                           },
-                          child: Text('Sign Up',
+                          child: const Text('Sign Up',
                             style: TextStyle(fontSize: 20,),
                           ),
+
                         ),
+                      ),
+                      const SizedBox(height: 1,),
+                      const HaveAccount(
+                        login: false,
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            Positioned(
-              bottom: 0,
-              left: 0,
-              right: 0,
-              child: Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    ThirdPartyButton(
-                      icon: FontAwesomeIcons.google,
-                      text: 'Sign Up with Google',
-                      color: Color(0xFFF86706),
-                    ),
-                    SizedBox(height: 20,),
-                    ThirdPartyButton(
-                      icon: FontAwesomeIcons.facebookF,
-                      text: 'Sign Up with Facebook',
-                      color: theme.primaryColor,
-                    ),
-                  ],
-                ),
-              ),
-            )
+
           ],
         ),
       ),
     );
+
   }
+
+  // void signUp(String email, String password) async {
+  //   if (formKey.currentState!.validate()) {
+  //     try {
+  //       await _auth
+  //           .createUserWithEmailAndPassword(email: email, password: password)
+  //           // .then((value) => {postDetailsToFirestore()})
+  //           .catchError((e) {
+  //         Fluttertoast.showToast(msg: e.message);
+  //       });
+  //     } on FirebaseAuthException catch (error) {
+  //       switch (error.code) {
+  //         case "invalid-email":
+  //           errorMessage = "Your email address appears to be malformed.";
+  //           break;
+  //         case "wrong-password":
+  //           errorMessage = "Your password is wrong.";
+  //           break;
+  //         case "user-not-found":
+  //           errorMessage = "User with this email doesn't exist.";
+  //           break;
+  //         case "user-disabled":
+  //           errorMessage = "User with this email has been disabled.";
+  //           break;
+  //         case "too-many-requests":
+  //           errorMessage = "Too many requests";
+  //           break;
+  //         case "operation-not-allowed":
+  //           errorMessage = "Signing in with Email and Password is not enabled.";
+  //           break;
+  //         default:
+  //           errorMessage = "An undefined Error happened.";
+  //       }
+  //       Fluttertoast.showToast(msg: errorMessage);
+  //       print(error.code);
+  //     }
+  //   }
+  // }
+  // postDetailsToFirestore() async {
+  //   // calling our firestore
+  //   // calling our user model
+  //   // sending these values
+  //
+  //   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+  //   User user = _auth.currentUser;
+  //
+  //   UserModel userModel = UserModel();
+  //
+  //   // writing all the values
+  //   userModel.email = user.email;
+  //   userModel.uId = user.uid;
+  //   userModel.phone = phoneEditingController.text;
+  //   userModel.name = userNameEditingController.text;
+  //
+  //   await firebaseFirestore
+  //       .collection("users")
+  //       .doc(user.uid)
+  //       .set(userModel.toMap());
+  //   Fluttertoast.showToast(msg: "Account created successfully :) ");
+  //
+  //   // Navigator.pushAndRemoveUntil(
+  //   //     (context),
+  //   //     MaterialPageRoute(builder: (context) => HomeScreen()),
+  //   //         (route) => false);
+  // }
 }
+
+
+
+
+
+
+
+
 
 
 // Container(
