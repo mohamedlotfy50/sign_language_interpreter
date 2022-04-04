@@ -45,7 +45,7 @@ class _BoardScreenState extends State<BoardScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   TextButton(
-                    child: Text(
+                    child: const Text(
                       "SKIP",
                       style: TextStyle(
                           fontSize: 20,
@@ -56,7 +56,7 @@ class _BoardScreenState extends State<BoardScreen> {
                       setState(() {
                         curretIndex = slidePages.length - 1;
                         _pageController.animateToPage(curretIndex,
-                            duration: Duration(milliseconds: 300),
+                            duration: const Duration(milliseconds: 300),
                             curve: Curves.easeInOut);
                       });
                     },

@@ -1,4 +1,4 @@
-import 'package:email_auth/email_auth.dart';
+// import 'package:email_auth/email_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -27,7 +27,7 @@ class _OTPScreenState extends State<OTPScreen> {
   // late String password;
   // late String conPassword;
   bool val = true;
-  EmailAuth emailAuth = new EmailAuth(sessionName: "OTP session",);
+  // EmailAuth emailAuth = new EmailAuth(sessionName: "OTP session",);
 
   onSwitchValueChanged(bool newval) {
     setState(() {
@@ -39,17 +39,17 @@ class _OTPScreenState extends State<OTPScreen> {
   TextEditingController _passwordController = TextEditingController();
   TextEditingController _conPasswordController = TextEditingController();
 
-  void verifyOTP() {
-    var res = emailAuth.validateOtp(
-        recipientMail: _emailController.value.text,
-        userOtp: _otpController.value.text);
-    if (res) {
-      print("OTP verified");
-    }
-    else {
-      print("Invalid OTP");
-    }
-  }
+  // void verifyOTP() {
+  //   var res = emailAuth.validateOtp(
+  //       recipientMail: _emailController.value.text,
+  //       userOtp: _otpController.value.text);
+  //   if (res) {
+  //     print("OTP verified");
+  //   }
+  //   else {
+  //     print("Invalid OTP");
+  //   }
+  // }
 
   void userResetPass({
     // required String username,

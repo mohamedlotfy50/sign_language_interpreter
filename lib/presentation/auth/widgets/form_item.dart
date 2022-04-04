@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-// OutlineInputBorder textFieldBorder = OutlineInputBorder(
-//     borderSide: BorderSide(
-//       color: Colors.blue.withOpacity(0.5),
-//   ),
-// );
-
 class TextContainer extends StatelessWidget {
   final Widget child;
   const TextContainer({Key? key, required this.child}) : super(key: key);

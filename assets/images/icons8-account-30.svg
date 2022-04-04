@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="54" height="53.75" viewBox="0 0 54 53.75">
+  <defs>
+    <pattern id="pattern" preserveAspectRatio="xMidYMid slice" width="100%" height="100%" viewBox="0 0 30 30">
+      <image width="30" height="30" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB4AAAAeCAYAAAA7MK6iAAAABmJLR0QA/wD/AP+gvaeTAAADLUlEQVRIicWXTWgcZRjHf887M9lsPiZr2iTFVITgWm9i8VBoUqsn24JUhbYH68lb0Yp4tYJ4ULzZeFJQVPAgVaxo8NTSphBQBA8VlZ40pNl+pDtxk2Zn953HQzab/ZhNZtKo/9u8z8fved7Z95l34X+SbOaw8NN9A07ZHhKVgyoySqTDCE6Tk2IRLQgyp6IXbcaZGnz8TrAlcGmmd8Ra9wzKS0BX0k5qCkE+NFJ9q39/6UZi8OKl3FE1+inQnxLYlkqQk/548XyrwbQuBJdzp9XouW2AAviKfh1c8V9pNTR1XOv0XFxB96hIRJ7z9xe/aQOXZnpHbNX9A/C3GbqmRSM2v/bO653ZqvtmYqi4mOweTGY0DdiP1H2jngJqR2YlukGCX683dIzusXcQdxCASuFzVv58Gw3nk8DLVdcZ3rFvYdEAOCv2SBKo6R4jm5+sQwG8kRfo2/sjpnssCTjjVO0hqG21IAeSRHk7j4K01ydOP97Q80lSIPBEHazI7kRB3lBnW8MubCwdrYNR7ZyxQdHda1uyNXNl1zq4dfZ20IYdb2BrdlxlpRoUYeETNCy0rWs4T1j4OE2qdGAN5ynPvte2Xv7r3diCtg0MEF7/CLt0tf5sl64Szqfrdh2s2OQhgjg9609ODwk+6+uqsdzVaC1sFmx6HsEbPEzl9ncs/3ocb+ezAFRufYXJPoy34wiVhe+Jln/bpG69XgcLMqedgJkH6H7oLG7uIABdu18nnPsAG0wD4A0fp+v+U4jJknnwDNXiBVauvUxUnu1EnltlAsEV/wQqX8S59T56AafvsY27aJEt/czSL0/F2lQ5lpsIvjQANuNMAWFct2mhAE7fXkwmdhiWref8AA0vNpjOTYKeavQSk8X07EkNBoiWf0eju82LKu8PTBRPN4H/g4tAYCKb7z9QugkN57hv31IB9ASkOVqJFQny4hq0CQwwML44hehrQLSdUERfbb1pxl9vp3PPKPoZ977tgag56U/c+bbVEDsy/fHieSM2DzIJlLcALIOcNZHNx0Ehway7PTPoO1X7tMCToKOojHT6CwMyq3Cxgjc1NH7r7y0U/O/rH4mEFzyEXm/KAAAAAElFTkSuQmCC"/>
+    </pattern>
+  </defs>
+  <path id="icons8-account-30" d="M12,0H54a0,0,0,0,1,0,0V53.75a0,0,0,0,1,0,0H12a12,12,0,0,1-12-12V12A12,12,0,0,1,12,0Z" opacity="0.71" fill="url(#pattern)"/>
+</svg>

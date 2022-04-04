@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sign_language_interpreter/domain/auth/validation.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
-import 'package:email_auth/email_auth.dart';
+// import 'package:email_auth/email_auth.dart';
 
 import '../../../asset_locations.dart';
 
@@ -17,7 +17,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   final TextEditingController _emailController = TextEditingController();
   // final TextEditingController _otpControl = TextEditingController();
 
-  EmailAuth emailAuth = new EmailAuth(sessionName: "OTP session",);
+  // EmailAuth emailAuth = new EmailAuth(sessionName: "OTP session",);
   // void verifyOTP() {
   //   var res = emailAuth.validateOtp(
   //       recipientMail: _emailControl.value.text,

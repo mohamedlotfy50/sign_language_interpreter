@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:sign_language_interpreter/domain/auth/model.dart';
 import 'package:sign_language_interpreter/domain/auth/validation.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/have_account.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
+import '../../../domain/auth/model.dart' ;
+import '../../home/screens/home.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -18,22 +22,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // TextEditingController _ConPasswordController = TextEditingController();
   bool _passwordVisible = true;
   bool val = true;
-  // final FirebaseAuth _auth = FirebaseAuth.instance;
-  // late String errorMessage;
 
-  void userRegister({
+  void userRegister ({
+    String? uid,
   required String username,
   required String email,
   required String password,
-  // required String conPassword,
   }){
     FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email, password: password).then((value) {
-      print(value.user?.email);
-      print(value.user?.uid);
-    })
-    .catchError((error){
-      print(error.toString());
+        email: email, password: password).then((value) async {
+          final UserModel user = UserModel(uid:value.user!.uid,password:password,email: email ,username: username );
+      await FirebaseFirestore.instance
+          .collection('Users').doc(value.user!.uid).set(user.toMap())
+          ;
+
+      // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+      // User? user = FirebaseAuth.instance.currentUser;
+      // UserModel userModel = UserModel();
+      // userModel.uid = user!.uid;
+      // await firebaseFirestore
+      //     .collection("Users")
+      //     .doc(user.uid)
+      //     .set(userModel.toMap());
+
+      // UserModel noteToAdd = UserModel(
+      //   username: username,
+      //   email: email,
+      //   password: password,
+      // );
+      // await FirebaseFirestore.instance.collection('Users').doc(uid).set(noteToAdd.toMap());
+
+      // Future<void> uploadingData(String username, String email,String password,) async {
+      //   await FirebaseFirestore.instance.collection('Users').add({email: email,password: password,username: username,uid: value.user!.uid}).toMap());
+      //
+      // }
+      // print(value.user?.email);
+      // print(value.user?.uid);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("User account created")));
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (ctx) => HomeScreen(
+            user: user,
+          )), (route) => false);
+      // await FirebaseFirestore.instance.collection('Users').add(custom.Users(password:password,email: email ,name: username ).toMap());
+      // await FirebaseFirestore.instance.collection('Users').add(custom.Users(password:password,email: email ,name: username ).toMap());
+
+    }).catchError((e){
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("User login failed " + e.toString())));
     });
   }
 
@@ -107,7 +143,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         // onSaved: (value) =>setState(() => username = value!,)
                       ),
 
-                      const SizedBox(height: 0,),
+                      // const SizedBox(height: 0,),
                       TextFormField(
                         decoration: const InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
                         controller: _emailController,
@@ -156,40 +192,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         },
                         // onSaved: (value) =>setState(() => password = value!,)// validator: Validator.isValidPassword,
                       ),
-                      // TextFormField(
-                      //   controller: _passwordController,
-                      //   obscureText: true,
-                      //   decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
-                      //   validator: (value){
-                      //     final bool isvalidPass = Validator.isValidPassword(value);
-                      //     if(isvalidPass){
-                      //       return null;
-                      //     }
-                      //     return 'Password must be at least 7 char';
-                      //     // if(value!.length <7){
-                      //     //   return "Please enter Password must be at least 7 char";
-                      //     // }
-                      //     // return null;
-                      //   },
+                      // Container(
+                      //   width: double.infinity,
+                      //   margin: const EdgeInsets.only(left: 20,),
+                      //     child:SwitchListTile.adaptive(
+                      //       title: const Text(
+                      //         "Is Deaf",
+                      //         style: TextStyle(
+                      //           color: Colors.blueAccent,
+                      //           fontSize: 20,
+                      //           fontWeight: FontWeight.w700,
+                      //         ),
+                      //       ),
+                      //         value: val,
+                      //         activeColor: Colors.deepOrange,
+                      //         onChanged: (newval) {
+                      //           onSwitchValueChange(newval);}
+                      //     ),
                       // ),
-                      Container(
-                        width: double.infinity,
-                        margin: const EdgeInsets.only(left: 20,),
-                          child:SwitchListTile.adaptive(
-                            title: const Text(
-                              "Is Deaf",
-                              style: TextStyle(
-                                color: Colors.blueAccent,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w700,
-                              ),
-                            ),
-                              value: val,
-                              activeColor: Colors.deepOrange,
-                              onChanged: (newval) {
-                                onSwitchValueChange(newval);}
-                          ),
-                      ),
                       SizedBox(
                         height: 45,
                         width: size.width / 2.5,
@@ -201,7 +221,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                 email: _emailController.text,
                                 password: _passwordController.text,);
 
-                            formKey.currentState!.save();
+                            // formKey.currentState!.save();
                             // const snackBar = SnackBar(content: Text("Successful",
                             //   style: TextStyle(fontSize: 20,),),
                             //     backgroundColor: Colors.green,);
@@ -224,7 +244,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
               ),
             ),
-
           ],
         ),
       ),

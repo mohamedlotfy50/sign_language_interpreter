@@ -1,15 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:sign_language_interpreter/domain/auth/model.dart';
+// import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/otp_screen.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_screen.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
-// import 'package:sign_language_interpreter/presentation/auth/widgets/sign_in_button.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/account.dart';
+// import 'package:sign_language_interpreter/presentation/home/screens/drawer.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/home.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/setting.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/setting_account.dart';
 // import 'package:sign_language_interpreter/presentation/onboard_screen/screens/board_screen.dart';
-// import 'package:firebase_core/firebase_core.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -30,13 +34,11 @@ class MyApp extends StatelessWidget {
               const EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 20,
-              ),
-            ),
+              ),),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
-              ),
-            ),
+              ),),
           ),),
         colorScheme: const ColorScheme.light(onSecondary: Color(0xFF448CF2)),
         inputDecorationTheme: InputDecorationTheme(
@@ -53,15 +55,25 @@ class MyApp extends StatelessWidget {
             borderSide: const BorderSide(color: Color(0xFF448CF2),width: 1.5,),
         ),
       ),
+        appBarTheme: const AppBarTheme(
+          backgroundColor: Color(0xFF0ea6cc),
+        ),
       ),
-      home: const SignInScreen(),
+      home:SignInScreen(),
+      // AccountSettingScreen(
+      //   userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063',username: 'xcjkhvnkjsdhkfjs'),
+      // ),
       routes: {
         '/signup': (context) => const SignUpScreen(),
         '/signin': (context) => const SignInScreen(),
         '/forget': (context) => const ForgetPassword(),
         '/otp': (context) => const OTPScreen(),
-        // '/home': (context) => const HomeScreen(),
-
+        // '/home': (context) =>  HomeScreen(),
+         // '/profile': (context) => const ProfileScreen(),
+         // '/setting': (context) => const SettingScreen(),
+         '/account': (context) => const AccountScreen(),
+         '/accountSetting': (context) =>  AccountSettingScreen(userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063'),),
+        // '/drawer': (context) => MyDrawer(pageName: '',),
       },
 
     );

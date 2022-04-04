@@ -1,10 +1,14 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:sign_language_interpreter/domain/auth/autth.dart';
+import 'package:sign_language_interpreter/domain/auth/model.dart';
 import 'package:sign_language_interpreter/domain/auth/validation.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/have_account.dart';
+import '../../home/screens/home.dart';
 import '../widgets/icon_button.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
 
@@ -17,32 +21,73 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   TextEditingController _emailController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
+
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   bool val = true;
   bool _passwordVisible = true;
+
   void userSignIn({
     required String email,
     required String password,}){
     FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email, password: password).then((value) {
-      print(value.user?.email);
-      print(value.user?.uid);
+        email: email, password: password).then((value) async{
+          final ins = await FirebaseFirestore.instance.collection('Users').doc(value.user!.uid).get();
+          UserModel user = UserModel.fromMap(ins.data()!);
+
+
+
+          ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text("User logged in")));
+      Navigator.pushAndRemoveUntil(context,
+          MaterialPageRoute(builder: (ctx) => HomeScreen(
+            user: user,
+          )), (route) => false);
+      // print(value.user?.email);
+      // print(value.user?.uid);
+    }).catchError((e) {
+      ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text("User login failed " + e.toString())));
     });
   }
+
+  //s
+  //   Future<String> signInWithEmailAndPassword(String email, String password) async{
+  //     FirebaseAuth.instance.signInWithEmailAndPassword( _emailC, password){
+  //       return user.uid ;}
+  //     }
+  // final BaseAuth _auth;
+  // void sigIIN() async{
+  //     try{
+  //       UserCredential userCredential = await FirebaseAuth.instance
+  //           .signInWithEmailAndPassword(
+  //           email: _emailController.text,
+  //           password: _passwordController.text);
+  //       print(userCredential);
+  //       // await FirebaseAuth.instance.signInWithEmailAndPassword(email: _emailController.text, password: _passwordController.text);
+  //     } on FirebaseAuthException catch(e){
+  //       if(e.code == 'user-not-found'){
+  //         print('The account already exists');
+  //       }
+  //     }
+  //     // catch(e){
+  //     //   print(e);
+  //     // }
+  // }
+
+
+
   onSwitchValueChanged() {
     setState(() {
       _passwordVisible = !_passwordVisible;
     });
   }
+  final AuthService _auth = AuthService();
 
   @override
-  // void initState() {
-  //   _passwordVisible = false;
-  // }
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context){
     Firebase.initializeApp();
     final Size size = MediaQuery.of(context).size;
     final ThemeData theme = Theme.of(context);
-    final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(
@@ -92,7 +137,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           }
                           return null;
                         },
-                        // onSaved: (value) => setState(() => email = value!),
+                         // onSaved: (value) => setState(() =>  email = value!),
                       ),
                       //   onSaved: (value) => setState(() => username = value!),
                       // ),
@@ -148,16 +193,69 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 45,
                         width: size.width / 2.5,
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async{
+                            // final model = context.read<AuthModel>();
+                            // await model.signIn(email: _emailController.text, password: _passwordController.text);
+
+                            // dynamic await _auth.siignIn();
+                            // try {
+                            //   userCredential = await FirebaseAuth.instance
+                            //       .signInWithEmailAndPassword(
+                            //       email: _emailController.text,
+                            //       password: _passwordController.text);
+                            // }on FirebaseAuthException catch (e){
+                            //   if(e.code == 'user-not-found'){
+                            //     print('No User found');
+                            //   }
+                            //   else if(e.code =='email-already-in-use'){
+                            //     print('The account already exists');
+                            //   }
+                            // } catch (e){ print(e);}
+                            // print(userCredential);
+                            // sigIIN( _emailController.text ,_passwordController.text);
+                            // sigIIN();
+                            // if (formKey.currentState!.validate()) {
+                            //   userSignIn(
+                            //     email: _emailController.text,
+                            //     password: _passwordController.text,);
+                            //   Navigator.of(context).push(
+                            //     MaterialPageRoute(
+                            //       builder: (_) => OTPScreen(),
+                            //     ),
+                            //   );
+                            // }
+
+
                             if (formKey.currentState!.validate()) {
                               userSignIn(
                                 email: _emailController.text,
                                 password: _passwordController.text,);
+                              formKey.currentState!.save();
+
+
+
+
+
+                              // await _auth.signIn(_emailController.text,_passwordController.text).then((value) {
+                              //   if(value==null){
+                              //     // ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('wrong email or paswword')));
+                              //        const snackBar = SnackBar(content: Text("Wrong Email or Paswword",
+                              //          style: TextStyle(fontSize: 20,),),
+                              //          backgroundColor: Colors.red,);
+                              //        ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              //   }else{
+                              //     // Navigator.of(context).pushNamed('/home', arguments: {'uid':})
+                              //     // Navigator.pushNamed(context, '/home');
+                              //   }
+                              // });
+
+
                               // const snackBar = SnackBar(content: Text("Successful",
                               //   style: TextStyle(fontSize: 20,),),
                               //   backgroundColor: Colors.green,);
                               // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              }},
+                              }
+                            },
 
                           child: const Text('Sign In',
                             style: TextStyle(fontSize: 20,),
@@ -196,13 +294,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
-
           ],
         ),
       ),
     );
   }
 }
+
 
 // import 'package:flutter/material.dart';
 // import 'package:sign_language_interpreter/constrant.dart';
@@ -330,4 +428,68 @@ class _SignInScreenState extends State<SignInScreen> {
 //       ),
 //     );
 //   }
+// }
+
+
+
+// void signUp(String email, String password) async {
+//   if (formKey.currentState.validate()) {
+//     try {
+//       await _auth
+//           .createUserWithEmailAndPassword(email: email, password: password)
+//           .then((value) => {postDetailsToFirestore()})
+//           .catchError((e) {
+//         Fluttertoast.showToast(msg: e.message);
+//       });
+//     } on FirebaseAuthException catch (error) {
+//       switch (error.code) {
+//         case "invalid-email":
+//           errorMessage = "Your email address appears to be malformed.";
+//           break;
+//         case "wrong-password":
+//           errorMessage = "Your password is wrong.";
+//           break;
+//         case "user-not-found":
+//           errorMessage = "User with this email doesn't exist.";
+//           break;
+//         case "user-disabled":
+//           errorMessage = "User with this email has been disabled.";
+//           break;
+//         case "too-many-requests":
+//           errorMessage = "Too many requests";
+//           break;
+//         case "operation-not-allowed":
+//           errorMessage = "Signing in with Email and Password is not enabled.";
+//           break;
+//         default:
+//           errorMessage = "An undefined Error happened.";
+//       }
+//       Fluttertoast.showToast(msg: errorMessage);
+//       print(error.code);
+//     }
+//   }
+// }
+// postDetailsToFirestore() async {
+//
+//   FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
+//   User user = _auth.currentUser;
+//
+//   UserModel userModel = UserModel();
+//
+//   // writing all the values
+//   userModel.email = user.email;
+//   userModel.uId = user.uid;
+//   userModel.phone = phoneEditingController.text;
+//   userModel.name = userNameEditingController.text;
+//
+//   await firebaseFirestore
+//       .collection("users")
+//       .doc(user.uid)
+//       .set(userModel.toMap());
+//   Fluttertoast.showToast(msg: "Account created successfully :) ");
+//
+//   // Navigator.pushAndRemoveUntil(
+//   //     (context),
+//   //     MaterialPageRoute(builder: (context) => HomeScreen()),
+//   //         (route) => false);
 // }

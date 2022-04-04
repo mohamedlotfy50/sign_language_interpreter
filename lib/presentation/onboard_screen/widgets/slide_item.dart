@@ -21,7 +21,7 @@ class SlideItem extends StatelessWidget {
           ),
           Text(
             title,
-            style: TextStyle(
+            style: const TextStyle(
                 fontSize: 28,
                 fontWeight: FontWeight.w600,
                 color: Color(0xFF4663AA)),
@@ -29,7 +29,7 @@ class SlideItem extends StatelessWidget {
           Text(
             text,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               fontSize: 17,
               color: Colors.black,
             ),
