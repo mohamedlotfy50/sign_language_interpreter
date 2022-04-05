@@ -1,8 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:sign_language_interpreter/domain/auth/validation.dart';
-import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
+import '../../../domain/auth/validation.dart';
+import '../..//auth/widgets/clip.dart';
 // import 'package:email_auth/email_auth.dart';
 
 import '../../../asset_locations.dart';
@@ -29,13 +29,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
   //     print("Invalid OTP");
   //   }
   // }
-  void sendOTP(String email) async{
+  void sendOTP(String email) async {
     // var res = await emailAuth.sendOtp(
     //     recipientMail: _emailController.value.text);
     // if(res){print("OTP Sent");}
     // else{print("OTP Don not Sent");}
     await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-
   }
 
   bool val = true;
@@ -65,9 +64,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                     'Forget Password',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 44,),
+                      fontSize: 44,
+                    ),
                   ),
-                  SizedBox(height: 8,),
+                  SizedBox(
+                    height: 8,
+                  ),
                   Text(
                     " Confirm your email and we will \n send the instructions.",
                     textAlign: TextAlign.center,
@@ -88,9 +90,11 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                   width: size.width,
-                  height: size.height*0.59,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  height: size.height * 0.59,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -116,19 +120,24 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                       //     },
                       //     onSaved: (value) =>setState(() => username = value!,)
                       // ),
-                      const SizedBox(height: 0,),
+                      const SizedBox(
+                        height: 0,
+                      ),
                       TextFormField(
-                        decoration: const InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
+                        decoration: const InputDecoration(
+                          hintText: "Email",
+                          prefixIcon: Icon(Icons.email),
+                        ),
                         controller: _emailController,
-                        validator: (value){
-                          final bool isvalidEmail = Validator.isValidEmail(value);
-                          if(isvalidEmail){
+                        validator: (value) {
+                          final bool isvalidEmail =
+                              Validator.isValidEmail(value);
+                          if (isvalidEmail) {
                             return null;
                           }
                           return 'Please Enter Valid Email';
                         },
                         // onSaved: (value) => setState(() => email = value!),
-
                       ),
                       SizedBox(
                         height: 45,
@@ -147,10 +156,12 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                             //   ScaffoldMessenger.of(context).showSnackBar(snackBar);
                             //   Navigator.pushNamed(context,'/otp');
                             // }
-
-                            },
-                          child: const Text('Send',
-                            style: TextStyle(fontSize: 20,),
+                          },
+                          child: const Text(
+                            'Send',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),

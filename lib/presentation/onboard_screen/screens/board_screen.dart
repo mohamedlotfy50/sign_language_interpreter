@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
+import '../../auth/screens/sign_up_screen.dart';
 
 import '../../../asset_locations.dart';
 import '../widgets/slide_item.dart';

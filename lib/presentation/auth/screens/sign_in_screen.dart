@@ -4,16 +4,18 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:sign_language_interpreter/domain/auth/autth.dart';
-import 'package:sign_language_interpreter/domain/auth/model.dart';
-import 'package:sign_language_interpreter/domain/auth/validation.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/have_account.dart';
+import '../../../domain/auth/autth.dart';
+import '../../../domain/auth/model.dart';
+import '../../../domain/auth/validation.dart';
+import '../widgets/have_account.dart';
 import '../../home/screens/home.dart';
 import '../widgets/icon_button.dart';
-import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
+import '../..//auth/widgets/clip.dart';
 
 class SignInScreen extends StatefulWidget {
-  const SignInScreen({Key? key,}) : super(key: key);
+  const SignInScreen({
+    Key? key,
+  }) : super(key: key);
   @override
   _SignInScreenState createState() => _SignInScreenState();
 }
@@ -28,20 +30,26 @@ class _SignInScreenState extends State<SignInScreen> {
 
   void userSignIn({
     required String email,
-    required String password,}){
-    FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email, password: password).then((value) async{
-          final ins = await FirebaseFirestore.instance.collection('Users').doc(value.user!.uid).get();
-          UserModel user = UserModel.fromMap(ins.data()!);
+    required String password,
+  }) {
+    FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((value) async {
+      final ins = await FirebaseFirestore.instance
+          .collection('Users')
+          .doc(value.user!.uid)
+          .get();
+      UserModel user = UserModel.fromMap(ins.data()!);
 
-
-
-          ScaffoldMessenger.of(context)
+      ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("User logged in")));
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (ctx) => HomeScreen(
-            user: user,
-          )), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (ctx) => HomeScreen(
+                    user: user,
+                  )),
+          (route) => false);
       // print(value.user?.email);
       // print(value.user?.uid);
     }).catchError((e) {
@@ -74,17 +82,16 @@ class _SignInScreenState extends State<SignInScreen> {
   //     // }
   // }
 
-
-
   onSwitchValueChanged() {
     setState(() {
       _passwordVisible = !_passwordVisible;
     });
   }
+
   final AuthService _auth = AuthService();
 
   @override
-  Widget build(BuildContext context){
+  Widget build(BuildContext context) {
     Firebase.initializeApp();
     final Size size = MediaQuery.of(context).size;
     final ThemeData theme = Theme.of(context);
@@ -98,8 +105,10 @@ class _SignInScreenState extends State<SignInScreen> {
               top: 70,
               child: Text(
                 'Sign In',
-                style: TextStyle(color: Colors.white,
-                  fontSize: 44,),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 44,
+                ),
               ),
             ),
             Positioned(
@@ -110,9 +119,11 @@ class _SignInScreenState extends State<SignInScreen> {
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                   width: size.width,
-                  height: size.height*0.45,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  height: size.height * 0.45,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -128,56 +139,64 @@ class _SignInScreenState extends State<SignInScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
-                        decoration: const InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
+                        decoration: const InputDecoration(
+                          hintText: "Email",
+                          prefixIcon: Icon(Icons.email),
+                        ),
                         controller: _emailController,
-                        validator: (value){
-                          final bool isvalidEmail = Validator.isValidEmail(value);
-                          if(isvalidEmail){
+                        validator: (value) {
+                          final bool isvalidEmail =
+                              Validator.isValidEmail(value);
+                          if (isvalidEmail) {
                             return 'Please Enter Valid Email';
                           }
                           return null;
                         },
-                         // onSaved: (value) => setState(() =>  email = value!),
+                        // onSaved: (value) => setState(() =>  email = value!),
                       ),
                       //   onSaved: (value) => setState(() => username = value!),
                       // ),
                       // const SizedBox(height: 0,),
                       TextFormField(
-                          controller: _passwordController,
-                          obscureText: _passwordVisible,//This will obscure text dynamically
-                          decoration: InputDecoration(
-                            hintText: "Password",
-                            prefixIcon: Icon(Icons.vpn_key_rounded),
-                            suffixIcon: IconButton(
-                              icon: Icon(
-                                // Based on passwordVisible state choose the icon
-                                _passwordVisible
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Theme.of(context).primaryColorDark,
-                              ),
-                              onPressed: onSwitchValueChanged,
+                        controller: _passwordController,
+                        obscureText:
+                            _passwordVisible, //This will obscure text dynamically
+                        decoration: InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(Icons.vpn_key_rounded),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              // Based on passwordVisible state choose the icon
+                              _passwordVisible
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
+                              color: Theme.of(context).primaryColorDark,
                             ),
+                            onPressed: onSwitchValueChanged,
                           ),
+                        ),
                         // obscureText: true,
                         // decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
-                        validator: (value){
-                          final bool isvalidPass = Validator.isValidPassword(value);
-                          if(isvalidPass){
+                        validator: (value) {
+                          final bool isvalidPass =
+                              Validator.isValidPassword(value);
+                          if (isvalidPass) {
                             return null;
                           }
                           return 'Password must be at least 7 char';
                         },
-                          // onSaved: (value) =>setState(() => password = value!,)// validator: Validator.isValidPassword,
+                        // onSaved: (value) =>setState(() => password = value!,)// validator: Validator.isValidPassword,
                       ),
-                      const SizedBox(height: 2,),
+                      const SizedBox(
+                        height: 2,
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, '/forget');
                         },
                         child: Align(
-                            alignment: Alignment.centerRight,
-                            child: Text(
+                          alignment: Alignment.centerRight,
+                          child: Text(
                             "Forget Password",
                             style: TextStyle(
                               color: theme.primaryColor,
@@ -193,7 +212,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         height: 45,
                         width: size.width / 2.5,
                         child: ElevatedButton(
-                          onPressed: () async{
+                          onPressed: () async {
                             // final model = context.read<AuthModel>();
                             // await model.signIn(email: _emailController.text, password: _passwordController.text);
 
@@ -225,16 +244,12 @@ class _SignInScreenState extends State<SignInScreen> {
                             //   );
                             // }
 
-
                             if (formKey.currentState!.validate()) {
                               userSignIn(
                                 email: _emailController.text,
-                                password: _passwordController.text,);
+                                password: _passwordController.text,
+                              );
                               formKey.currentState!.save();
-
-
-
-
 
                               // await _auth.signIn(_emailController.text,_passwordController.text).then((value) {
                               //   if(value==null){
@@ -249,16 +264,17 @@ class _SignInScreenState extends State<SignInScreen> {
                               //   }
                               // });
 
-
                               // const snackBar = SnackBar(content: Text("Successful",
                               //   style: TextStyle(fontSize: 20,),),
                               //   backgroundColor: Colors.green,);
                               // ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                              }
-                            },
-
-                          child: const Text('Sign In',
-                            style: TextStyle(fontSize: 20,),
+                            }
+                          },
+                          child: const Text(
+                            'Sign In',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),
@@ -268,14 +284,13 @@ class _SignInScreenState extends State<SignInScreen> {
                 ),
               ),
             ),
-
             Positioned(
               bottom: 0,
               left: 0,
               right: 0,
               child: Padding(
                 padding:
-                const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
+                    const EdgeInsets.symmetric(horizontal: 30, vertical: 20),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
@@ -284,7 +299,9 @@ class _SignInScreenState extends State<SignInScreen> {
                       text: 'Sign Up with Google',
                       color: Color(0xFFF86706),
                     ),
-                    const SizedBox(height: 20,),
+                    const SizedBox(
+                      height: 20,
+                    ),
                     ThirdPartyButton(
                       icon: FontAwesomeIcons.facebookF,
                       text: 'Sign Up with Facebook',

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/domain/auth/model.dart';
+import 'domain/auth/model.dart';
 // import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/otp_screen.dart';
@@ -34,12 +34,15 @@ class MyApp extends StatelessWidget {
               const EdgeInsets.symmetric(
                 vertical: 10,
                 horizontal: 20,
-              ),),
+              ),
+            ),
             shape: MaterialStateProperty.all<RoundedRectangleBorder>(
               RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(50),
-              ),),
-          ),),
+              ),
+            ),
+          ),
+        ),
         colorScheme: const ColorScheme.light(onSecondary: Color(0xFF448CF2)),
         inputDecorationTheme: InputDecorationTheme(
           enabledBorder: const OutlineInputBorder(
@@ -52,14 +55,17 @@ class MyApp extends StatelessWidget {
           ),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(10.0),
-            borderSide: const BorderSide(color: Color(0xFF448CF2),width: 1.5,),
+            borderSide: const BorderSide(
+              color: Color(0xFF448CF2),
+              width: 1.5,
+            ),
+          ),
         ),
-      ),
         appBarTheme: const AppBarTheme(
           backgroundColor: Color(0xFF0ea6cc),
         ),
       ),
-      home:SignInScreen(),
+      home: SignInScreen(),
       // AccountSettingScreen(
       //   userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063',username: 'xcjkhvnkjsdhkfjs'),
       // ),
@@ -69,13 +75,14 @@ class MyApp extends StatelessWidget {
         '/forget': (context) => const ForgetPassword(),
         '/otp': (context) => const OTPScreen(),
         // '/home': (context) =>  HomeScreen(),
-         // '/profile': (context) => const ProfileScreen(),
-         // '/setting': (context) => const SettingScreen(),
-         '/account': (context) => const AccountScreen(),
-         '/accountSetting': (context) =>  AccountSettingScreen(userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063'),),
+        // '/profile': (context) => const ProfileScreen(),
+        // '/setting': (context) => const SettingScreen(),
+        '/account': (context) => const AccountScreen(),
+        '/accountSetting': (context) => AccountSettingScreen(
+              userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063'),
+            ),
         // '/drawer': (context) => MyDrawer(pageName: '',),
       },
-
     );
   }
 }

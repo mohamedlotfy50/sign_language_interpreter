@@ -2,11 +2,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/domain/auth/model.dart';
-import 'package:sign_language_interpreter/domain/auth/validation.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/have_account.dart';
-import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
-import '../../../domain/auth/model.dart' ;
+import '../../../domain/auth/model.dart';
+import '../../../domain/auth/validation.dart';
+import '../widgets/have_account.dart';
+import '../..//auth/widgets/clip.dart';
+import '../../../domain/auth/model.dart';
 import '../../home/screens/home.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -23,18 +23,24 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _passwordVisible = true;
   bool val = true;
 
-  void userRegister ({
+  void userRegister({
     String? uid,
-  required String username,
-  required String email,
-  required String password,
-  }){
-    FirebaseAuth.instance.createUserWithEmailAndPassword(
-        email: email, password: password).then((value) async {
-          final UserModel user = UserModel(uid:value.user!.uid,password:password,email: email ,username: username );
+    required String username,
+    required String email,
+    required String password,
+  }) {
+    FirebaseAuth.instance
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((value) async {
+      final UserModel user = UserModel(
+          uid: value.user!.uid,
+          password: password,
+          email: email,
+          username: username);
       await FirebaseFirestore.instance
-          .collection('Users').doc(value.user!.uid).set(user.toMap())
-          ;
+          .collection('Users')
+          .doc(value.user!.uid)
+          .set(user.toMap());
 
       // FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
       // User? user = FirebaseAuth.instance.currentUser;
@@ -60,14 +66,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
       // print(value.user?.uid);
       ScaffoldMessenger.of(context)
           .showSnackBar(SnackBar(content: Text("User account created")));
-      Navigator.pushAndRemoveUntil(context,
-          MaterialPageRoute(builder: (ctx) => HomeScreen(
-            user: user,
-          )), (route) => false);
+      Navigator.pushAndRemoveUntil(
+          context,
+          MaterialPageRoute(
+              builder: (ctx) => HomeScreen(
+                    user: user,
+                  )),
+          (route) => false);
       // await FirebaseFirestore.instance.collection('Users').add(custom.Users(password:password,email: email ,name: username ).toMap());
       // await FirebaseFirestore.instance.collection('Users').add(custom.Users(password:password,email: email ,name: username ).toMap());
-
-    }).catchError((e){
+    }).catchError((e) {
       ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(content: Text("User login failed " + e.toString())));
     });
@@ -78,6 +86,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       val = newval;
     });
   }
+
   onSwitchValueChanged() {
     setState(() {
       _passwordVisible = !_passwordVisible;
@@ -100,8 +109,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               top: 70,
               child: Text(
                 'Sign Up',
-                style: TextStyle(color: Colors.white,
-                  fontSize: 44,),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 44,
+                ),
               ),
             ),
             Positioned(
@@ -113,9 +124,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                   width: size.width,
-                  height: size.height*0.65,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  height: size.height * 0.65,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -131,11 +144,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
-                        decoration: const InputDecoration(hintText: "User Name", prefixIcon: Icon(Icons.person),),
+                        decoration: const InputDecoration(
+                          hintText: "User Name",
+                          prefixIcon: Icon(Icons.person),
+                        ),
                         controller: _userController,
-                          validator: (value) {
+                        validator: (value) {
                           final bool isvalidName = Validator.isValidName(value);
-                          if(isvalidName){
+                          if (isvalidName) {
                             return null;
                           }
                           return 'Please Enter User Name';
@@ -145,11 +161,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
                       // const SizedBox(height: 0,),
                       TextFormField(
-                        decoration: const InputDecoration(hintText: "Email", prefixIcon: Icon(Icons.email),),
+                        decoration: const InputDecoration(
+                          hintText: "Email",
+                          prefixIcon: Icon(Icons.email),
+                        ),
                         controller: _emailController,
-                        validator: (value){
-                          final bool isvalidEmail = Validator.isValidEmail(value);
-                          if(isvalidEmail){
+                        validator: (value) {
+                          final bool isvalidEmail =
+                              Validator.isValidEmail(value);
+                          if (isvalidEmail) {
                             return 'Please Enter Valid Email';
                           }
                           return null;
@@ -161,12 +181,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           // }
                           // return null;
                         },
-                         // onSaved: (value) => setState(() => email = value!),
+                        // onSaved: (value) => setState(() => email = value!),
                       ),
                       const SizedBox(height: 0),
                       TextFormField(
                         controller: _passwordController,
-                        obscureText: _passwordVisible,//This will obscure text dynamically
+                        obscureText:
+                            _passwordVisible, //This will obscure text dynamically
                         decoration: InputDecoration(
                           hintText: "Password",
                           prefixIcon: Icon(Icons.vpn_key_rounded),
@@ -183,9 +204,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         // obscureText: true,
                         // decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
-                        validator: (value){
-                          final bool isvalidPass = Validator.isValidPassword(value);
-                          if(isvalidPass){
+                        validator: (value) {
+                          final bool isvalidPass =
+                              Validator.isValidPassword(value);
+                          if (isvalidPass) {
                             return null;
                           }
                           return 'Password must be at least 7 char';
@@ -219,23 +241,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               userRegister(
                                 username: _userController.text,
                                 email: _emailController.text,
-                                password: _passwordController.text,);
+                                password: _passwordController.text,
+                              );
 
-                            // formKey.currentState!.save();
-                            // const snackBar = SnackBar(content: Text("Successful",
-                            //   style: TextStyle(fontSize: 20,),),
-                            //     backgroundColor: Colors.green,);
-                            //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
-                            //     Navigator.pushNamed(context,'/home');
+                              // formKey.currentState!.save();
+                              // const snackBar = SnackBar(content: Text("Successful",
+                              //   style: TextStyle(fontSize: 20,),),
+                              //     backgroundColor: Colors.green,);
+                              //     ScaffoldMessenger.of(context).showSnackBar(snackBar);
+                              //     Navigator.pushNamed(context,'/home');
                             }
                           },
-                          child: const Text('Sign Up',
-                            style: TextStyle(fontSize: 20,),
+                          child: const Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
-
                         ),
                       ),
-                      const SizedBox(height: 1,),
+                      const SizedBox(
+                        height: 1,
+                      ),
                       const HaveAccount(
                         login: false,
                       ),
@@ -248,7 +275,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
-
   }
 
   // void signUp(String email, String password) async {

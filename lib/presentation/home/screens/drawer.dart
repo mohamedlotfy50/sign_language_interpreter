@@ -2,55 +2,75 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/main_screen/main_screen_provider.dart';
-import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_screen.dart';
-import 'package:sign_language_interpreter/presentation/home/widgets/drawer_item.dart';
+import '../../../application/main_screen/main_screen_provider.dart';
+import '../../auth/screens/sign_in_screen.dart';
+import '../widgets/drawer_item.dart';
 
 import '../../../asset_locations.dart';
 
 class MyDrawer extends StatelessWidget {
   // final String Title;
 
-  const MyDrawer({Key? key,}) : super(key: key);
+  const MyDrawer({
+    Key? key,
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     // final Size size = MediaQuery.of(context).size;
-    final MainScreenProvider provider = Provider.of<MainScreenProvider>(context);
+    final MainScreenProvider provider =
+        Provider.of<MainScreenProvider>(context);
     return Drawer(
       backgroundColor: const Color(0xFF0ea6cc),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            Column(
-              children: [
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 20.0),
-                  child: Stack(
-                    children: [
-                     Center(child:  SvgPicture.asset(AssetLocations.imgbg),),
-                      const Positioned(
-                        left: 82,
-                        top: 5,
-                        child: CircleAvatar(
-        // fit: BoxFit.cover;
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                child: Stack(
+                  children: [
+                    Center(
+                      child: SvgPicture.asset(AssetLocations.imgbg),
+                    ),
+                    const Positioned(
+                      left: 82,
+                      top: 5,
+                      child: CircleAvatar(
+                        // fit: BoxFit.cover;
                         radius: 75, // Image radius
                         backgroundImage: AssetImage(AssetLocations.profile),
-                      ),)
-                  ],),
-                  // ),
+                      ),
+                    )
+                  ],
                 ),
-  // const SizedBox(height: 15,),
-                 Text(provider.user.username,textAlign: TextAlign.center, style: TextStyle(color:Colors.white, fontSize: 24),),
-                const SizedBox(height: 10,),
-                 Text(provider.user.email,textAlign: TextAlign.center, style: TextStyle(color:Colors.white, fontSize: 20, fontWeight: FontWeight.w300),),
-              ],),
-                      // const SizedBox(height: 44,),
-            Container(
-              child: DrawerItemTile(
+                // ),
               ),
-            ),
+              // const SizedBox(height: 15,),
+              Text(
+                provider.user.username,
+                textAlign: TextAlign.center,
+                style: TextStyle(color: Colors.white, fontSize: 24),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              Text(
+                provider.user.email,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 20,
+                    fontWeight: FontWeight.w300),
+              ),
+            ],
+          ),
+          // const SizedBox(height: 44,),
+          Container(
+            child: DrawerItemTile(),
+          ),
           //   Padding(
 
           //     padding: EdgeInsets.symmetric(vertical: 30.0),
@@ -83,20 +103,30 @@ class MyDrawer extends StatelessWidget {
           //       ),
           //     ),
           //   ),
-            // const SizedBox(height: 50,),
-            ElevatedButton(
-              child: const Text('Sign Out', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold, color: Color(0xFF0ea6cc))),
-              onPressed: () async{
-                await FirebaseAuth.instance.signOut();
-                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=> const SignInScreen()), (route) => false);
-              },
-              style: ElevatedButton.styleFrom(
-                primary: Colors.white,
-                shape:  RoundedRectangleBorder(borderRadius: BorderRadius.circular(0),),
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 22),
+          // const SizedBox(height: 50,),
+          ElevatedButton(
+            child: const Text('Sign Out',
+                style: TextStyle(
+                    fontSize: 20,
+                    fontWeight: FontWeight.bold,
+                    color: Color(0xFF0ea6cc))),
+            onPressed: () async {
+              await FirebaseAuth.instance.signOut();
+              Navigator.pushAndRemoveUntil(
+                  context,
+                  MaterialPageRoute(builder: (context) => const SignInScreen()),
+                  (route) => false);
+            },
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(0),
               ),
+              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 22),
             ),
-          ],),
+          ),
+        ],
+      ),
     );
   }
 }

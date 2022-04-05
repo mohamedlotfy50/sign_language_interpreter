@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/main_screen/main_screen_provider.dart';
+import '../../../application/main_screen/main_screen_provider.dart';
 
 class DrawerItemTile extends StatelessWidget {
-
-  const DrawerItemTile({Key? key,}) : super(key: key);
+  const DrawerItemTile({
+    Key? key,
+  }) : super(key: key);
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<MainScreenProvider>(context);
@@ -14,30 +15,31 @@ class DrawerItemTile extends StatelessWidget {
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
         itemCount: provider.drawerTitle.length,
-        itemBuilder: (ctx, i)=> ListTile(
-          selected: i==provider.currentIndex,
+        itemBuilder: (ctx, i) => ListTile(
+          selected: i == provider.currentIndex,
           selectedTileColor: Colors.black12,
           leading: AnimatedContainer(
             decoration: BoxDecoration(
-                color: Colors.green,
-                borderRadius: BorderRadius.circular(50)
-            ),
+                color: Colors.green, borderRadius: BorderRadius.circular(50)),
             duration: const Duration(
               milliseconds: 150,
             ),
-            width: i==provider.currentIndex?17:0,
-            height: i==provider.currentIndex?17:0,
+            width: i == provider.currentIndex ? 17 : 0,
+            height: i == provider.currentIndex ? 17 : 0,
           ),
-          title: Text(provider.drawerTitle[i].title,
+          title: Text(
+            provider.drawerTitle[i].title,
             style: TextStyle(
-              color: Colors.white,
-                fontSize: i==provider.currentIndex?18:16,
-                fontWeight: i==provider.currentIndex? FontWeight.w600:FontWeight.w400),),
-          onTap: (){
+                color: Colors.white,
+                fontSize: i == provider.currentIndex ? 18 : 16,
+                fontWeight: i == provider.currentIndex
+                    ? FontWeight.w600
+                    : FontWeight.w400),
+          ),
+          onTap: () {
             Navigator.pop(context);
             provider.changeCurrentIndex(i);
           },
-
         ),
       ),
     );

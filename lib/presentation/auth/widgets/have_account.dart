@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_screen.dart';
-import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
+import '../screens/sign_in_screen.dart';
+import '../screens/sign_up_screen.dart';
 
 class HaveAccount extends StatelessWidget {
   final bool login;
@@ -27,11 +27,10 @@ class HaveAccount extends StatelessWidget {
         GestureDetector(
           onTap: () {
             Navigator.push(
-              context,
-              MaterialPageRoute(
-                  builder: (context) =>
-                      login ? const SignUpScreen() : const SignInScreen())
-            );
+                context,
+                MaterialPageRoute(
+                    builder: (context) =>
+                        login ? const SignUpScreen() : const SignInScreen()));
           },
           child: Text(
             login ? "Sign Up" : "Sign In",

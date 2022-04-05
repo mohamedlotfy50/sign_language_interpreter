@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/main_screen/main_screen_provider.dart';
-import 'package:sign_language_interpreter/domain/auth/model.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/account.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/drawer.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/home.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/setting_account.dart';
-import 'package:sign_language_interpreter/presentation/home/widgets/main_subscreen.dart';
+import '../../../application/main_screen/main_screen_provider.dart';
+import '../../../domain/auth/model.dart';
+import 'account.dart';
+import 'drawer.dart';
+import 'home.dart';
+import 'setting_account.dart';
+import '../widgets/main_subscreen.dart';
 import '../../../asset_locations.dart';
 import '../widgets/setting_item.dart';
 
@@ -21,11 +21,16 @@ class _SettingScreenState extends State<SettingScreen> {
   var top = 0.0;
   // late ScrollController _scrollController;
   List<SettingItem> settingTile = [
-    SettingItem(title: 'Account', iconSvg: AssetLocations.account, route:'/accountSetting'),
-    SettingItem(title: 'Settings', iconSvg: AssetLocations.setting, route:'/account'),
-    SettingItem(title: 'Share', iconSvg: AssetLocations.share, route:'/home'),
-    SettingItem(title: 'Rate Us', iconSvg: AssetLocations.rate, route:'/home'),
-    SettingItem(title: 'Log Out', iconSvg: AssetLocations.logout, route:'/home'),
+    SettingItem(
+        title: 'Account',
+        iconSvg: AssetLocations.account,
+        route: '/accountSetting'),
+    SettingItem(
+        title: 'Settings', iconSvg: AssetLocations.setting, route: '/account'),
+    SettingItem(title: 'Share', iconSvg: AssetLocations.share, route: '/home'),
+    SettingItem(title: 'Rate Us', iconSvg: AssetLocations.rate, route: '/home'),
+    SettingItem(
+        title: 'Log Out', iconSvg: AssetLocations.logout, route: '/home'),
     // SettingItem(title: 'dsfc', iconSvg: AssetLocations.account),
     // SettingItem(title: 'Settings', iconSvg: AssetLocations.setting),
     // SettingItem(title: 'Share', iconSvg: AssetLocations.share),
@@ -36,15 +41,15 @@ class _SettingScreenState extends State<SettingScreen> {
     // SettingItem(title: 'Log Out', iconSvg: AssetLocations.menu),
     // SettingItem(title: 'Logsdc Out', iconSvg: AssetLocations.logout),
     // SettingItem(title: 'Log Out', iconSvg: AssetLocations.logout),
-
   ];
 
   var scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
-final MainScreenProvider provider = Provider.of<MainScreenProvider>(context);
-    return  Stack(
+    final MainScreenProvider provider =
+        Provider.of<MainScreenProvider>(context);
+    return Stack(
       children: [
         CustomScrollView(
           slivers: [
@@ -59,91 +64,114 @@ final MainScreenProvider provider = Provider.of<MainScreenProvider>(context);
               //   onPressed: () { scaffoldKey.currentState?.openDrawer(); },
               // ),
 
-              expandedHeight: size.height*0.5,
-              flexibleSpace: LayoutBuilder(builder: (ctx,cons){
-                top = cons.biggest.height;
-                return FlexibleSpaceBar(
-                    centerTitle: true,
-
-                    title: AnimatedOpacity(
-                      duration: const Duration(milliseconds: 250),
-                      opacity: top<=size.height*0.45? 1.0:0.0,
-                      child: Padding(
-                        padding: const EdgeInsets.only(top: 50.0,right: 40.0, left: 40.0),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            // const SizedBox(height: 50,),
-                            ClipRRect(
-                              borderRadius: BorderRadius.circular(20), // Image border
-                              child: SizedBox.fromSize(
-                                size: const Size.fromRadius(70),
-                                child: Image.asset(AssetLocations.profile, fit: BoxFit.cover, width: size.width*0.3,height: size.height*0.18,),
+              expandedHeight: size.height * 0.5,
+              flexibleSpace: LayoutBuilder(
+                builder: (ctx, cons) {
+                  top = cons.biggest.height;
+                  return FlexibleSpaceBar(
+                      centerTitle: true,
+                      title: AnimatedOpacity(
+                        duration: const Duration(milliseconds: 250),
+                        opacity: top <= size.height * 0.45 ? 1.0 : 0.0,
+                        child: Padding(
+                          padding: const EdgeInsets.only(
+                              top: 50.0, right: 40.0, left: 40.0),
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              // const SizedBox(height: 50,),
+                              ClipRRect(
+                                borderRadius:
+                                    BorderRadius.circular(20), // Image border
+                                child: SizedBox.fromSize(
+                                  size: const Size.fromRadius(70),
+                                  child: Image.asset(
+                                    AssetLocations.profile,
+                                    fit: BoxFit.cover,
+                                    width: size.width * 0.3,
+                                    height: size.height * 0.18,
+                                  ),
+                                ),
                               ),
-                            ),
-                            const SizedBox(height: 15,),
-                            const Text('Noran Alaa',textAlign: TextAlign.center, style: TextStyle(color:Colors.white, fontSize: 24),),
-                          ],
-
+                              const SizedBox(
+                                height: 15,
+                              ),
+                              const Text(
+                                'Noran Alaa',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                    color: Colors.white, fontSize: 24),
+                              ),
+                            ],
+                          ),
                         ),
                       ),
-                    ),
-                    background: Image.asset(
-                      AssetLocations.profile,
-                      fit: BoxFit.cover,));
-              },),
+                      background: Image.asset(
+                        AssetLocations.profile,
+                        fit: BoxFit.cover,
+                      ));
+                },
+              ),
             ),
 
             SliverList(
-
-                delegate: SliverChildBuilderDelegate((ctx,i){
-                  return Container(
-                    height: (size.height-300)/4.8,
-                    // height: size.height-280,
-                    alignment: Alignment.center,
-                    child: Padding(
-                      padding: const EdgeInsets.all(0.0),
-                      child: ListTile(
-                        leading: SvgPicture.asset(settingTile[i].iconSvg,width: 40,height: 40,),
-                        title: Text(settingTile[i].title,style: const TextStyle(fontSize: 18),),
-                        onTap: (){
-                          // print('Tappped');
-                          // Navigator.pushNamed(context, settingTile[i].route!);
-                          if(settingTile[i].route=='/accountSetting'){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AccountSettingScreen(userModel: provider.user),));
-                          }
-                          if(settingTile[i].route=='/account'){
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => AccountScreen()));
-                          }
-                          // if(settingTile[i].route=='/home'){
-                          //   Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(user: user),));
-                          // }
-
-
-                          // Navigator.pushNamed(context, settingTile[i].route);
-                        },
-                        // trailing: IconButton(alignment: Alignment.center,icon: settingTile[i]?.iconTrail, onPressed: () { N },),
-                        // tileColor: Colors.blueAccent,
-                      ),
+                delegate: SliverChildBuilderDelegate((ctx, i) {
+              return Container(
+                height: (size.height - 300) / 4.8,
+                // height: size.height-280,
+                alignment: Alignment.center,
+                child: Padding(
+                  padding: const EdgeInsets.all(0.0),
+                  child: ListTile(
+                    leading: SvgPicture.asset(
+                      settingTile[i].iconSvg,
+                      width: 40,
+                      height: 40,
                     ),
-                  );
-                },
-                    childCount: settingTile.length
+                    title: Text(
+                      settingTile[i].title,
+                      style: const TextStyle(fontSize: 18),
+                    ),
+                    onTap: () {
+                      // print('Tappped');
+                      // Navigator.pushNamed(context, settingTile[i].route!);
+                      if (settingTile[i].route == '/accountSetting') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AccountSettingScreen(
+                                  userModel: provider.user),
+                            ));
+                      }
+                      if (settingTile[i].route == '/account') {
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => AccountScreen()));
+                      }
+                      // if(settingTile[i].route=='/home'){
+                      //   Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(user: user),));
+                      // }
 
+                      // Navigator.pushNamed(context, settingTile[i].route);
+                    },
+                    // trailing: IconButton(alignment: Alignment.center,icon: settingTile[i]?.iconTrail, onPressed: () { N },),
+                    // tileColor: Colors.blueAccent,
+                  ),
+                ),
+              );
+            }, childCount: settingTile.length)
 
-                )
+                //   List.generate(settingTile.length, (i){
+                //     return ListTile(
+                //     leading: SvgPicture.asset(settingTile[i].iconSvg, color: Colors.black,),
+                //   title: Text(settingTile[i].title,style: TextStyle(fontSize: 18),),
+                //   tileColor: Colors.blueAccent,
+                //
+                // );
+                //   }),
 
-              //   List.generate(settingTile.length, (i){
-              //     return ListTile(
-              //     leading: SvgPicture.asset(settingTile[i].iconSvg, color: Colors.black,),
-              //   title: Text(settingTile[i].title,style: TextStyle(fontSize: 18),),
-              //   tileColor: Colors.blueAccent,
-              //
-              // );
-              //   }),
-
-            ),
-
+                ),
 
             // SliverToBoxAdapter(
             // // SliverList(
