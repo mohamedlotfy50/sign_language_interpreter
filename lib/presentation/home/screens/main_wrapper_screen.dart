@@ -20,24 +20,26 @@ class MainScreenWrapper extends StatelessWidget {
         Provider.of<AuthProvider>(context, listen: false);
     return ChangeNotifierProvider(
       create: (_) => MainScreenProvider(),
-      builder: (context, _) => Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          leading: IconButton(
-            icon: SvgPicture.asset(
-              AssetLocations.menu,
-              color: Colors.white,
+      builder: (context, _) => WillPopScope(
+          onWillPop: context.read<MainScreenProvider>().onWillPop,
+          child: Scaffold(
+            appBar: AppBar(
+              centerTitle: true,
+              leading: IconButton(
+                icon: SvgPicture.asset(
+                  AssetLocations.menu,
+                  color: Colors.white,
+                ),
+                onPressed: () {
+                  scaffoldKey.currentState?.openDrawer();
+                },
+              ),
+              title: const Text('App Name'),
             ),
-            onPressed: () {
-              scaffoldKey.currentState?.openDrawer();
-            },
-          ),
-          title: const Text('App Name'),
-        ),
-        body: context.watch<MainScreenProvider>().CurrentPageWidget,
-        key: scaffoldKey,
-        drawer: const MyDrawer(),
-      ),
+            body: context.watch<MainScreenProvider>().CurrentPageWidget,
+            key: scaffoldKey,
+            drawer: const MyDrawer(),
+          )),
     );
   }
 }

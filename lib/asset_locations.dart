@@ -1,5 +1,5 @@
 class AssetLocations {
-  //* Images location.
+  //! Images location.
   static const String translation = 'assets/images/translation.png';
   static const String communication = 'assets/images/communicate.png';
   static const String learn = 'assets/images/learn.png';
@@ -27,7 +27,10 @@ class AssetLocations {
       'assets/images/2135790_id card_identity_icon (1).svg';
   static const String phone = 'assets/images/408400_phone_icon.svg';
 
-  //* Documents location.
+  //! Documents location.
   static const String book1 = 'assets/documents/ar_sign1.pdf';
   static const String book2 = 'assets/documents/ar_sign2.pdf';
+
+  //! avatar assets
+  static const String avatarBG = 'avatar_background.jpg';
 }

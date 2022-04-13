@@ -1,6 +1,8 @@
+import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:sign_language_interpreter/presentation/interpreter/widgets/avatar.dart';
 import '../../../application/avatar/avatar_provider.dart';
 import '../widgets/controller_button.dart';
 
@@ -35,13 +37,7 @@ class _AvatarScreenState extends State<AvatarScreen>
           ),
           child: Stack(
             children: [
-              // const Padding(
-              //   padding: EdgeInsets.only(top: 50),
-              //   child: riv.RiveAnimation.asset(
-              //     'assets/animation/avatar.riv',
-              //   ),
-              // ),
-
+              GameWidget(game: MyAvatar()),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(

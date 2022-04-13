@@ -7,7 +7,7 @@ import 'account.dart';
 import 'drawer.dart';
 import 'main_wrapper_screen.dart';
 import 'setting_account.dart';
-import 'home_screen.dart';
+import 'main_screen.dart';
 import '../../../asset_locations.dart';
 import '../widgets/setting_item.dart';
 
