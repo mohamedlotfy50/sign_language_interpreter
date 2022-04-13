@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
+import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
+import 'package:sign_language_interpreter/presentation/avatar/screens/avatar_screen.dart';
 import 'domain/auth/model.dart';
 // import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
@@ -7,7 +11,7 @@ import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_scre
 import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
 import 'package:sign_language_interpreter/presentation/home/screens/account.dart';
 // import 'package:sign_language_interpreter/presentation/home/screens/drawer.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/home.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/main_wrapper_screen.dart';
 import 'package:sign_language_interpreter/presentation/home/screens/setting.dart';
 import 'package:sign_language_interpreter/presentation/home/screens/setting_account.dart';
 // import 'package:sign_language_interpreter/presentation/onboard_screen/screens/board_screen.dart';
@@ -65,24 +69,22 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFF0ea6cc),
         ),
       ),
-      home: SignInScreen(),
-      // AccountSettingScreen(
-      //   userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063',username: 'xcjkhvnkjsdhkfjs'),
-      // ),
-      routes: {
-        '/signup': (context) => const SignUpScreen(),
-        '/signin': (context) => const SignInScreen(),
-        '/forget': (context) => const ForgetPassword(),
-        '/otp': (context) => const OTPScreen(),
-        // '/home': (context) =>  HomeScreen(),
-        // '/profile': (context) => const ProfileScreen(),
-        // '/setting': (context) => const SettingScreen(),
-        '/account': (context) => const AccountScreen(),
-        '/accountSetting': (context) => AccountSettingScreen(
-              userModel: UserModel(uid: 'xjlixtzSG1QrN27KCfmNUcZeg063'),
-            ),
-        // '/drawer': (context) => MyDrawer(pageName: '',),
-      },
+      home: ChangeNotifierProvider(
+          create: (context) => AuthProvider()..authStateChanges(),
+          builder: (context, child) {
+            final watch = context.watch<AuthProvider>();
+            if (watch.authStates == AuthStates.loading) {
+              return const Scaffold(
+                body: Center(
+                  child: CircularProgressIndicator(),
+                ),
+              );
+            } else if (watch.authStates == AuthStates.logged) {
+              return MainScreenWrapper();
+            } else {
+              return SignInScreen();
+            }
+          }),
     );
   }
 }

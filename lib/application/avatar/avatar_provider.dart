@@ -20,14 +20,15 @@ class AvatarProvider extends ChangeNotifier {
   PlayerState playerState = PlayerState.playerUnset;
   final PermissionChecker _permissionChecker = PermissionChecker();
   AvatarProvider() {
-    _initRecorder();
-    _initPlayer();
+    _initRecorder().then((value) {
+      _initPlayer();
+    });
     notifyListeners();
   }
   void audiStateChanged() {
-    // if (playerState == PlayerState.playerUnset) {
-    //   _initPlayer();
-    // }
+    if (playerState == PlayerState.playerUnset) {
+      _initPlayer();
+    }
     if (recorderState == RecorderState.recorderUnset) {
       _initRecorder();
     } else if (recorderState == RecorderState.recorderInitialized) {
@@ -88,7 +89,7 @@ class AvatarProvider extends ChangeNotifier {
     print('deleted');
   }
 
-  void _initPlayer() {
+  Future<void> _initPlayer() async {
     _permissionChecker.storage().then((value) {
       if (value) {
         _audioService.initializeplayer();
@@ -98,7 +99,7 @@ class AvatarProvider extends ChangeNotifier {
     print('storage permission');
   }
 
-  void _initRecorder() {
+  Future<void> _initRecorder() async {
     _permissionChecker.microphone().then((value) {
       if (value) {
         _audioService.initializeRecord().then((value) {
@@ -112,6 +113,7 @@ class AvatarProvider extends ChangeNotifier {
   Future<String> test() async {
     InterpreterModel? i =
         await SignInterpreter.translateAudio(_audioService.audioFile);
-    return i!.text;
+    i!.printUser();
+    return i.text;
   }
 }

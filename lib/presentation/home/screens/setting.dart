@@ -5,9 +5,9 @@ import '../../../application/main_screen/main_screen_provider.dart';
 import '../../../domain/auth/model.dart';
 import 'account.dart';
 import 'drawer.dart';
-import 'home.dart';
+import 'main_wrapper_screen.dart';
 import 'setting_account.dart';
-import '../widgets/main_subscreen.dart';
+import 'home_screen.dart';
 import '../../../asset_locations.dart';
 import '../widgets/setting_item.dart';
 
@@ -135,20 +135,20 @@ class _SettingScreenState extends State<SettingScreen> {
                     onTap: () {
                       // print('Tappped');
                       // Navigator.pushNamed(context, settingTile[i].route!);
-                      if (settingTile[i].route == '/accountSetting') {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => AccountSettingScreen(
-                                  userModel: provider.user),
-                            ));
-                      }
-                      if (settingTile[i].route == '/account') {
-                        Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => AccountScreen()));
-                      }
+                      // if (settingTile[i].route == '/accountSetting') {
+                      //   Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //         builder: (context) => AccountSettingScreen(
+                      //             userModel: provider.),
+                      //       ));
+                      // }
+                      // if (settingTile[i].route == '/account') {
+                      //   Navigator.push(
+                      //       context,
+                      //       MaterialPageRoute(
+                      //           builder: (context) => AccountScreen()));
+                      // }
                       // if(settingTile[i].route=='/home'){
                       //   Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen(user: user),));
                       // }

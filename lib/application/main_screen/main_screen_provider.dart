@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import '../../domain/auth/model.dart';
 import '../../presentation/home/drawer_item.dart';
 import '../../presentation/home/screens/setting.dart';
-import '../../presentation/home/widgets/main_subscreen.dart';
+import '../../presentation/home/screens/home_screen.dart';
 
 class MainScreenProvider extends ChangeNotifier {
-  final UserModel user;
-  MainScreenProvider(this.user);
+  MainScreenProvider();
   int currentIndex = 0;
   // final UserModel user;
   // MainScreenProvider(this.user);

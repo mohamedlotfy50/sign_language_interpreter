@@ -9,6 +9,7 @@ import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.da
 import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
 import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
 import '../../../asset_locations.dart';
+
 // import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
 class OTPScreen extends StatefulWidget {
   const OTPScreen({Key? key}) : super(key: key);
@@ -20,7 +21,6 @@ class OTPScreen extends StatefulWidget {
 class _OTPScreenState extends State<OTPScreen> {
   // final TextEditingController _emailControl = TextEditingController();
   // final TextEditingController _otpControl = TextEditingController();
-
 
   final TextEditingController _confirmPassword = TextEditingController();
   // late int otp;
@@ -34,6 +34,7 @@ class _OTPScreenState extends State<OTPScreen> {
       val = newval;
     });
   }
+
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _otpController = TextEditingController();
   TextEditingController _passwordController = TextEditingController();
@@ -56,10 +57,9 @@ class _OTPScreenState extends State<OTPScreen> {
     required String code,
     required String password,
     // required String conPassword,
-  }){
+  }) {
     // FirebaseAuth.instance.confirmPasswordReset(code: code, newPassword: password);
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +82,11 @@ class _OTPScreenState extends State<OTPScreen> {
                 // autovalidateMode: AutovalidateMode.onUserInteraction,
                 child: Container(
                   width: size.width,
-                  height: size.height*0.77,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
-                  margin: const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
+                  height: size.height * 0.77,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 20),
+                  margin:
+                      const EdgeInsets.symmetric(horizontal: 20, vertical: 50),
                   decoration: BoxDecoration(
                     boxShadow: <BoxShadow>[
                       BoxShadow(
@@ -112,47 +114,54 @@ class _OTPScreenState extends State<OTPScreen> {
                       // ),
                       TextFormField(
                         controller: _otpController,
-                        validator: (value){
-                          if(value!.isEmpty){
+                        validator: (value) {
+                          if (value!.isEmpty) {
                             return "Please Enter Password";
                           }
-                          if(value.length <6){
+                          if (value.length < 6) {
                             return "Please enter Password must be at least 7 char";
                           }
                           return null;
                         },
-                        decoration: const InputDecoration(hintText: "OTP", prefixIcon: Icon(Icons.phonelink_lock_outlined),
-
-
-                      ),
+                        decoration: const InputDecoration(
+                          hintText: "OTP",
+                          prefixIcon: Icon(Icons.phonelink_lock_outlined),
+                        ),
                       ),
                       TextFormField(
                         obscureText: true,
                         controller: _passwordController,
-                        decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
-                          validator: (value){
-                            if(value!.isEmpty){
-                              return "Please Enter Password";
-                            }
-                            if(value.length <7){
-                              return "Please enter Password must be at least 7 char";
-                            }
-                            return null;
-                          },
-                          // onSaved: (value) => setState(() => password = value!),
+                        decoration: const InputDecoration(
+                          hintText: "Password",
+                          prefixIcon: Icon(Icons.vpn_key_rounded),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Password";
+                          }
+                          if (value.length < 7) {
+                            return "Please enter Password must be at least 7 char";
+                          }
+                          return null;
+                        },
+                        // onSaved: (value) => setState(() => password = value!),
                       ),
                       TextFormField(
                         obscureText: true,
                         controller: _conPasswordController,
-                        decoration: const InputDecoration(hintText: "Confirm Password", prefixIcon: Icon(Icons.lock_outlined),),
-                        validator: (value){
-                          if(value!.isEmpty){
-                          return "Please Enter Confirm Password";
-                        }
-                        if(_conPasswordController.text != _passwordController.text){
-                          return "Passsword Don not match";
-                        }
-                        return null;
+                        decoration: const InputDecoration(
+                          hintText: "Confirm Password",
+                          prefixIcon: Icon(Icons.lock_outlined),
+                        ),
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return "Please Enter Confirm Password";
+                          }
+                          if (_conPasswordController.text !=
+                              _passwordController.text) {
+                            return "Passsword Don not match";
+                          }
+                          return null;
                         },
                         // onSaved: (value) => setState(() => conPassword = value!),
                       ),
@@ -162,16 +171,22 @@ class _OTPScreenState extends State<OTPScreen> {
                         child: ElevatedButton(
                           onPressed: () {
                             // verifyOTP();
-                            userResetPass(code: _otpController.text, password: _passwordController.text);
+                            userResetPass(
+                                code: _otpController.text,
+                                password: _passwordController.text);
                             if (formKey.currentState!.validate()) {
                               // const snackBar = SnackBar(content: Text("Successful",
                               //   style: TextStyle(fontSize: 20,),),
                               //   backgroundColor: Colors.green,);
                               // ScaffoldMessenger.of(context).showSnackBar(snackBar);
                               // Navigator.pushNamed(context,'/signin');
-                            }},
-                          child: const Text('Confirm',
-                            style: TextStyle(fontSize: 20,),
+                            }
+                          },
+                          child: const Text(
+                            'Confirm',
+                            style: TextStyle(
+                              fontSize: 20,
+                            ),
                           ),
                         ),
                       ),

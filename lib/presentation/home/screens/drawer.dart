@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
 import '../../../application/main_screen/main_screen_provider.dart';
 import '../../auth/screens/sign_in_screen.dart';
 import '../widgets/drawer_item.dart';
@@ -17,9 +19,9 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final Size size = MediaQuery.of(context).size;
-    final MainScreenProvider provider =
-        Provider.of<MainScreenProvider>(context);
+    final Size size = MediaQuery.of(context).size;
+    final AuthProvider provider =
+        Provider.of<AuthProvider>(context, listen: false);
     return Drawer(
       backgroundColor: const Color(0xFF0ea6cc),
       child: Column(
@@ -29,20 +31,28 @@ class MyDrawer extends StatelessWidget {
           Column(
             children: [
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 20.0),
+                padding: const EdgeInsets.symmetric(vertical: 20),
                 child: Stack(
+                  alignment: Alignment.center,
                   children: [
                     Center(
-                      child: SvgPicture.asset(AssetLocations.imgbg),
-                    ),
-                    const Positioned(
-                      left: 82,
-                      top: 5,
-                      child: CircleAvatar(
-                        // fit: BoxFit.cover;
-                        radius: 75, // Image radius
-                        backgroundImage: AssetImage(AssetLocations.profile),
+                      child: SvgPicture.asset(
+                        AssetLocations.imgbg,
+                        width: size.width / 1.5,
                       ),
+                    ),
+                    Container(
+                      height: size.width / 2.6,
+                      decoration: BoxDecoration(
+                          color: Colors.black,
+                          shape: BoxShape.circle,
+                          image: DecorationImage(
+                              image: CachedNetworkImageProvider(
+                                  provider.user!.imagePath),
+                              fit: BoxFit.contain)),
+                      //   child: CachedNetworkImage(
+                      //   imageUrl: provider.user!.imagePath,
+                      // ),
                     )
                   ],
                 ),
@@ -50,7 +60,7 @@ class MyDrawer extends StatelessWidget {
               ),
               // const SizedBox(height: 15,),
               Text(
-                provider.user.username,
+                provider.user!.username,
                 textAlign: TextAlign.center,
                 style: TextStyle(color: Colors.white, fontSize: 24),
               ),
@@ -58,7 +68,7 @@ class MyDrawer extends StatelessWidget {
                 height: 10,
               ),
               Text(
-                provider.user.email,
+                provider.user!.email,
                 textAlign: TextAlign.center,
                 style: TextStyle(
                     color: Colors.white,
@@ -111,11 +121,12 @@ class MyDrawer extends StatelessWidget {
                     fontWeight: FontWeight.bold,
                     color: Color(0xFF0ea6cc))),
             onPressed: () async {
-              await FirebaseAuth.instance.signOut();
-              Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(builder: (context) => const SignInScreen()),
-                  (route) => false);
+              provider.logout();
+              // await FirebaseAuth.instance.signOut();
+              // Navigator.pushAndRemoveUntil(
+              //     context,
+              //     MaterialPageRoute(builder: (context) => SignInScreen()),
+              //     (route) => false);
             },
             style: ElevatedButton.styleFrom(
               primary: Colors.white,

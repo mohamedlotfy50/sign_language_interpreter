@@ -4,10 +4,12 @@ import '../screens/sign_up_screen.dart';
 
 class HaveAccount extends StatelessWidget {
   final bool login;
+  final void Function()? onPressed;
 
   const HaveAccount({
     Key? key,
     this.login = true,
+    this.onPressed,
   }) : super(key: key);
 
   @override
@@ -25,13 +27,7 @@ class HaveAccount extends StatelessWidget {
           ),
         ),
         GestureDetector(
-          onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                    builder: (context) =>
-                        login ? const SignUpScreen() : const SignInScreen()));
-          },
+          onTap: onPressed,
           child: Text(
             login ? "Sign Up" : "Sign In",
             style: TextStyle(

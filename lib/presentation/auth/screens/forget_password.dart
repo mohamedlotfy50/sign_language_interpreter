@@ -7,48 +7,12 @@ import '../..//auth/widgets/clip.dart';
 
 import '../../../asset_locations.dart';
 
-class ForgetPassword extends StatefulWidget {
+class ForgetPassword extends StatelessWidget {
   const ForgetPassword({Key? key}) : super(key: key);
-  @override
-  _ForgetPasswordState createState() => _ForgetPasswordState();
-}
-
-class _ForgetPasswordState extends State<ForgetPassword> {
-  final TextEditingController _emailController = TextEditingController();
-  // final TextEditingController _otpControl = TextEditingController();
-
-  // EmailAuth emailAuth = new EmailAuth(sessionName: "OTP session",);
-  // void verifyOTP() {
-  //   var res = emailAuth.validateOtp(
-  //       recipientMail: _emailControl.value.text,
-  //       userOtp: _otpControl.value.text);
-  //   if (res) {
-  //     print("OTP verified");
-  //   }
-  //   else {
-  //     print("Invalid OTP");
-  //   }
-  // }
-  void sendOTP(String email) async {
-    // var res = await emailAuth.sendOtp(
-    //     recipientMail: _emailController.value.text);
-    // if(res){print("OTP Sent");}
-    // else{print("OTP Don not Sent");}
-    await FirebaseAuth.instance.sendPasswordResetEmail(email: email);
-  }
-
-  bool val = true;
-  onSwitchValueChanged(bool newval) {
-    setState(() {
-      val = newval;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    // Firebase.initializeApp();
     final Size size = MediaQuery.of(context).size;
-    final ThemeData theme = Theme.of(context);
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SingleChildScrollView(
@@ -128,7 +92,7 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           hintText: "Email",
                           prefixIcon: Icon(Icons.email),
                         ),
-                        controller: _emailController,
+                        // controller: _emailController,
                         validator: (value) {
                           final bool isvalidEmail =
                               Validator.isValidEmail(value);
@@ -147,7 +111,6 @@ class _ForgetPasswordState extends State<ForgetPassword> {
                           //   Navigator.pushNamed(context,page),
                           // },
                           onPressed: () {
-                            sendOTP(_emailController.text);
                             // if (formKey.currentState!.validate()) {
                             //   sendOTP();
                             //   const snackBar = SnackBar(content: Text("Successful",

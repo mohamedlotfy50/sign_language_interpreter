@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:rive/rive.dart' as riv;
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
 import '../../../application/avatar/avatar_provider.dart';
@@ -36,12 +35,13 @@ class _AvatarScreenState extends State<AvatarScreen>
           ),
           child: Stack(
             children: [
-              const Padding(
-                padding: EdgeInsets.only(top: 50),
-                child: riv.RiveAnimation.asset(
-                  'assets/animation/avatar.riv',
-                ),
-              ),
+              // const Padding(
+              //   padding: EdgeInsets.only(top: 50),
+              //   child: riv.RiveAnimation.asset(
+              //     'assets/animation/avatar.riv',
+              //   ),
+              // ),
+
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(

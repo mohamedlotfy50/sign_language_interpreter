@@ -39,17 +39,25 @@ dependencies:
   cupertino_icons: ^1.0.2
   firebase_auth: ^3.3.7
   cloud_firestore: ^3.1.8
+  firebase_storage: ^10.2.8
+  firebase_analytics: ^9.1.0
   firebase_core: ^1.12.0
   flutter_svg: ^1.0.3
   provider: ^6.0.2
-  firebase_storage: ^10.2.8
-  firebase_analytics: ^9.1.0
   image_picker: ^0.8.4+11
   mic_stream: ^0.6.0
   soundpool: ^2.3.0
   permission_handler: ^9.2.0
   path_provider: ^2.0.9
-  rive: ^0.8.4
+  flame: ^1.1.0
+  flame_texturepacker: ^2.0.0+2
+  google_sign_in: ^5.2.4
+  cached_network_image: ^3.2.0
+  native_pdf_view: ^6.0.0+1
+  sign_in_with_apple: ^3.3.0
+
+
+
 
 
 
@@ -70,7 +78,9 @@ dev_dependencies:
 # The following section is specific to Flutter.
 flutter:
   assets:
+    - assets/
     - assets/images/
+    - assets/documents/
 
 
   # The following line ensures that the Material Icons font is

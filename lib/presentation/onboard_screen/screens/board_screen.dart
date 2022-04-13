@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import '../../auth/screens/sign_up_screen.dart';
 
 import '../../../asset_locations.dart';
-import '../widgets/slide_item.dart';
 
 class BoardScreen extends StatefulWidget {
   const BoardScreen({Key? key}) : super(key: key);
@@ -13,22 +12,22 @@ class BoardScreen extends StatefulWidget {
 
 class _BoardScreenState extends State<BoardScreen> {
   final PageController _pageController = PageController(initialPage: 0);
-  final List<SlideItem> slidePages = [
-    SlideItem(
-        imagePath: AssetLocations.translation,
-        title: 'Translate',
-        text:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi quis commodo odio aenean sed. Augue lacus viverra vitae congue eu.'),
-    SlideItem(
-        imagePath: AssetLocations.learn,
-        title: 'Learn',
-        text:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi quis commodo odio aenean sed. Augue lacus viverra vitae congue eu.'),
-    SlideItem(
-        imagePath: AssetLocations.communication,
-        title: 'Communicate',
-        text:
-            'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi quis commodo odio aenean sed. Augue lacus viverra vitae congue eu.'),
+  final List slidePages = [
+    // SlideItem(
+    //     imagePath: AssetLocations.translation,
+    //     title: 'Translate',
+    //     text:
+    //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi quis commodo odio aenean sed. Augue lacus viverra vitae congue eu.'),
+    // SlideItem(
+    //     imagePath: AssetLocations.learn,
+    //     title: 'Learn',
+    //     text:
+    //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi quis commodo odio aenean sed. Augue lacus viverra vitae congue eu.'),
+    // SlideItem(
+    //     imagePath: AssetLocations.communication,
+    //     title: 'Communicate',
+    //     text:
+    //         'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Morbi quis commodo odio aenean sed. Augue lacus viverra vitae congue eu.'),
   ];
   int curretIndex = 0;
   @override
@@ -121,7 +120,7 @@ class _BoardScreenState extends State<BoardScreen> {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const SignUpScreen()),
+                                builder: (context) => SignUpScreen()),
                           );
                         });
                       },
