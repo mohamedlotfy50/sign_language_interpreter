@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:pdfx/pdfx.dart';
+import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/domain/learning/document_model.dart';
 

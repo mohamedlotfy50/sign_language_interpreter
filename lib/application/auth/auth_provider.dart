@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
-import 'package:sign_language_interpreter/domain/auth/model.dart';
+import 'package:sign_language_interpreter/domain/auth/user_model.dart';
 import 'package:sign_language_interpreter/infrastructure/auth/auth_service.dart';
 import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
 
@@ -113,5 +113,10 @@ class AuthProvider extends ChangeNotifier {
       notifyListeners();
       user?.printUser();
     });
+  }
+
+  void upDateUserData(UserModel newUser) {
+    user = newUser;
+    notifyListeners();
   }
 }

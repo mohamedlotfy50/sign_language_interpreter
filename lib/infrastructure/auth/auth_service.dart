@@ -5,7 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
 import 'package:sign_language_interpreter/domain/auth/auth_facade.dart';
-import 'package:sign_language_interpreter/domain/auth/model.dart';
+import 'package:sign_language_interpreter/domain/auth/user_model.dart';
 import 'package:sign_language_interpreter/infrastructure/core/colltion_names.dart';
 
 class AuthService extends AuthFacade {
@@ -195,5 +195,12 @@ class AuthService extends AuthFacade {
   @override
   Future<void> logout() async {
     await _firebaseAuth.signOut();
+  }
+
+  @override
+  Future<UserModel?> refreshUser(String uid) async {
+    final DocumentSnapshot<Map<String, dynamic>> userData =
+        await _firestore.collection(CollectionNames.users).doc(uid).get();
+    return UserModel.fromMap(userData.data()!);
   }
 }

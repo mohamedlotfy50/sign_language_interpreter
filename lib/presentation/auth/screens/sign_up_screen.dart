@@ -4,11 +4,11 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../application/auth/auth_provider.dart';
-import '../../../domain/auth/model.dart';
+import '../../../domain/auth/user_model.dart';
 import '../../../domain/auth/validation.dart';
 import '../widgets/have_account.dart';
 import '../..//auth/widgets/clip.dart';
-import '../../../domain/auth/model.dart';
+import '../../../domain/auth/user_model.dart';
 import '../../home/screens/main_wrapper_screen.dart';
 
 class SignUpScreen extends StatelessWidget {
@@ -20,7 +20,7 @@ class SignUpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
-        Provider.of<AuthProvider>(context, listen: false);
+        Provider.of<AuthProvider>(context, listen: true);
     return Scaffold(
       body: SingleChildScrollView(
         child: Stack(

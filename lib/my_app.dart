@@ -2,17 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
 import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
-import 'domain/auth/model.dart';
+import 'domain/auth/user_model.dart';
 // import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/otp_screen.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/sign_in_screen.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/account.dart';
 // import 'package:sign_language_interpreter/presentation/home/screens/drawer.dart';
 import 'package:sign_language_interpreter/presentation/home/screens/main_wrapper_screen.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/setting.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/setting_account.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/setting_screen.dart';
+import 'package:sign_language_interpreter/presentation/home/screens/account_screen.dart';
 // import 'package:sign_language_interpreter/presentation/onboard_screen/screens/board_screen.dart';
 
 class MyApp extends StatelessWidget {

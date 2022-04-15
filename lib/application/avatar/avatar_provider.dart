@@ -19,6 +19,7 @@ class AvatarProvider extends ChangeNotifier {
   RecorderState recorderState = RecorderState.recorderUnset;
   PlayerState playerState = PlayerState.playerUnset;
   final PermissionChecker _permissionChecker = PermissionChecker();
+  String text = '';
   AvatarProvider() {
     _initRecorder().then((value) {
       _initPlayer();
@@ -110,10 +111,11 @@ class AvatarProvider extends ChangeNotifier {
     print('mic permission');
   }
 
-  Future<String> test() async {
+  Future<void> test() async {
     InterpreterModel? i =
         await SignInterpreter.translateAudio(_audioService.audioFile);
-    i!.printUser();
-    return i.text;
+
+    text = i!.text;
+    notifyListeners();
   }
 }

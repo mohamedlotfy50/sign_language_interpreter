@@ -1,4 +1,4 @@
-import 'package:sign_language_interpreter/domain/auth/model.dart';
+import 'package:sign_language_interpreter/domain/auth/user_model.dart';
 
 abstract class AuthFacade {
   Future<UserModel?> login({required String email, required String password});
@@ -9,6 +9,7 @@ abstract class AuthFacade {
       required String email,
       required String password});
   Future<UserModel?> gmailLogin();
+  Future<UserModel?> refreshUser(String uid);
   Future<bool> isLogedinUser();
   Future<UserModel?> appleLogin();
   Stream<UserModel?> authStateChanges();

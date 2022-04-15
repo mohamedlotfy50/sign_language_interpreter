@@ -7,7 +7,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
 import '../../../application/auth/auth_provider.dart';
-import '../../../domain/auth/model.dart';
+import '../../../domain/auth/user_model.dart';
 import '../../../domain/auth/validation.dart';
 import '../widgets/have_account.dart';
 import '../../home/screens/main_wrapper_screen.dart';
@@ -24,7 +24,7 @@ class SignInScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
-        Provider.of<AuthProvider>(context, listen: false);
+        Provider.of<AuthProvider>(context, listen: true);
     final ThemeData theme = Theme.of(context);
     return Scaffold(
       body: SingleChildScrollView(

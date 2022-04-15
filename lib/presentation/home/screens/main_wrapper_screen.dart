@@ -3,8 +3,8 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
 import '../../../application/main_screen/main_screen_provider.dart';
-import '../../../domain/auth/model.dart';
-import 'drawer.dart';
+import '../../../domain/auth/user_model.dart';
+import '../widgets/my_drawer.dart';
 import '../../../asset_locations.dart';
 
 class MainScreenWrapper extends StatelessWidget {
@@ -17,7 +17,7 @@ class MainScreenWrapper extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final AuthProvider provider =
-        Provider.of<AuthProvider>(context, listen: false);
+        Provider.of<AuthProvider>(context, listen: true);
     return ChangeNotifierProvider(
       create: (_) => MainScreenProvider(),
       builder: (context, _) => WillPopScope(

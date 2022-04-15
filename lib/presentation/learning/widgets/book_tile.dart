@@ -20,8 +20,8 @@ class BookTile extends StatelessWidget {
         decoration: BoxDecoration(
             color: Colors.white,
             gradient: LinearGradient(
-                stops: const [0.02, 0.02],
-                colors: [theme.primaryColor, Colors.white]),
+                stops: const [0.015, 0.015],
+                colors: [theme.appBarTheme.backgroundColor!, Colors.white]),
             boxShadow: [
               BoxShadow(
                   offset: Offset(3, 5), blurRadius: 3, color: Colors.black12),

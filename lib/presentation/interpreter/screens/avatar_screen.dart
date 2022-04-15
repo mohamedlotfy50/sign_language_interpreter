@@ -38,6 +38,24 @@ class _AvatarScreenState extends State<AvatarScreen>
           child: Stack(
             children: [
               GameWidget(game: MyAvatar()),
+              watch.text.isNotEmpty
+                  ? Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        padding: const EdgeInsets.all(8),
+                        decoration: BoxDecoration(color: Colors.black45),
+                        child: Text(
+                          watch.text,
+                          textAlign: TextAlign.center,
+                          style: TextStyle(
+                            fontSize: 16,
+                            color: Colors.white,
+                          ),
+                        ),
+                      ),
+                    )
+                  : Container(),
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
@@ -63,7 +81,7 @@ class _AvatarScreenState extends State<AvatarScreen>
                         icon: const Icon(Icons.text_fields,
                             size: 30, color: Colors.white),
                         onPressed: () async {
-                          read.test();
+                          await read.test();
                         },
                       )
                     ],

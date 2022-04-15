@@ -28,7 +28,7 @@ class DrawerItemTile extends StatelessWidget {
             height: i == provider.currentIndex ? 17 : 0,
           ),
           title: Text(
-            provider.drawerTitle[i].title,
+            provider.drawerTitle[i],
             style: TextStyle(
                 color: Colors.white,
                 fontSize: i == provider.currentIndex ? 18 : 16,
@@ -37,7 +37,6 @@ class DrawerItemTile extends StatelessWidget {
                     : FontWeight.w400),
           ),
           onTap: () {
-            Navigator.pop(context);
             provider.changeCurrentIndex(i);
           },
         ),
