@@ -2,23 +2,15 @@ import 'package:flame/game.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:sign_language_interpreter/presentation/interpreter/widgets/avatar.dart';
+import 'package:sign_language_interpreter/infrastructure/avatar/audio_state.dart';
+import 'package:sign_language_interpreter/presentation/interpreter/widgets/translation_room.dart';
 import '../../../application/avatar/avatar_provider.dart';
 import '../widgets/controller_button.dart';
 
-class AvatarScreen extends StatefulWidget {
-  const AvatarScreen({Key? key}) : super(key: key);
+class InterpreterScreen extends StatelessWidget {
+  InterpreterScreen({Key? key}) : super(key: key);
 
-  @override
-  State<AvatarScreen> createState() => _AvatarScreenState();
-}
-
-class _AvatarScreenState extends State<AvatarScreen>
-    with SingleTickerProviderStateMixin {
-  @override
-  void initState() {
-    super.initState();
-  }
+  final _game = TranslationRoom();
 
   @override
   Widget build(BuildContext context) {
@@ -29,6 +21,7 @@ class _AvatarScreenState extends State<AvatarScreen>
       builder: (context, child) {
         final watch = context.watch<AvatarProvider>();
         final read = context.read<AvatarProvider>();
+
         return Container(
           decoration: BoxDecoration(
             gradient: RadialGradient(
@@ -37,7 +30,18 @@ class _AvatarScreenState extends State<AvatarScreen>
           ),
           child: Stack(
             children: [
-              GameWidget(game: MyAvatar()),
+              GameWidget(
+                  game: watch.translationRoom,
+                  backgroundBuilder: (context) {
+                    return Container(
+                      color: Colors.green,
+                    );
+                  },
+                  loadingBuilder: (context) {
+                    return Container(
+                      color: Colors.green,
+                    );
+                  }),
               watch.text.isNotEmpty
                   ? Align(
                       alignment: Alignment.center,
@@ -59,6 +63,7 @@ class _AvatarScreenState extends State<AvatarScreen>
               Align(
                 alignment: Alignment.bottomCenter,
                 child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 10),
                   height: 120,
                   color: Colors.black87,
                   child: Row(
@@ -68,20 +73,30 @@ class _AvatarScreenState extends State<AvatarScreen>
                         onPressed: () {
                           read.deleteRecored();
                         },
-                        icon: const Icon(
-                          Icons.delete,
+                        icon: Icon(
+                          watch.hasDelete
+                              ? Icons.delete
+                              : Icons.record_voice_over,
                           size: 30,
-                          color: Colors.red,
+                          color: watch.hasAudio ? Colors.red : Colors.white,
                         ),
                       ),
+                      watch.fromText
+                          ? Expanded(
+                              child: TextField(
+                              onChanged: watch.onChanged,
+                              style: const TextStyle(color: Colors.white),
+                            ))
+                          : ControllButton(),
                       IconButton(
-                          onPressed: read.audiStateChanged,
-                          icon: Icon(Icons.mic)),
-                      IconButton(
-                        icon: const Icon(Icons.text_fields,
-                            size: 30, color: Colors.white),
+                        icon: Icon(
+                            watch.hasAudio || watch.fromText
+                                ? Icons.send
+                                : Icons.text_fields,
+                            size: 30,
+                            color: watch.canSend ? Colors.blue : Colors.white),
                         onPressed: () async {
-                          await read.test();
+                          await read.submitButton();
                         },
                       )
                     ],

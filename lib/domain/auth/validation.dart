@@ -16,7 +16,9 @@ class Validator {
   }
 
   static bool isValidPassword(String? value) {
-    if (RegExp(r"^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$").hasMatch(value!)) {
+    if (RegExp(
+            r"^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$")
+        .hasMatch(value!)) {
       return true;
     }
 

@@ -3,9 +3,11 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
 import '../../../application/auth/auth_provider.dart';
 import '../../../domain/auth/user_model.dart';
 import '../../../domain/auth/validation.dart';
+import '../../../infrastructure/core/app_state.dart';
 import '../widgets/have_account.dart';
 import '../..//auth/widgets/clip.dart';
 import '../../../domain/auth/user_model.dart';
@@ -43,7 +45,9 @@ class SignUpScreen extends StatelessWidget {
               top: 150,
               child: Form(
                 key: formKey,
-                // autovalidateMode: AutovalidateMode.onUserInteraction,
+                autovalidateMode: provider.showError
+                    ? AutovalidateMode.onUserInteraction
+                    : AutovalidateMode.disabled,
                 child: Container(
                   width: size.width,
                   height: size.height * 0.65,
@@ -66,11 +70,11 @@ class SignUpScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
+                        onChanged: provider.setuserName,
                         decoration: const InputDecoration(
                           hintText: "User Name",
                           prefixIcon: Icon(Icons.person),
                         ),
-                        // controller: _userController,
                         validator: (value) {
                           final bool isvalidName = Validator.isValidName(value);
                           if (isvalidName) {
@@ -78,53 +82,38 @@ class SignUpScreen extends StatelessWidget {
                           }
                           return 'Please Enter User Name';
                         },
-                        // onSaved: (value) =>setState(() => username = value!,)
                       ),
-
-                      // const SizedBox(height: 0,),
                       TextFormField(
+                        onChanged: provider.setEmail,
                         decoration: const InputDecoration(
                           hintText: "Email",
                           prefixIcon: Icon(Icons.email),
                         ),
-                        // controller: _emailController,
                         validator: (value) {
                           final bool isvalidEmail =
                               Validator.isValidEmail(value);
                           if (isvalidEmail) {
-                            return 'Please Enter Valid Email';
+                            return null;
                           }
-                          return null;
-                          // if(value!.isEmpty){
-                          //   return "Please Enter Email";
-                          // }
-                          // if(!RegExp(r'^[a-zA-Z0-9+_.-]+@[a-zA-Z0-9]+\.[a-zA-z]+$').hasMatch(value)){
-                          //   return "Please Enter Valid Email";
-                          // }
-                          // return null;
+                          return 'Please Enter Valid Email';
                         },
-                        // onSaved: (value) => setState(() => email = value!),
                       ),
                       TextFormField(
-                        // controller: _passwordController,
-                        // obscureText:
-                        //     _passwordVisible, //This will obscure text dynamically
+                        onChanged: provider.setPassword,
                         decoration: InputDecoration(
                           hintText: "Password",
-                          prefixIcon: Icon(Icons.vpn_key_rounded),
+                          prefixIcon: const Icon(Icons.vpn_key_rounded),
                           suffixIcon: IconButton(
                             icon: Icon(
-                              // Based on passwordVisible state choose the icon
-                              // _passwordVisible
-                              //     ? Icons.visibility
-                              //     :
-                              Icons.visibility_off,
+                              provider.isObscure
+                                  ? Icons.visibility
+                                  : Icons.visibility_off,
                               color: Theme.of(context).primaryColorDark,
                             ),
-                            onPressed: null,
+                            onPressed: provider.setPasswordVisability,
                           ),
                         ),
-                        // obscureText: true,
+                        obscureText: provider.isObscure,
                         // decoration: const InputDecoration(hintText: "Password", prefixIcon: Icon(Icons.vpn_key_rounded),),
                         validator: (value) {
                           final bool isvalidPass =
@@ -132,29 +121,48 @@ class SignUpScreen extends StatelessWidget {
                           if (isvalidPass) {
                             return null;
                           }
-                          return 'Password must be at least 7 char';
+                          return 'Password must be at least 8 char with uper and lower case and special char';
                         },
                       ),
-
-                      SizedBox(
-                        width: size.width / 2.5,
-                        child: ElevatedButton(
-                          onPressed: () {
-                            if (formKey.currentState!.validate()) {}
-                          },
-                          child: const Text(
-                            'Sign Up',
-                            style: TextStyle(
-                              fontSize: 20,
+                      if (provider.appState == AppState.loading)
+                        const Center(
+                          child: CircularProgressIndicator(),
+                        )
+                      else
+                        SizedBox(
+                          width: size.width / 2.5,
+                          child: ElevatedButton(
+                            onPressed: () async {
+                              if (formKey.currentState!.validate()) {
+                                await provider.signUp().then((value) {
+                                  if (provider.appState == AppState.error) {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                      content: Text('Email is already in use'),
+                                      duration: Duration(seconds: 3),
+                                    ));
+                                  }
+                                });
+                              } else {
+                                provider.showErrors();
+                              }
+                            },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(
+                                fontSize: 20,
+                              ),
                             ),
                           ),
                         ),
-                      ),
                       const SizedBox(
                         height: 1,
                       ),
-                      const HaveAccount(
+                      HaveAccount(
                         login: false,
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
                       ),
                     ],
                   ),

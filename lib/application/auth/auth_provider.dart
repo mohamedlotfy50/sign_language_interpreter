@@ -11,6 +11,13 @@ class AuthProvider extends ChangeNotifier {
   AppState appState = AppState.init;
   AuthStates authStates = AuthStates.loading;
   late UserModel? user;
+  bool _showError = false;
+  bool get showError => _showError;
+
+  void showErrors() {
+    _showError = true;
+    notifyListeners();
+  }
 
   void setEmail(String val) {
     _email = val;
@@ -29,7 +36,7 @@ class AuthProvider extends ChangeNotifier {
     _password = val;
   }
 
-  Future<UserModel?> loginWithEmailAndPassword() async {
+  Future<void> loginWithEmailAndPassword() async {
     appState = AppState.loading;
 
     notifyListeners();
@@ -44,10 +51,9 @@ class AuthProvider extends ChangeNotifier {
       appState = AppState.loaded;
       notifyListeners();
     }
-    return user;
   }
 
-  Future<UserModel?> signUp() async {
+  Future<void> signUp() async {
     appState = AppState.loading;
     notifyListeners();
 
@@ -55,15 +61,13 @@ class AuthProvider extends ChangeNotifier {
         username: _username, email: _email, password: _password);
     if (user == null) {
       appState = AppState.error;
-      notifyListeners();
     } else {
       appState = AppState.loaded;
-      notifyListeners();
     }
-    return user;
+    notifyListeners();
   }
 
-  Future<UserModel?> loginWithGoogle() async {
+  Future<void> loginWithGoogle() async {
     appState = AppState.loading;
     notifyListeners();
 
@@ -75,10 +79,9 @@ class AuthProvider extends ChangeNotifier {
       appState = AppState.loaded;
       notifyListeners();
     }
-    return user;
   }
 
-  Future<UserModel?> loginWithApple() async {
+  Future<void> loginWithApple() async {
     appState = AppState.loading;
     notifyListeners();
 
@@ -90,7 +93,6 @@ class AuthProvider extends ChangeNotifier {
       appState = AppState.loaded;
       notifyListeners();
     }
-    return user;
   }
 
   void logout() async {

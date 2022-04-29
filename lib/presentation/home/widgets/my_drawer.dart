@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
+import 'package:sign_language_interpreter/presentation/home/widgets/image_provider.dart';
 import '../../../application/main_screen/main_screen_provider.dart';
 import '../../auth/screens/sign_in_screen.dart';
 import 'drawer_item.dart';
@@ -43,9 +44,7 @@ class MyDrawer extends StatelessWidget {
                     ),
                     CircleAvatar(
                       radius: size.width / 5,
-                      backgroundImage: CachedNetworkImageProvider(
-                        provider.user!.imagePath,
-                      ),
+                      backgroundImage: getImage(url: provider.user!.imagePath),
                     ),
                   ],
                 ),

@@ -6,6 +6,7 @@ import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
 import 'package:sign_language_interpreter/presentation/home/screens/account_screen.dart';
 
 import '../../../asset_locations.dart';
+import '../widgets/image_provider.dart';
 
 class SettingScreen extends StatelessWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -34,9 +35,7 @@ class SettingScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
-                        image: CachedNetworkImageProvider(
-                            provider.user!.imagePath),
-                        fit: BoxFit.cover),
+                        image: getImage(url: provider.user!.imagePath)),
                   ),
                 ),
                 SizedBox(

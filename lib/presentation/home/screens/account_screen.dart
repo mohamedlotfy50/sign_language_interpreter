@@ -18,16 +18,11 @@ import '../../../asset_locations.dart';
 import '../../../domain/auth/user_model.dart';
 import 'package:path/path.dart';
 
+import '../widgets/image_provider.dart';
+
 class AccountScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   AccountScreen({Key? key}) : super(key: key);
-
-  ImageProvider getImage(File? imagePath, String url) {
-    if (imagePath != null) {
-      return FileImage(imagePath);
-    }
-    return CachedNetworkImageProvider(url);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -70,7 +65,8 @@ class AccountScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(30),
                                 image: DecorationImage(
                                     image: getImage(
-                                        watch.image, provider.user!.imagePath),
+                                        imagePath: watch.image,
+                                        url: provider.user!.imagePath),
                                     fit: BoxFit.cover),
                               ),
                             ),

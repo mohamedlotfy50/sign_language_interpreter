@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:mic_stream/mic_stream.dart';
 import 'package:path_provider/path_provider.dart';
-import '../../application/audio/audio_facade.dart';
+import 'package:sign_language_interpreter/domain/audio/audio_facade.dart';
 import 'package:soundpool/soundpool.dart';
 
 class AudioService extends AudioFacade {
@@ -17,6 +17,7 @@ class AudioService extends AudioFacade {
   late File _file;
   int? _streamID;
   File get audioFile => _file;
+  bool isplayerDone = false;
 
   @override
   void initializeplayer() {
@@ -39,8 +40,10 @@ class AudioService extends AudioFacade {
   }
 
   @override
-  Future<void> play() async {
+  Future<bool> play() async {
     _streamID = await pool.loadAndPlayUint8List(_file.readAsBytesSync());
+
+    return true;
   }
 
   @override
@@ -118,5 +121,16 @@ class AudioService extends AudioFacade {
       await pool.stop(_streamID!);
     }
     audio.clear();
+  }
+
+  Duration getAudioDuration() {
+    final byets = _file.readAsBytesSync();
+    final time = (byets.length / (sampleRate * channels * 2)).ceil();
+    int hours = time ~/ 3600;
+    int minuts = (time - hours) ~/ 60;
+    int seconds = (time - minuts - hours);
+    print('$hours:$minuts:$seconds');
+
+    return Duration(hours: hours, minutes: minuts, seconds: seconds);
   }
 }

@@ -6,7 +6,7 @@ import 'package:sign_language_interpreter/presentation/home/widgets/items_home.d
 import 'package:sign_language_interpreter/presentation/learning/screens/books_list_screen.dart';
 
 import '../../../asset_locations.dart';
-import '../../interpreter/screens/avatar_screen.dart';
+import '../../interpreter/screens/interpreter_screen.dart';
 
 class MainScreen extends StatelessWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -30,7 +30,7 @@ class MainScreen extends StatelessWidget {
               Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => AvatarScreen(),
+                    builder: (context) => InterpreterScreen(),
                   ));
             },
             title: 'Translate Sign Language',

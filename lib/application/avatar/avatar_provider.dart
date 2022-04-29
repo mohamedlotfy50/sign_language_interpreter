@@ -6,7 +6,10 @@ import 'package:flutter/material.dart';
 import 'package:mic_stream/mic_stream.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:sign_language_interpreter/domain/interpreter/core/words.dart';
+import 'package:sign_language_interpreter/infrastructure/audio/pauseable_timer.dart';
 import 'package:sign_language_interpreter/infrastructure/helpers/permission_handler.dart';
+import 'package:sign_language_interpreter/presentation/interpreter/widgets/translation_room.dart';
 import 'package:soundpool/soundpool.dart';
 
 import '../../domain/interpreter/interpreter.dart';
@@ -16,106 +19,165 @@ import '../../infrastructure/avatar/sign_interpreter.dart';
 
 class AvatarProvider extends ChangeNotifier {
   final AudioService _audioService = AudioService();
+  final TranslationRoom translationRoom = TranslationRoom();
   RecorderState recorderState = RecorderState.recorderUnset;
   PlayerState playerState = PlayerState.playerUnset;
   final PermissionChecker _permissionChecker = PermissionChecker();
+  late PauseableTimer _timer;
+  bool isLoading = false;
+  bool hasAudio = false;
+  bool fromText = false;
+  String _translateText = '';
+
+  bool get hasDelete {
+    if (hasAudio) {
+      return true;
+    } else if (!fromText) {
+      return true;
+    }
+    return false;
+  }
+
+  bool get canSend => hasAudio || _translateText.length > 3;
+
   String text = '';
   AvatarProvider() {
     _initRecorder().then((value) {
-      _initPlayer();
+      _initPlayer().then((value) {
+        notifyListeners();
+      });
     });
-    notifyListeners();
   }
-  void audiStateChanged() {
+
+  Future<void> audiStateChanged() async {
     if (playerState == PlayerState.playerUnset) {
-      _initPlayer();
+      await _initPlayer();
     }
     if (recorderState == RecorderState.recorderUnset) {
-      _initRecorder();
+      await _initRecorder();
     } else if (recorderState == RecorderState.recorderInitialized) {
-      _record();
+      await _record();
     } else if (recorderState == RecorderState.recording) {
-      _stopRecorder();
-    } else if (recorderState == RecorderState.recorded) {
-      _play();
+      hasAudio = true;
+
+      await _stopRecorder();
+      _timer = PauseableTimer(_audioService.getAudioDuration(), () {
+        playerState = PlayerState.playerInitialized;
+        notifyListeners();
+      });
+      print(_audioService.getAudioDuration().inSeconds);
+    } else if (recorderState == RecorderState.recorded &&
+        playerState == PlayerState.playerInitialized) {
+      _timer.start();
+
+      await _play();
     } else if (playerState == PlayerState.played) {
-      _pause();
+      _timer.start();
+
+      await _pause();
     } else if (playerState == PlayerState.paused) {
-      _resume();
+      _timer.resume();
+
+      await _resume();
     }
     notifyListeners();
   }
 
-  void _record() {
-    _audioService.record().then((value) {
-      recorderState = RecorderState.recording;
-    });
+  Future<void> _record() async {
+    recorderState = RecorderState.recording;
+
+    await _audioService.record();
     print('recording');
   }
 
-  void _stopRecorder() async {
-    _audioService.stopRecorder().then((value) {
-      recorderState = RecorderState.recorded;
-    });
-    print('stop recording');
+  Future<void> _stopRecorder() async {
+    recorderState = RecorderState.recorded;
+
+    await _audioService.stopRecorder();
   }
 
-  void _play() async {
-    _audioService.play().then((value) {
-      playerState = PlayerState.played;
-    });
+  Future<void> _play() async {
+    playerState = PlayerState.played;
+
+    await _audioService.play();
     print('play');
   }
 
-  void _pause() async {
-    _audioService.pause().then((value) {
-      playerState = PlayerState.paused;
-    });
+  Future<void> _pause() async {
+    playerState = PlayerState.paused;
+
+    await _audioService.pause();
     print('paused');
   }
 
-  void _resume() async {
-    _audioService.resume().then((value) {
-      playerState = PlayerState.played;
-    });
+  Future<void> _resume() async {
+    playerState = PlayerState.played;
+
+    await _audioService.resume();
     print('resume');
   }
 
-  void deleteRecored() {
-    _audioService.delete().then((value) {
-      recorderState = RecorderState.recorderInitialized;
-      playerState = PlayerState.playerInitialized;
-      notifyListeners();
-    });
-    print('deleted');
+  Future<void> deleteRecored() async {
+    //TODO: delete the audio and return to the init state or clear the text
+    translationRoom.translateSigns([
+      Signs.alhamdullah,
+      Signs.sabahalkir,
+      Signs.salamalikom,
+      Signs.alhamdullah
+    ]);
+    // if (hasAudio) {
+    //   recorderState = RecorderState.recorderInitialized;
+    //   playerState = PlayerState.playerInitialized;
+    //   text = '';
+    //   hasAudio = false;
+
+    //   await _audioService.delete();
+
+    //   print('deleted');
+    // } else if (fromText) {
+    //   fromText = false;
+    // }
+    // notifyListeners();
   }
 
   Future<void> _initPlayer() async {
-    _permissionChecker.storage().then((value) {
+    await _permissionChecker.storage().then((value) {
+      print(value);
       if (value) {
         _audioService.initializeplayer();
         playerState = PlayerState.playerInitialized;
       }
     });
+
     print('storage permission');
   }
 
   Future<void> _initRecorder() async {
-    _permissionChecker.microphone().then((value) {
+    await _permissionChecker.microphone().then((value) {
       if (value) {
         _audioService.initializeRecord().then((value) {
           recorderState = RecorderState.recorderInitialized;
         });
       }
     });
-    print('mic permission');
   }
 
-  Future<void> test() async {
-    InterpreterModel? i =
-        await SignInterpreter.translateAudio(_audioService.audioFile);
-
-    text = i!.text;
+  void onChanged(String val) {
+    _translateText = val;
     notifyListeners();
+  }
+
+  Future<void> submitButton() async {
+    //TODO: delete the audio and return to the init state and cancel ticker
+    if (hasAudio) {
+    } else {
+      fromText = true;
+    }
+    notifyListeners();
+    // InterpreterModel? i =
+    //     await SignInterpreter.translateAudio(_audioService.audioFile);
+
+    // text = i!.text;
+    // notifyListeners();
   }
 }

@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
+import 'package:sign_language_interpreter/presentation/auth/screens/sign_up_screen.dart';
 import '../../../application/auth/auth_provider.dart';
 import '../../../domain/auth/user_model.dart';
 import '../../../domain/auth/validation.dart';
@@ -102,14 +103,14 @@ class SignInScreen extends StatelessWidget {
                           ),
                         ),
                         onChanged: provider.setPassword,
-                        // validator: (value) {
-                        //   final bool isvalidPass =
-                        //       Validator.isValidPassword(value);
-                        //   if (!isvalidPass) {
-                        //     return 'Password must be at least 7 char';
-                        //   }
-                        //   return null;
-                        // },
+                        validator: (value) {
+                          final bool isvalidPass =
+                              Validator.isValidPassword(value);
+                          if (!isvalidPass) {
+                            return 'Password must be at least 7 char';
+                          }
+                          return null;
+                        },
                       ),
                       const SizedBox(
                         height: 2,
@@ -150,7 +151,18 @@ class SignInScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                      const HaveAccount(),
+                      HaveAccount(
+                        onPressed: () {
+                          Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => ChangeNotifierProvider.value(
+                                  value: provider,
+                                  builder: (context, _) => SignUpScreen(),
+                                ),
+                              ));
+                        },
+                      ),
                     ],
                   ),
                 ),
