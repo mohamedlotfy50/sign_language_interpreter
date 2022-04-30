@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
-import 'package:native_pdf_view/native_pdf_view.dart';
 import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/domain/learning/document_model.dart';
+import 'package:sign_language_interpreter/infrastructure/core/endpoints.dart';
+import 'package:syncfusion_flutter_pdfviewer/pdfviewer.dart';
 
 class PdfScreenViewer extends StatelessWidget {
   final DocumentModel doc;
-  PdfScreenViewer({Key? key, required this.doc}) : super(key: key);
+  const PdfScreenViewer({Key? key, required this.doc}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -13,10 +14,8 @@ class PdfScreenViewer extends StatelessWidget {
       appBar: AppBar(
         title: Text(doc.enTitle),
       ),
-      body: PdfViewPinch(
-        controller: PdfControllerPinch(
-          document: PdfDocument.openAsset(doc.location),
-        ),
+      body: SfPdfViewer.network(
+        Endpoints.staticDir + '${doc.location}.pdf',
       ),
     );
   }

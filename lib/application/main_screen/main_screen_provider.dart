@@ -14,11 +14,11 @@ class MainScreenProvider extends ChangeNotifier {
     DocumentModel(
         arTitle: 'arabic sign language pt1',
         enTitle: 'arabic sign language pt1',
-        location: AssetLocations.book1),
+        location: 'ar_sign1'),
     DocumentModel(
         arTitle: 'arabic sign language pt2',
         enTitle: 'arabic sign language pt2',
-        location: AssetLocations.book2),
+        location: 'ar_sign2'),
   ];
   final List<String> drawerTitle = ['Home', 'Account Settings'];
   List<Widget> _pages = [MainScreen(), SettingScreen()];

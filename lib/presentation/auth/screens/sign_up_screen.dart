@@ -141,6 +141,9 @@ class SignUpScreen extends StatelessWidget {
                                       content: Text('Email is already in use'),
                                       duration: Duration(seconds: 3),
                                     ));
+                                  } else if (provider.appState ==
+                                      AppState.loaded) {
+                                    Navigator.pop(context);
                                   }
                                 });
                               } else {
