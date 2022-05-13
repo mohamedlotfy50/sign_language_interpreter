@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 import 'package:mic_stream/mic_stream.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sign_language_interpreter/domain/interpreter/core/words.dart';
+import 'package:sign_language_interpreter/domain/interpreter/validator.dart';
 import 'package:sign_language_interpreter/infrastructure/audio/pauseable_timer.dart';
 import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
 import 'package:sign_language_interpreter/infrastructure/helpers/permission_handler.dart';
@@ -133,6 +133,7 @@ class AvatarProvider extends ChangeNotifier {
       print('deleted');
     } else if (fromText) {
       fromText = false;
+      _translateText = '';
     }
     notifyListeners();
   }
@@ -177,7 +178,14 @@ class AvatarProvider extends ChangeNotifier {
           state = AppState.loaded;
         }
       } else {
-        _interpreterModel = await SignInterpreter.translateText(_translateText);
+        final bool isUrl = InterpreterValidator.isUrl(_translateText);
+        if (isUrl) {
+          _interpreterModel =
+              await SignInterpreter.translateUrl(_translateText);
+        } else {
+          _interpreterModel =
+              await SignInterpreter.translateText(_translateText);
+        }
         if (_interpreterModel == null) {
           state = AppState.error;
         } else {
@@ -185,7 +193,7 @@ class AvatarProvider extends ChangeNotifier {
         }
       }
     } else {
-      fromText = !fromText;
+      fromText = true;
     }
     notifyListeners();
   }

@@ -24,6 +24,23 @@ class SignInterpreter {
     }
   }
 
+  static Future<InterpreterModel?> translateUrl(String text) async {
+    try {
+      http.Response response =
+          await http.post(Uri.parse(Endpoints.translateUrl), body: {
+        'url': text,
+      });
+      if (response.statusCode == 200) {
+        return InterpreterModel.fromJson(
+            json.decode(utf8.decode(response.body.codeUnits)));
+      } else {
+        return null;
+      }
+    } on SocketException catch (_) {
+      return null;
+    }
+  }
+
   static Future<InterpreterModel?> translateAudio(File audio) async {
     try {
       final http.MultipartRequest request =
