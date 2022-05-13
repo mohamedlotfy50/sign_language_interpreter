@@ -10,13 +10,14 @@ import '../widgets/controller_button.dart';
 class InterpreterScreen extends StatelessWidget {
   InterpreterScreen({Key? key}) : super(key: key);
 
-  final _game = TranslationRoom();
+  // final _game = TranslationRoom();
 
   @override
   Widget build(BuildContext context) {
-    // final Size size = MediaQuery.of(context).size;
+    final Size size = MediaQuery.of(context).size;
     return Scaffold(
         body: ChangeNotifierProvider(
+      lazy: false,
       create: (_) => AvatarProvider(),
       builder: (context, child) {
         final watch = context.watch<AvatarProvider>();
@@ -30,29 +31,31 @@ class InterpreterScreen extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              GameWidget(
-                  game: watch.translationRoom,
-                  backgroundBuilder: (context) {
-                    return Container(
-                      color: Colors.green,
-                    );
-                  },
-                  loadingBuilder: (context) {
-                    return Container(
-                      color: Colors.green,
-                    );
-                  }),
+              // GameWidget(
+              //     game: watch.translationRoom,
+              //     backgroundBuilder: (context) {
+              //       return Container(
+              //         color: Colors.green,
+              //       );
+              //     },
+              //     loadingBuilder: (context) {
+              //       return Container(
+              //         color: Colors.green,
+              //       );
+              //     }),
               watch.text.isNotEmpty
-                  ? Align(
-                      alignment: Alignment.center,
+                  ? Positioned(
+                      bottom: 150,
+                      left: 0,
+                      right: 0,
                       child: Container(
-                        margin: EdgeInsets.symmetric(horizontal: 10),
+                        margin: const EdgeInsets.symmetric(horizontal: 10),
                         padding: const EdgeInsets.all(8),
-                        decoration: BoxDecoration(color: Colors.black45),
+                        decoration: const BoxDecoration(color: Colors.black45),
                         child: Text(
                           watch.text,
                           textAlign: TextAlign.center,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 16,
                             color: Colors.white,
                           ),

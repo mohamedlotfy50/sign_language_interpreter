@@ -35,7 +35,10 @@ class SettingScreen extends StatelessWidget {
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(30),
                     image: DecorationImage(
-                        image: getImage(url: provider.user!.imagePath)),
+                        image: getImage(
+                          url: provider.user!.imagePath,
+                        ),
+                        fit: BoxFit.cover),
                   ),
                 ),
                 SizedBox(

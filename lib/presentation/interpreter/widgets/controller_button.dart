@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:sign_language_interpreter/application/avatar/avatar_provider.dart';
 import 'package:sign_language_interpreter/infrastructure/avatar/audio_state.dart';
+import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
 
 class ControllButton extends StatefulWidget {
   ControllButton({Key? key}) : super(key: key);
@@ -58,7 +59,7 @@ class _ControllButtonState extends State<ControllButton>
 
   @override
   Widget build(BuildContext context) {
-    final provider = Provider.of<AvatarProvider>(context);
+    final provider = Provider.of<AvatarProvider>(context, listen: true);
     return AnimatedBuilder(
         animation: _animationController,
         builder: (context, child) {
@@ -80,7 +81,8 @@ class _ControllButtonState extends State<ControllButton>
               width: 70,
               height: 70,
               child: provider.recorderState == RecorderState.recorderUnset ||
-                      provider.playerState == PlayerState.playerUnset
+                      provider.playerState == PlayerState.playerUnset ||
+                      provider.state == AppState.loading
                   ? const CircularProgressIndicator(
                       color: Color(0xFFE78EA9),
                     )

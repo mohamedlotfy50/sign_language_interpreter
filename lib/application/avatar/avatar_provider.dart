@@ -8,6 +8,7 @@ import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:sign_language_interpreter/domain/interpreter/core/words.dart';
 import 'package:sign_language_interpreter/infrastructure/audio/pauseable_timer.dart';
+import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
 import 'package:sign_language_interpreter/infrastructure/helpers/permission_handler.dart';
 import 'package:sign_language_interpreter/presentation/interpreter/widgets/translation_room.dart';
 import 'package:soundpool/soundpool.dart';
@@ -19,15 +20,17 @@ import '../../infrastructure/avatar/sign_interpreter.dart';
 
 class AvatarProvider extends ChangeNotifier {
   final AudioService _audioService = AudioService();
-  final TranslationRoom translationRoom = TranslationRoom();
+  // final TranslationRoom translationRoom = TranslationRoom();
   RecorderState recorderState = RecorderState.recorderUnset;
   PlayerState playerState = PlayerState.playerUnset;
+  AppState state = AppState.init;
   final PermissionChecker _permissionChecker = PermissionChecker();
   late PauseableTimer _timer;
   bool isLoading = false;
   bool hasAudio = false;
   bool fromText = false;
   String _translateText = '';
+  InterpreterModel? _interpreterModel;
 
   bool get hasDelete {
     if (hasAudio) {
@@ -40,10 +43,11 @@ class AvatarProvider extends ChangeNotifier {
 
   bool get canSend => hasAudio || _translateText.length > 3;
 
-  String text = '';
+  String get text => _interpreterModel?.text ?? '';
   AvatarProvider() {
     _initRecorder().then((value) {
       _initPlayer().then((value) {
+        print('notify');
         notifyListeners();
       });
     });
@@ -118,31 +122,23 @@ class AvatarProvider extends ChangeNotifier {
   }
 
   Future<void> deleteRecored() async {
-    //TODO: delete the audio and return to the init state or clear the text
-    translationRoom.translateSigns([
-      Signs.alhamdullah,
-      Signs.sabahalkir,
-      Signs.salamalikom,
-      Signs.alhamdullah
-    ]);
-    // if (hasAudio) {
-    //   recorderState = RecorderState.recorderInitialized;
-    //   playerState = PlayerState.playerInitialized;
-    //   text = '';
-    //   hasAudio = false;
+    if (hasAudio) {
+      recorderState = RecorderState.recorderInitialized;
+      playerState = PlayerState.playerInitialized;
+      _interpreterModel = null;
+      hasAudio = false;
 
-    //   await _audioService.delete();
+      await _audioService.delete();
 
-    //   print('deleted');
-    // } else if (fromText) {
-    //   fromText = false;
-    // }
-    // notifyListeners();
+      print('deleted');
+    } else if (fromText) {
+      fromText = false;
+    }
+    notifyListeners();
   }
 
   Future<void> _initPlayer() async {
-    await _permissionChecker.storage().then((value) {
-      print(value);
+    await _permissionChecker.storage().then((value) async {
       if (value) {
         _audioService.initializeplayer();
         playerState = PlayerState.playerInitialized;
@@ -153,13 +149,14 @@ class AvatarProvider extends ChangeNotifier {
   }
 
   Future<void> _initRecorder() async {
-    await _permissionChecker.microphone().then((value) {
+    await _permissionChecker.microphone().then((value) async {
       if (value) {
-        _audioService.initializeRecord().then((value) {
+        await _audioService.initializeRecord().then((value) {
           recorderState = RecorderState.recorderInitialized;
         });
       }
     });
+    print('recoredr permission');
   }
 
   void onChanged(String val) {
@@ -168,16 +165,28 @@ class AvatarProvider extends ChangeNotifier {
   }
 
   Future<void> submitButton() async {
-    //TODO: delete the audio and return to the init state and cancel ticker
-    if (hasAudio) {
+    if (canSend) {
+      state = AppState.loading;
+      notifyListeners();
+      if (hasAudio) {
+        _interpreterModel =
+            await SignInterpreter.translateAudio(_audioService.audioFile);
+        if (_interpreterModel == null) {
+          state = AppState.error;
+        } else {
+          state = AppState.loaded;
+        }
+      } else {
+        _interpreterModel = await SignInterpreter.translateText(_translateText);
+        if (_interpreterModel == null) {
+          state = AppState.error;
+        } else {
+          state = AppState.loaded;
+        }
+      }
     } else {
-      fromText = true;
+      fromText = !fromText;
     }
     notifyListeners();
-    // InterpreterModel? i =
-    //     await SignInterpreter.translateAudio(_audioService.audioFile);
-
-    // text = i!.text;
-    // notifyListeners();
   }
 }

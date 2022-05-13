@@ -41,8 +41,8 @@ class AuthProvider extends ChangeNotifier {
 
     notifyListeners();
 
-    user =
-        await _authService.login(email: 'noran1@test.com', password: '1234567');
+    user = await _authService.login(email: _email, password: _password);
+    print(user);
     if (user == null) {
       appState = AppState.error;
 
