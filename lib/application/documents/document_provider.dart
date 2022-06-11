@@ -1,8 +1,8 @@
 import 'dart:typed_data';
 
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
-import 'package:sign_language_interpreter/infrastructure/document/document_service.dart';
+import '../../infrastructure/core/app_state.dart';
+import '../../infrastructure/document/document_service.dart';
 
 import '../../domain/document/document_model.dart';
 

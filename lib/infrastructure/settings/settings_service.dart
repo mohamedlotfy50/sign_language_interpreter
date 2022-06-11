@@ -4,9 +4,9 @@ import 'dart:typed_data';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:sign_language_interpreter/domain/auth/user_model.dart';
-import 'package:sign_language_interpreter/domain/settings/settings_facade.dart';
-import 'package:sign_language_interpreter/infrastructure/core/colltion_names.dart';
+import '../../domain/auth/user_model.dart';
+import '../../domain/settings/settings_facade.dart';
+import '../core/colltion_names.dart';
 
 class SettingsService extends SettingFacade {
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;

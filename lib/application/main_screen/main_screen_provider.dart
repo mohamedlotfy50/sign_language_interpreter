@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/asset_locations.dart';
+import '../../asset_locations.dart';
 import '../../domain/auth/user_model.dart';
 import '../../presentation/home/screens/setting_screen.dart';
 import '../../presentation/home/screens/main_screen.dart';

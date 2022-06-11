@@ -2,8 +2,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
-import 'package:sign_language_interpreter/presentation/home/screens/account_screen.dart';
+import '../../../application/auth/auth_provider.dart';
+import 'account_screen.dart';
 
 import '../../../asset_locations.dart';
 import '../widgets/image_provider.dart';

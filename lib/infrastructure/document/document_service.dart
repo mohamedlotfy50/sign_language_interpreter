@@ -3,8 +3,8 @@ import 'dart:io';
 import 'dart:typed_data';
 import 'package:http/http.dart' as http;
 import 'package:internet_file/internet_file.dart';
-import 'package:sign_language_interpreter/domain/document/document_model.dart';
-import 'package:sign_language_interpreter/infrastructure/core/endpoints.dart';
+import '../../domain/document/document_model.dart';
+import '../core/endpoints.dart';
 
 class DocumentService {
   Future<List<DocumentModel>?> getDocList() async {

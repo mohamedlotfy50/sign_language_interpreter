@@ -1,4 +1,4 @@
-import 'package:sign_language_interpreter/domain/auth/user_model.dart';
+import 'user_model.dart';
 
 abstract class AuthFacade {
   Future<UserModel?> login({required String email, required String password});

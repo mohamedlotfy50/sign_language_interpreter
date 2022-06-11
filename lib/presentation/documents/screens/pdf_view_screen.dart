@@ -3,7 +3,7 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:pdfx/pdfx.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/documents/document_provider.dart';
+import '../../../application/documents/document_provider.dart';
 
 import '../../../domain/document/document_model.dart';
 

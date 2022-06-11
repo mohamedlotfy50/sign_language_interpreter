@@ -6,19 +6,20 @@ import 'package:flutter/services.dart';
 class AvatarAnimation {
   int _currentFrame = 0;
   List<FrameAnimation>? frames;
-  Size? size;
   AvatarAnimation({this.frames});
 
   Future<void> fromFile(String fileName) async {
     final String response = await rootBundle.loadString(fileName);
     final Map<String, dynamic> data = await json.decode(response);
     frames = FrameAnimation.fromJsonList(data['frames']);
-    size = Size(data['width'] * 1.0, data['height'] * 1.0);
   }
 
-  factory AvatarAnimation.fromJson(Map<String, dynamic> json) {
-    return AvatarAnimation(frames: FrameAnimation.fromJsonList(json['frames']));
+  factory AvatarAnimation.fromJson(List jsonList) {
+    return AvatarAnimation(
+      frames: FrameAnimation.fromJsonList(jsonList),
+    );
   }
+
   bool get isEnded {
     if (frames == null) {
       return false;
@@ -29,51 +30,56 @@ class AvatarAnimation {
 
   FrameAnimation currentAnimation() {
     if (frames != null) {
-      if (_currentFrame == 0) {
+      if (frames!.isNotEmpty) {
+        if (_currentFrame == 0) {
+          return frames![_currentFrame];
+        }
+        if (frames![_currentFrame].face.isZero() &&
+            !frames![_currentFrame - 1].face.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(face: frames![_currentFrame - 1].face);
+        }
+        if (frames![_currentFrame].leftArm.isZero() &&
+            !frames![_currentFrame - 1].leftArm.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(leftArm: frames![_currentFrame - 1].leftArm);
+        }
+        if (frames![_currentFrame].rightArm.isZero() &&
+            !frames![_currentFrame - 1].rightArm.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(rightArm: frames![_currentFrame - 1].rightArm);
+        }
+        if (frames![_currentFrame].leftHand.isZero() &&
+            !frames![_currentFrame - 1].leftHand.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(leftHand: frames![_currentFrame - 1].leftHand);
+        }
+        if (frames![_currentFrame].rightHand.isZero() &&
+            !frames![_currentFrame - 1].rightHand.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(rightHand: frames![_currentFrame - 1].rightHand);
+        }
+        if (frames![_currentFrame].leftLeg.isZero() &&
+            !frames![_currentFrame - 1].leftLeg.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(leftLeg: frames![_currentFrame - 1].leftLeg);
+        }
+        if (frames![_currentFrame].rightLeg.isZero() &&
+            !frames![_currentFrame - 1].rightLeg.isZero()) {
+          frames![_currentFrame]
+              .setNewValue(rightLeg: frames![_currentFrame - 1].rightLeg);
+        }
         return frames![_currentFrame];
+      } else {
+        return FrameAnimation.idl();
       }
-      if (frames![_currentFrame].face.isZero() &&
-          !frames![_currentFrame - 1].face.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(face: frames![_currentFrame - 1].face);
-      }
-      if (frames![_currentFrame].leftArm.isZero() &&
-          !frames![_currentFrame - 1].leftArm.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(leftArm: frames![_currentFrame - 1].leftArm);
-      }
-      if (frames![_currentFrame].rightArm.isZero() &&
-          !frames![_currentFrame - 1].rightArm.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(rightArm: frames![_currentFrame - 1].rightArm);
-      }
-      if (frames![_currentFrame].leftHand.isZero() &&
-          !frames![_currentFrame - 1].leftHand.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(leftHand: frames![_currentFrame - 1].leftHand);
-      }
-      if (frames![_currentFrame].rightHand.isZero() &&
-          !frames![_currentFrame - 1].rightHand.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(rightHand: frames![_currentFrame - 1].rightHand);
-      }
-      if (frames![_currentFrame].leftLeg.isZero() &&
-          !frames![_currentFrame - 1].leftLeg.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(leftLeg: frames![_currentFrame - 1].leftLeg);
-      }
-      if (frames![_currentFrame].rightLeg.isZero() &&
-          !frames![_currentFrame - 1].rightLeg.isZero()) {
-        frames![_currentFrame]
-            .setNewValue(rightLeg: frames![_currentFrame - 1].rightLeg);
-      }
-      return frames![_currentFrame];
     } else {
-      return FrameAnimation.empty();
+      return FrameAnimation.idl();
     }
   }
 
   void nextFrame() {
+    print(_currentFrame);
     if (!isEnded) {
       _currentFrame += 1;
     }
@@ -259,96 +265,99 @@ class FrameAnimation {
     required this.leftArm,
     required this.rightArm,
   });
-  factory FrameAnimation.empty() {
+  factory FrameAnimation.idl() {
     return FrameAnimation(
-        face: Face(
-          f0: Coordinate(),
-          f1: Coordinate(),
-          f2: Coordinate(),
-          f3: Coordinate(),
-          le0: Coordinate(),
-          le1: Coordinate(),
-          le2: Coordinate(),
-          le3: Coordinate(),
-          re0: Coordinate(),
-          re1: Coordinate(),
-          re2: Coordinate(),
-          re3: Coordinate(),
-          m0: Coordinate(),
-          m1: Coordinate(),
-          m2: Coordinate(),
-          m3: Coordinate(),
-          m4: Coordinate(),
-          m5: Coordinate(),
-        ),
-        leftHand: Hand(
-            h0: Coordinate(),
-            h1: Coordinate(),
-            h2: Coordinate(),
-            h3: Coordinate(),
-            h4: Coordinate(),
-            h5: Coordinate(),
-            h6: Coordinate(),
-            h7: Coordinate(),
-            h8: Coordinate(),
-            h9: Coordinate(),
-            h10: Coordinate(),
-            h11: Coordinate(),
-            h12: Coordinate(),
-            h13: Coordinate(),
-            h14: Coordinate(),
-            h15: Coordinate(),
-            h16: Coordinate(),
-            h17: Coordinate(),
-            h18: Coordinate(),
-            h19: Coordinate(),
-            h20: Coordinate()),
-        rightHand: Hand(
-            h0: Coordinate(),
-            h1: Coordinate(),
-            h2: Coordinate(),
-            h3: Coordinate(),
-            h4: Coordinate(),
-            h5: Coordinate(),
-            h6: Coordinate(),
-            h7: Coordinate(),
-            h8: Coordinate(),
-            h9: Coordinate(),
-            h10: Coordinate(),
-            h11: Coordinate(),
-            h12: Coordinate(),
-            h13: Coordinate(),
-            h14: Coordinate(),
-            h15: Coordinate(),
-            h16: Coordinate(),
-            h17: Coordinate(),
-            h18: Coordinate(),
-            h19: Coordinate(),
-            h20: Coordinate()),
-        leftLeg: Leg(
-          l0: Coordinate(),
-          l1: Coordinate(),
-          l2: Coordinate(),
-          l3: Coordinate(),
-          l4: Coordinate(),
-        ),
-        rightLeg: Leg(
-          l0: Coordinate(),
-          l1: Coordinate(),
-          l2: Coordinate(),
-          l3: Coordinate(),
-          l4: Coordinate(),
-        ),
-        leftArm: Arm(
-          a0: Coordinate(),
-          a1: Coordinate(),
-          a2: Coordinate(),
-        ),
-        rightArm: Arm(
-          a0: Coordinate(),
-          a1: Coordinate(),
-          a2: Coordinate(),
-        ));
+      face: Face(
+        f0: Coordinate(x: 0.5562, y: 0.24),
+        f1: Coordinate(x: 0.6141, y: 0.2815),
+        f2: Coordinate(x: 0.5604, y: 0.3152),
+        f3: Coordinate(x: 0.5014, y: 0.284),
+        le0: Coordinate(x: 0.5593, y: 0.2925),
+        le1: Coordinate(x: 0.5593, y: 0.2925),
+        le2: Coordinate(x: 0.5593, y: 0.2925),
+        le3: Coordinate(x: 0.5593, y: 0.2925),
+        re0: Coordinate(x: 0.5593, y: 0.2925),
+        re1: Coordinate(x: 0.5593, y: 0.2925),
+        re2: Coordinate(x: 0.5593, y: 0.2925),
+        re3: Coordinate(x: 0.5593, y: 0.2925),
+        m0: Coordinate(x: 0.5593, y: 0.2925),
+        m1: Coordinate(x: 0.5593, y: 0.2925),
+        m2: Coordinate(x: 0.5593, y: 0.2925),
+        m3: Coordinate(x: 0.5593, y: 0.2925),
+        m4: Coordinate(x: 0.5593, y: 0.2925),
+        m5: Coordinate(x: 0.5593, y: 0.2925),
+      ),
+      rightHand: Hand(
+        h0: Coordinate(x: 0.7196, y: 0.5866),
+        h1: Coordinate(x: 0.6965, y: 0.596),
+        h2: Coordinate(x: 0.6862, y: 0.6097),
+        h3: Coordinate(x: 0.681, y: 0.6219),
+        h4: Coordinate(x: 0.6756, y: 0.6309),
+        h5: Coordinate(x: 0.7141, y: 0.6228),
+        h6: Coordinate(x: 0.7012, y: 0.6375),
+        h7: Coordinate(x: 0.6893, y: 0.6405),
+        h8: Coordinate(x: 0.6809, y: 0.641),
+        h9: Coordinate(x: 0.7265, y: 0.6224),
+        h10: Coordinate(x: 0.7117, y: 0.6377),
+        h11: Coordinate(x: 0.6976, y: 0.6396),
+        h12: Coordinate(x: 0.6877, y: 0.6385),
+        h13: Coordinate(x: 0.733, y: 0.62),
+        h14: Coordinate(x: 0.7202, y: 0.6335),
+        h15: Coordinate(x: 0.7069, y: 0.6358),
+        h16: Coordinate(x: 0.697, y: 0.6353),
+        h17: Coordinate(x: 0.7351, y: 0.6171),
+        h18: Coordinate(x: 0.7266, y: 0.6284),
+        h19: Coordinate(x: 0.7164, y: 0.6316),
+        h20: Coordinate(x: 0.7077, y: 0.6318),
+      ),
+      leftHand: Hand(
+        h0: Coordinate(x: 0.3863, y: 0.5815),
+        h1: Coordinate(x: 0.4096, y: 0.5904),
+        h2: Coordinate(x: 0.4209, y: 0.6038),
+        h3: Coordinate(x: 0.4266, y: 0.616),
+        h4: Coordinate(x: 0.4315, y: 0.6245),
+        h5: Coordinate(x: 0.3928, y: 0.6149),
+        h6: Coordinate(x: 0.4055, y: 0.6302),
+        h7: Coordinate(x: 0.4164, y: 0.6338),
+        h8: Coordinate(x: 0.4245, y: 0.635),
+        h9: Coordinate(x: 0.3811, y: 0.6152),
+        h10: Coordinate(x: 0.3964, y: 0.6301),
+        h11: Coordinate(x: 0.4093, y: 0.633),
+        h12: Coordinate(x: 0.4186, y: 0.6328),
+        h13: Coordinate(x: 0.3759, y: 0.6138),
+        h14: Coordinate(x: 0.39, y: 0.6267),
+        h15: Coordinate(x: 0.4022, y: 0.6295),
+        h16: Coordinate(x: 0.411, y: 0.6295),
+        h17: Coordinate(x: 0.3752, y: 0.6121),
+        h18: Coordinate(x: 0.3851, y: 0.6225),
+        h19: Coordinate(x: 0.3951, y: 0.6259),
+        h20: Coordinate(x: 0.4031, y: 0.6263),
+      ),
+      leftLeg: Leg(
+        l0: Coordinate(x: 0.4932, y: 0.5713),
+        l1: Coordinate(x: 0.4902, y: 0.72),
+        l2: Coordinate(x: 0.474, y: 0.8457),
+        l3: Coordinate(x: 0.4868, y: 0.8598),
+        l4: Coordinate(x: 0.4514, y: 0.9057),
+      ),
+      rightLeg: Leg(
+        l0: Coordinate(x: 0.6248, y: 0.5719),
+        l1: Coordinate(x: 0.6168, y: 0.7221),
+        l2: Coordinate(x: 0.6167, y: 0.8407),
+        l3: Coordinate(x: 0.5988, y: 0.8551),
+        l4: Coordinate(x: 0.6493, y: 0.898),
+      ),
+      rightArm: Arm(
+        a0: Coordinate(x: 0.6903, y: 0.37),
+        a1: Coordinate(x: 0.7193, y: 0.4841),
+        a2: Coordinate(x: 0.7182, y: 0.5866),
+      ),
+      leftArm: Arm(
+        a0: Coordinate(x: 0.4426, y: 0.3689),
+        a1: Coordinate(x: 0.3973, y: 0.4829),
+        a2: Coordinate(x: 0.3916, y: 0.5812),
+      ),
+    );
   }
   factory FrameAnimation.fromJson(Map<String, dynamic> json) {
     return FrameAnimation(

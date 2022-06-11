@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
-import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
-import 'package:sign_language_interpreter/presentation/interpreter/screens/interpreter_screen.dart';
+import 'application/auth/auth_provider.dart';
+import 'domain/auth/auth_states.dart';
+import 'presentation/interpreter/screens/interpreter_screen.dart';
 import 'domain/auth/user_model.dart';
 // import 'package:sign_language_interpreter/asset_locations.dart';
 import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';

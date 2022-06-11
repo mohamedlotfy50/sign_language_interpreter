@@ -4,9 +4,9 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:sign_in_with_apple/sign_in_with_apple.dart';
-import 'package:sign_language_interpreter/domain/auth/auth_facade.dart';
-import 'package:sign_language_interpreter/domain/auth/user_model.dart';
-import 'package:sign_language_interpreter/infrastructure/core/colltion_names.dart';
+import '../../domain/auth/auth_facade.dart';
+import '../../domain/auth/user_model.dart';
+import '../core/colltion_names.dart';
 
 class AuthService extends AuthFacade {
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;

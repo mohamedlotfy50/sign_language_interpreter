@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
-import 'package:sign_language_interpreter/domain/auth/user_model.dart';
-import 'package:sign_language_interpreter/infrastructure/auth/auth_service.dart';
-import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
+
+import '../../domain/auth/auth_states.dart';
+import '../../domain/auth/user_model.dart';
+import '../../infrastructure/auth/auth_service.dart';
+import '../../infrastructure/core/app_state.dart';
 
 class AuthProvider extends ChangeNotifier {
   String _email = '', _username = '', _password = '';

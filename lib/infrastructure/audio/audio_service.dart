@@ -4,7 +4,7 @@ import 'dart:typed_data';
 
 import 'package:mic_stream/mic_stream.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:sign_language_interpreter/domain/audio/audio_facade.dart';
+import '../../domain/audio/audio_facade.dart';
 import 'package:soundpool/soundpool.dart';
 
 class AudioService extends AudioFacade {

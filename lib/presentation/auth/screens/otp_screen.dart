@@ -1,13 +1,10 @@
 // import 'package:email_auth/email_auth.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:sign_language_interpreter/asset_locations.dart';
 // import 'package:sign_language_interpreter/constrant.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/TextField.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/auth_button.dart';
-import 'package:sign_language_interpreter/presentation/auth/widgets/input_field.dart';
+
 import '../../../asset_locations.dart';
 
 // import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';

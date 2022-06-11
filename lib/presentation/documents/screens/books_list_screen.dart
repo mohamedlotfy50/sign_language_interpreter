@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
-import 'package:sign_language_interpreter/presentation/documents/screens/pdf_view_screen.dart';
-import 'package:sign_language_interpreter/presentation/documents/widgets/book_tile.dart';
+import '../../../infrastructure/core/app_state.dart';
+import 'pdf_view_screen.dart';
+import '../widgets/book_tile.dart';
 
 import '../../../application/documents/document_provider.dart';
 

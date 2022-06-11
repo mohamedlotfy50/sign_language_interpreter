@@ -1,16 +1,16 @@
-import 'package:flame/game.dart';
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
-import 'package:sign_language_interpreter/infrastructure/avatar/audio_state.dart';
-import 'package:sign_language_interpreter/presentation/interpreter/widgets/translation_room.dart';
+import '../../../infrastructure/avatar/audio_state.dart';
+import '../widgets/point_drive_drawing.dart';
+import '../widgets/translation_room.dart';
 import '../../../application/avatar/avatar_provider.dart';
 import '../widgets/controller_button.dart';
 
 class InterpreterScreen extends StatelessWidget {
-  InterpreterScreen({Key? key}) : super(key: key);
-
-  // final _game = TranslationRoom();
+  const InterpreterScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -31,18 +31,24 @@ class InterpreterScreen extends StatelessWidget {
           ),
           child: Stack(
             children: [
-              // GameWidget(
-              //     game: watch.translationRoom,
-              //     backgroundBuilder: (context) {
-              //       return Container(
-              //         color: Colors.green,
-              //       );
-              //     },
-              //     loadingBuilder: (context) {
-              //       return Container(
-              //         color: Colors.green,
-              //       );
-              //     }),
+              GestureDetector(
+                onTap: () {},
+                child: Transform.translate(
+                  offset: Offset(size.width / 4, 0),
+                  child: SizedBox(
+                    width: size.width / 2,
+                    height: size.height,
+                    child: CustomPaint(
+                      isComplex: true,
+                      willChange: true,
+                      // painter: TestingPainter(),
+                      painter: PointToShape(
+                        animation: watch.currentAnimation(),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
               watch.text.isNotEmpty
                   ? Positioned(
                       bottom: 150,

@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/auth/auth_provider.dart';
-import 'package:sign_language_interpreter/application/main_screen/main_screen_provider.dart';
-import 'package:sign_language_interpreter/presentation/documents/screens/books_list_screen.dart';
-import 'package:sign_language_interpreter/presentation/home/widgets/items_home.dart';
+import '../../../application/auth/auth_provider.dart';
+import '../../../application/main_screen/main_screen_provider.dart';
+import '../../documents/screens/books_list_screen.dart';
+import '../widgets/items_home.dart';
 
 import '../../../asset_locations.dart';
 import '../../interpreter/screens/interpreter_screen.dart';

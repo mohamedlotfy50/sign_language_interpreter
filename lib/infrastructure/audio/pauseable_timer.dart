@@ -3,11 +3,12 @@ import 'dart:async';
 class PauseableTimer {
   final Duration duration;
   final void Function() onDone;
+  final void Function()? onTick;
   final t = const Duration(seconds: 1);
   Timer? _timer;
   int second = 0;
 
-  PauseableTimer(this.duration, this.onDone);
+  PauseableTimer(this.duration, this.onDone, {this.onTick});
 
   void start() {
     second = 0;
@@ -19,6 +20,11 @@ class PauseableTimer {
           onDone();
           timer.cancel();
         } else {
+          if (onTick != null) {
+            print('tick');
+
+            onTick!();
+          }
           second += 1;
         }
       },

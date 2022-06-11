@@ -1,9 +1,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
-import 'package:sign_language_interpreter/infrastructure/helpers/permission_handler.dart';
-import 'package:sign_language_interpreter/infrastructure/settings/settings_service.dart';
+import '../../infrastructure/core/app_state.dart';
+import '../../infrastructure/helpers/permission_handler.dart';
+import '../../infrastructure/settings/settings_service.dart';
 
 import '../../domain/auth/user_model.dart';
 

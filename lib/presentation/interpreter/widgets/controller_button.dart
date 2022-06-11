@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/application/avatar/avatar_provider.dart';
-import 'package:sign_language_interpreter/infrastructure/avatar/audio_state.dart';
-import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
+import '../../../application/avatar/avatar_provider.dart';
+import '../../../infrastructure/avatar/audio_state.dart';
+import '../../../infrastructure/core/app_state.dart';
 
 class ControllButton extends StatefulWidget {
   ControllButton({Key? key}) : super(key: key);

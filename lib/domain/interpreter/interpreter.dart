@@ -1,4 +1,4 @@
-import 'package:sign_language_interpreter/domain/interpreter/avatar_animation.dart';
+import 'avatar_animation.dart';
 
 class InterpreterModel {
   final String text;

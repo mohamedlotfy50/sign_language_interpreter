@@ -6,11 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:mic_stream/mic_stream.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sign_language_interpreter/domain/interpreter/validator.dart';
-import 'package:sign_language_interpreter/infrastructure/audio/pauseable_timer.dart';
-import 'package:sign_language_interpreter/infrastructure/core/app_state.dart';
-import 'package:sign_language_interpreter/infrastructure/helpers/permission_handler.dart';
-import 'package:sign_language_interpreter/presentation/interpreter/widgets/translation_room.dart';
+import '../../domain/interpreter/avatar_animation.dart';
+import '../../domain/interpreter/validator.dart';
+import '../../infrastructure/audio/pauseable_timer.dart';
+import '../../infrastructure/core/app_state.dart';
+import '../../infrastructure/helpers/permission_handler.dart';
+import '../../presentation/interpreter/widgets/translation_room.dart';
 import 'package:soundpool/soundpool.dart';
 
 import '../../domain/interpreter/interpreter.dart';
@@ -20,7 +21,6 @@ import '../../infrastructure/avatar/sign_interpreter.dart';
 
 class AvatarProvider extends ChangeNotifier {
   final AudioService _audioService = AudioService();
-  // final TranslationRoom translationRoom = TranslationRoom();
   RecorderState recorderState = RecorderState.recorderUnset;
   PlayerState playerState = PlayerState.playerUnset;
   AppState state = AppState.init;
@@ -31,7 +31,7 @@ class AvatarProvider extends ChangeNotifier {
   bool fromText = false;
   String _translateText = '';
   InterpreterModel? _interpreterModel;
-
+  Timer? _animationTimer;
   bool get hasDelete {
     if (hasAudio) {
       return true;
@@ -127,6 +127,9 @@ class AvatarProvider extends ChangeNotifier {
       playerState = PlayerState.playerInitialized;
       _interpreterModel = null;
       hasAudio = false;
+      if (_animationTimer != null) {
+        _animationTimer!.cancel();
+      }
 
       await _audioService.delete();
 
@@ -192,9 +195,32 @@ class AvatarProvider extends ChangeNotifier {
           state = AppState.loaded;
         }
       }
+      if (state == AppState.loaded) {
+        createAnimation();
+      }
     } else {
       fromText = true;
     }
     notifyListeners();
+  }
+
+  currentAnimation() {
+    if (_interpreterModel != null) {
+      return _interpreterModel!.translation.currentAnimation();
+    }
+    return FrameAnimation.idl();
+  }
+
+  void createAnimation() {
+    _animationTimer = Timer.periodic(const Duration(milliseconds: 50), (timer) {
+      if (_interpreterModel!.translation.isEnded) {
+        _interpreterModel!.translation.reset();
+        _animationTimer!.cancel();
+        notifyListeners();
+      } else {
+        _interpreterModel!.translation.nextFrame();
+        notifyListeners();
+      }
+    });
   }
 }

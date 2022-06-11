@@ -1,5 +1,5 @@
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sign_language_interpreter/application/permissions/premession_facade.dart';
+import '../../application/permissions/premession_facade.dart';
 
 class PermissionChecker extends PremissionFacade {
   @override

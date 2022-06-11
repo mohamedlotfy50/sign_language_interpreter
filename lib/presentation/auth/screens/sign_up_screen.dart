@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:sign_language_interpreter/domain/auth/auth_states.dart';
+import '../../../domain/auth/auth_states.dart';
 import '../../../application/auth/auth_provider.dart';
 import '../../../domain/auth/user_model.dart';
 import '../../../domain/auth/validation.dart';
