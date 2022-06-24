@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:http/http.dart' as http;
+import 'package:sign_language_interpreter/presentation/interpreter/widgets/avatar_painter.dart';
 import '../../../infrastructure/avatar/audio_state.dart';
 import '../widgets/point_drive_drawing.dart';
 import '../widgets/translation_room.dart';
@@ -42,7 +43,7 @@ class InterpreterScreen extends StatelessWidget {
                       isComplex: true,
                       willChange: true,
                       // painter: TestingPainter(),
-                      painter: PointToShape(
+                      painter: AvatarPainter(
                         animation: watch.currentAnimation(),
                       ),
                     ),
