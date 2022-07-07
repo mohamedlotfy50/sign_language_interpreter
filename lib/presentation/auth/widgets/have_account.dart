@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../screens/sign_in_screen.dart';
 import '../screens/sign_up_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class HaveAccount extends StatelessWidget {
   final bool login;
@@ -15,11 +16,13 @@ class HaveAccount extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final ThemeData theme = Theme.of(context);
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
         Text(
-          login ? "Don't have An Account ? " : "Already have an Account ? ",
+          login ? locale.dontHaveAccount : locale.alreadyHaveAccount,
           style: TextStyle(
             color: theme.primaryColor,
             letterSpacing: 0.8,
@@ -29,7 +32,7 @@ class HaveAccount extends StatelessWidget {
         GestureDetector(
           onTap: onPressed,
           child: Text(
-            login ? "Sign Up" : "Sign In",
+            login ? locale.signUp : locale.signin,
             style: TextStyle(
               color: theme.primaryColor,
               fontWeight: FontWeight.bold,

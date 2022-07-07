@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../../application/auth/auth_provider.dart';
 import 'account_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../asset_locations.dart';
 import '../widgets/image_provider.dart';
@@ -13,6 +14,8 @@ class SettingScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final ThemeData theme = Theme.of(context);
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
@@ -80,8 +83,8 @@ class SettingScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       child:
                           SvgPicture.asset(AssetLocations.account, width: 40)),
-                  title: const Text(
-                    'Account',
+                  title: Text(
+                    locale.account,
                     style: TextStyle(color: Color(0xFF92B1DF), fontSize: 18),
                   ),
                 ),
@@ -92,7 +95,7 @@ class SettingScreen extends StatelessWidget {
                       child:
                           SvgPicture.asset(AssetLocations.setting, width: 40)),
                   title: Text(
-                    'Settings',
+                    locale.setting,
                     style: TextStyle(color: Color(0xFF92B1DF), fontSize: 18),
                   ),
                 ),
@@ -102,7 +105,7 @@ class SettingScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       child: SvgPicture.asset(AssetLocations.share, width: 40)),
                   title: Text(
-                    'Share',
+                    locale.share,
                     style: TextStyle(color: Color(0xFF92B1DF), fontSize: 18),
                   ),
                 ),
@@ -112,7 +115,7 @@ class SettingScreen extends StatelessWidget {
                       borderRadius: BorderRadius.circular(15),
                       child: SvgPicture.asset(AssetLocations.rate, width: 40)),
                   title: Text(
-                    'Rate Us',
+                    locale.rateUs,
                     style: TextStyle(color: Color(0xFF92B1DF), fontSize: 18),
                   ),
                 ),

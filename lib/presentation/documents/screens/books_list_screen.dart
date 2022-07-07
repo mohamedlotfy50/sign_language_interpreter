@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import '../../../infrastructure/core/app_state.dart';
 import 'pdf_view_screen.dart';
 import '../widgets/book_tile.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../application/documents/document_provider.dart';
 
@@ -11,10 +12,12 @@ class BooksListScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(
-          'Resources',
+        title: Text(
+          locale.resources,
         ),
         centerTitle: true,
       ),

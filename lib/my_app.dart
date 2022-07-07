@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import 'package:sign_language_interpreter/l10n/locals.dart';
 import 'application/auth/auth_provider.dart';
 import 'domain/auth/auth_states.dart';
 import 'presentation/interpreter/screens/interpreter_screen.dart';
@@ -14,6 +15,8 @@ import 'package:sign_language_interpreter/presentation/home/screens/main_wrapper
 import 'package:sign_language_interpreter/presentation/home/screens/setting_screen.dart';
 import 'package:sign_language_interpreter/presentation/home/screens/account_screen.dart';
 // import 'package:sign_language_interpreter/presentation/onboard_screen/screens/board_screen.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
@@ -21,6 +24,13 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
+      localizationsDelegates: const [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+        AppLocalizations.delegate,
+      ],
+      supportedLocales: SupportedLocals.all,
       theme: ThemeData(
         primaryColor: const Color(0xFF448CF2),
         textTheme: const TextTheme(
@@ -68,6 +78,7 @@ class MyApp extends StatelessWidget {
           backgroundColor: Color(0xFF0ea6cc),
         ),
       ),
+      locale: SupportedLocals.all[0],
       home: ChangeNotifierProvider(
           create: (context) => AuthProvider()..authStateChanges(),
           builder: (context, child) {

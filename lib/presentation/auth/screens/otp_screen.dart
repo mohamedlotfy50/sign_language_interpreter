@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:sign_language_interpreter/asset_locations.dart';
 // import 'package:sign_language_interpreter/constrant.dart';
 import 'package:sign_language_interpreter/presentation//auth/widgets/clip.dart';
-
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import '../../../asset_locations.dart';
 
 // import 'package:sign_language_interpreter/presentation/auth/screens/forget_password.dart';
@@ -60,6 +60,8 @@ class _OTPScreenState extends State<OTPScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final Size size = MediaQuery.of(context).size;
     final ThemeData theme = Theme.of(context);
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -128,8 +130,8 @@ class _OTPScreenState extends State<OTPScreen> {
                       TextFormField(
                         obscureText: true,
                         controller: _passwordController,
-                        decoration: const InputDecoration(
-                          hintText: "Password",
+                        decoration: InputDecoration(
+                          hintText: locale.password,
                           prefixIcon: Icon(Icons.vpn_key_rounded),
                         ),
                         validator: (value) {

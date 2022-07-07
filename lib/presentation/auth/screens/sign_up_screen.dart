@@ -12,6 +12,7 @@ import '../widgets/have_account.dart';
 import '../..//auth/widgets/clip.dart';
 import '../../../domain/auth/user_model.dart';
 import '../../home/screens/main_wrapper_screen.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignUpScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -20,6 +21,8 @@ class SignUpScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
         Provider.of<AuthProvider>(context, listen: true);
@@ -29,10 +32,10 @@ class SignUpScreen extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             const BackgroundClip(),
-            const Positioned(
+            Positioned(
               top: 70,
               child: Text(
-                'Sign Up',
+                locale.signUp,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 44,
@@ -71,8 +74,8 @@ class SignUpScreen extends StatelessWidget {
                     children: [
                       TextFormField(
                         onChanged: provider.setuserName,
-                        decoration: const InputDecoration(
-                          hintText: "User Name",
+                        decoration: InputDecoration(
+                          hintText: locale.userName,
                           prefixIcon: Icon(Icons.person),
                         ),
                         validator: (value) {
@@ -85,8 +88,8 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       TextFormField(
                         onChanged: provider.setEmail,
-                        decoration: const InputDecoration(
-                          hintText: "Email",
+                        decoration: InputDecoration(
+                          hintText: locale.email,
                           prefixIcon: Icon(Icons.email),
                         ),
                         validator: (value) {
@@ -95,13 +98,13 @@ class SignUpScreen extends StatelessWidget {
                           if (isvalidEmail) {
                             return null;
                           }
-                          return 'Please Enter Valid Email';
+                          return locale.enterAValidEmail;
                         },
                       ),
                       TextFormField(
                         onChanged: provider.setPassword,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: locale.password,
                           prefixIcon: const Icon(Icons.vpn_key_rounded),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -121,7 +124,7 @@ class SignUpScreen extends StatelessWidget {
                           if (isvalidPass) {
                             return null;
                           }
-                          return 'Password must be at least 8 char with uper and lower case and special char';
+                          return locale.enterAValidPassword;
                         },
                       ),
                       if (provider.appState == AppState.loading)
@@ -150,8 +153,8 @@ class SignUpScreen extends StatelessWidget {
                                 provider.showErrors();
                               }
                             },
-                            child: const Text(
-                              'Sign Up',
+                            child: Text(
+                              locale.signUp,
                               style: TextStyle(
                                 fontSize: 20,
                               ),

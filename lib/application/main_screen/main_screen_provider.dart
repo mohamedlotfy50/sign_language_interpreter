@@ -8,7 +8,15 @@ class MainScreenProvider extends ChangeNotifier {
   MainScreenProvider();
   int currentIndex = 0;
 
-  final List<String> drawerTitle = ['Home', 'Account Settings'];
+  final List<String> _drawerTitleEn = ['Home', 'Account Settings'];
+  final List<String> _drawerTitleAr = ['الرئيسية', 'اعدادات الحساب'];
+  List<String> getTitles(String langCode) {
+    if (langCode.toLowerCase() == 'ar') {
+      return _drawerTitleAr;
+    }
+    return _drawerTitleEn;
+  }
+
   final List<Widget> _pages = const [MainScreen(), SettingScreen()];
 
   void changeCurrentIndex(int index) {

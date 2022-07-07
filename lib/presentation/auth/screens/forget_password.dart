@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import '../../../domain/auth/validation.dart';
 import '../..//auth/widgets/clip.dart';
 // import 'package:email_auth/email_auth.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../asset_locations.dart';
 
@@ -12,6 +13,8 @@ class ForgetPassword extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final Size size = MediaQuery.of(context).size;
     final GlobalKey<FormState> formKey = GlobalKey<FormState>();
     return Scaffold(
@@ -23,9 +26,9 @@ class ForgetPassword extends StatelessWidget {
             Positioned(
               top: 70,
               child: Column(
-                children: const [
+                children: [
                   Text(
-                    'Forget Password',
+                    locale.forgotpassword,
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 44,
@@ -35,7 +38,7 @@ class ForgetPassword extends StatelessWidget {
                     height: 8,
                   ),
                   Text(
-                    " Confirm your email and we will \n send the instructions.",
+                    locale.forgotConfirm,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -88,8 +91,8 @@ class ForgetPassword extends StatelessWidget {
                         height: 0,
                       ),
                       TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Email",
+                        decoration: InputDecoration(
+                          hintText: locale.email,
                           prefixIcon: Icon(Icons.email),
                         ),
                         // controller: _emailController,
@@ -99,7 +102,7 @@ class ForgetPassword extends StatelessWidget {
                           if (isvalidEmail) {
                             return null;
                           }
-                          return 'Please Enter Valid Email';
+                          return locale.enterAValidEmail;
                         },
                         // onSaved: (value) => setState(() => email = value!),
                       ),
@@ -120,8 +123,8 @@ class ForgetPassword extends StatelessWidget {
                             //   Navigator.pushNamed(context,'/otp');
                             // }
                           },
-                          child: const Text(
-                            'Send',
+                          child: Text(
+                            locale.send,
                             style: TextStyle(
                               fontSize: 20,
                             ),

@@ -1836,8 +1836,7 @@ class AvatarPainter extends CustomPainter {
     canvas.drawPath(path_73, darkSkin);
 
     canvas.drawLine(
-        Offset(size.width * animation.leftArm.a0.x,
-            size.height * animation.leftArm.a0.y),
+        Offset(size.width * 0.3016, size.height * 0.1979),
         Offset(size.width * animation.leftArm.a1.x,
             size.height * animation.leftArm.a1.y),
         arms);
@@ -1845,8 +1844,8 @@ class AvatarPainter extends CustomPainter {
     canvas.drawLine(
         Offset(size.width * animation.leftArm.a1.x,
             size.height * animation.leftArm.a1.y),
-        Offset(size.width * animation.leftArm.a2.x,
-            size.height * animation.leftArm.a2.y),
+        Offset(size.width * animation.leftHand.h0.x,
+            size.height * animation.leftHand.h0.y),
         arms);
     final Path leftBalm = Path();
     leftBalm.moveTo(size.width * animation.leftHand.h0.x,
@@ -1970,8 +1969,7 @@ class AvatarPainter extends CustomPainter {
         fingures);
 
     canvas.drawLine(
-        Offset(size.width * animation.rightArm.a0.x,
-            size.height * animation.rightArm.a0.y),
+        Offset(size.width * 0.7075, size.height * 0.1996),
         Offset(size.width * animation.rightArm.a1.x,
             size.height * animation.rightArm.a1.y),
         arms);
@@ -1979,8 +1977,8 @@ class AvatarPainter extends CustomPainter {
     canvas.drawLine(
         Offset(size.width * animation.rightArm.a1.x,
             size.height * animation.rightArm.a1.y),
-        Offset(size.width * animation.rightArm.a2.x,
-            size.height * animation.rightArm.a2.y),
+        Offset(size.width * animation.rightHand.h0.x,
+            size.height * animation.rightHand.h0.y),
         arms);
 
     final Path rightBalm = Path();
@@ -2006,4 +2004,3 @@ class AvatarPainter extends CustomPainter {
     return true;
   }
 }
-

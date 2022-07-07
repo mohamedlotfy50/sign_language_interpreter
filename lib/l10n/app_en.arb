@@ -1,0 +1,33 @@
+{
+  "signin":"Sign in",
+  "email":"Email",
+  "password":"Password",
+  "forgotpassword":"Forgot password",
+  "dontHaveAccount":"Don't have an account ?",
+  "signinWithGoogle":"Sign in with Google",
+  "signinWithApple":"Sign in with Apple",
+  "signUp":"Sign up",
+  "userName":"User Name",
+  "alreadyHaveAccount":"Already have an account ?",
+  "chat":"Chat",
+  "translateSignLanguage":"Translate Sign Language",
+  "learnSignLanguage":"Learn Sign Language",
+  "home":"Home",
+  "accountSetting":"Account settings",
+  "signout":"Sign out",
+  "account":"Account",
+  "setting":"Setting",
+  "share":"Share",
+  "rateUs":"Rate us",
+  "phone":"Phone",
+  "submit":"Submit",
+  "resources":"Resources",
+  "language":"Language",
+  "forgotConfirm":"Confirm your email and we will \n send the instructions.",
+  "enterAValidEmail":"Please enter a valid email",
+  "enterAValidPassword":"Password must be at least 8 char",
+  "send":"Send"
+
+
+
+}

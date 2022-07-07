@@ -8,6 +8,7 @@ import 'image_provider.dart';
 import '../../../application/main_screen/main_screen_provider.dart';
 import '../../auth/screens/sign_in_screen.dart';
 import 'drawer_item.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../../../asset_locations.dart';
 
@@ -20,6 +21,8 @@ class MyDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
         Provider.of<AuthProvider>(context, listen: true);
@@ -74,7 +77,7 @@ class MyDrawer extends StatelessWidget {
           ),
 
           ElevatedButton(
-            child: const Text('Sign Out',
+            child: Text(locale.signout,
                 style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.bold,

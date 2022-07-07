@@ -1,0 +1,32 @@
+{
+  "signin":"تسجيل الدخول",
+  "email":"الايميل",
+  "password":"كلمة المرور",
+  "forgotpassword":"نسيت كلمة المرور",
+  "dontHaveAccount":"لا تمتلك حساب ؟",
+  "signinWithGoogle":"تسجيل الدخول باستخدام جوجل",
+  "signinWithApple":"تسجيل الدخول باستخدام ابل",
+  "signUp":"إنشاء حساب",
+  "userName":"اسم المستخدم",
+  "alreadyHaveAccount":"تمتلك حساب بالفعل ؟",
+  "chat":"المحادثه",
+  "translateSignLanguage":"ترجمه لغة الاشارة",
+  "learnSignLanguage":"تعلم لغة الاشارة",
+  "home":"الرئسية",
+  "accountSetting":"اعدادات الحساب",
+  "signout":"تسجيل الخروج",
+  "account":"الحساب",
+  "setting":"الاعدادات",
+  "share":"مشاركه",
+  "rateUs":"قيمنا",
+  "phone":"الهاتف",
+  "submit":"تاكيد",
+  "resources":"المصادر",
+  "language":"اللغة",
+  "forgotConfirm":"اكد حسابك و نحن سنقوم بارسال الاجرات اللازمة",
+  "enterAValidEmail":"من فضلك ادخل ايميل صحيح",
+  "enterAValidPassword":"كلمة المرور يجب ان تكون 8 احرف علي الاقل",
+  "send":"إرسال"
+
+
+}

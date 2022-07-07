@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../application/main_screen/main_screen_provider.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class DrawerItemTile extends StatelessWidget {
   const DrawerItemTile({
@@ -8,13 +9,15 @@ class DrawerItemTile extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final provider = Provider.of<MainScreenProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 30.0),
       child: ListView.builder(
         physics: const NeverScrollableScrollPhysics(),
         shrinkWrap: true,
-        itemCount: provider.drawerTitle.length,
+        itemCount: provider.getTitles(locale.localeName).length,
         itemBuilder: (ctx, i) => ListTile(
           selected: i == provider.currentIndex,
           selectedTileColor: Colors.black12,
@@ -28,7 +31,7 @@ class DrawerItemTile extends StatelessWidget {
             height: i == provider.currentIndex ? 17 : 0,
           ),
           title: Text(
-            provider.drawerTitle[i],
+            provider.getTitles(locale.localeName)[i],
             style: TextStyle(
                 color: Colors.white,
                 fontSize: i == provider.currentIndex ? 18 : 16,

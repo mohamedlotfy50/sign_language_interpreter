@@ -31,48 +31,11 @@ class AvatarAnimation {
   FrameAnimation currentAnimation() {
     if (frames != null) {
       if (frames!.isNotEmpty) {
-        if (_currentFrame == 0) {
-          return frames![_currentFrame];
+        while (frames![_currentFrame].leftHand.isZero()) {
+          _currentFrame += 1;
         }
-        if (frames![_currentFrame].face.isZero() &&
-            !frames![_currentFrame - 1].face.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(face: frames![_currentFrame - 1].face);
-        }
-        if (frames![_currentFrame].leftArm.isZero() &&
-            !frames![_currentFrame - 1].leftArm.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(leftArm: frames![_currentFrame - 1].leftArm);
-        }
-        if (frames![_currentFrame].rightArm.isZero() &&
-            !frames![_currentFrame - 1].rightArm.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(rightArm: frames![_currentFrame - 1].rightArm);
-        }
-        if (frames![_currentFrame].leftHand.isZero() &&
-            !frames![_currentFrame - 1].leftHand.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(leftHand: frames![_currentFrame - 1].leftHand);
-        }
-        if (frames![_currentFrame].rightHand.isZero() &&
-            !frames![_currentFrame - 1].rightHand.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(rightHand: frames![_currentFrame - 1].rightHand);
-        }
-        if (frames![_currentFrame].leftLeg.isZero() &&
-            !frames![_currentFrame - 1].leftLeg.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(leftLeg: frames![_currentFrame - 1].leftLeg);
-        }
-        if (frames![_currentFrame].rightLeg.isZero() &&
-            !frames![_currentFrame - 1].rightLeg.isZero()) {
-          frames![_currentFrame]
-              .setNewValue(rightLeg: frames![_currentFrame - 1].rightLeg);
-        }
-        return frames![_currentFrame];
-      } else {
-        return FrameAnimation.idl();
       }
+      return frames![_currentFrame];
     } else {
       return FrameAnimation.idl();
     }
@@ -268,94 +231,94 @@ class FrameAnimation {
   factory FrameAnimation.idl() {
     return FrameAnimation(
       face: Face(
-        f0: Coordinate(x: 0.3357, y: 0.0),
-        f1: Coordinate(x: 0.4956, y: 0.0611),
-        f2: Coordinate(x: 0.3475, y: 0.1179),
-        f3: Coordinate(x: 0.1857, y: 0.0649),
-        le0: Coordinate(x: 0.3444, y: 0.0797),
-        le1: Coordinate(x: 0.3444, y: 0.0797),
-        le2: Coordinate(x: 0.3444, y: 0.0797),
-        le3: Coordinate(x: 0.3444, y: 0.0797),
-        re0: Coordinate(x: 0.3444, y: 0.0797),
-        re1: Coordinate(x: 0.3444, y: 0.0797),
-        re2: Coordinate(x: 0.3444, y: 0.0797),
-        re3: Coordinate(x: 0.3444, y: 0.0797),
-        m0: Coordinate(x: 0.3444, y: 0.0797),
-        m1: Coordinate(x: 0.3444, y: 0.0797),
-        m2: Coordinate(x: 0.3444, y: 0.0797),
-        m3: Coordinate(x: 0.3444, y: 0.0797),
-        m4: Coordinate(x: 0.3444, y: 0.0797),
-        m5: Coordinate(x: 0.3444, y: 0.0797),
+        f0: Coordinate(x: 0.334, y: 0.0),
+        f1: Coordinate(x: 0.4954, y: 0.0606),
+        f2: Coordinate(x: 0.3486, y: 0.118),
+        f3: Coordinate(x: 0.1882, y: 0.0648),
+        le0: Coordinate(x: 0.3441, y: 0.08),
+        le1: Coordinate(x: 0.3441, y: 0.08),
+        le2: Coordinate(x: 0.3441, y: 0.08),
+        le3: Coordinate(x: 0.3441, y: 0.08),
+        re0: Coordinate(x: 0.3441, y: 0.08),
+        re1: Coordinate(x: 0.3441, y: 0.08),
+        re2: Coordinate(x: 0.3441, y: 0.08),
+        re3: Coordinate(x: 0.3441, y: 0.08),
+        m0: Coordinate(x: 0.3441, y: 0.08),
+        m1: Coordinate(x: 0.3441, y: 0.08),
+        m2: Coordinate(x: 0.3441, y: 0.08),
+        m3: Coordinate(x: 0.3441, y: 0.08),
+        m4: Coordinate(x: 0.3441, y: 0.08),
+        m5: Coordinate(x: 0.3441, y: 0.08),
       ),
       rightHand: Hand(
-        h0: Coordinate(x: 0.7841, y: 0.5267),
-        h1: Coordinate(x: 0.7206, y: 0.5411),
-        h2: Coordinate(x: 0.6926, y: 0.5618),
-        h3: Coordinate(x: 0.6783, y: 0.5804),
-        h4: Coordinate(x: 0.6635, y: 0.5941),
-        h5: Coordinate(x: 0.7691, y: 0.5817),
-        h6: Coordinate(x: 0.7339, y: 0.6041),
-        h7: Coordinate(x: 0.7011, y: 0.6087),
-        h8: Coordinate(x: 0.6781, y: 0.6095),
-        h9: Coordinate(x: 0.803, y: 0.5812),
-        h10: Coordinate(x: 0.7625, y: 0.6044),
-        h11: Coordinate(x: 0.7239, y: 0.6072),
-        h12: Coordinate(x: 0.6968, y: 0.6057),
-        h13: Coordinate(x: 0.8209, y: 0.5775),
-        h14: Coordinate(x: 0.7859, y: 0.598),
-        h15: Coordinate(x: 0.7493, y: 0.6016),
-        h16: Coordinate(x: 0.7222, y: 0.6008),
-        h17: Coordinate(x: 0.8265, y: 0.573),
-        h18: Coordinate(x: 0.8034, y: 0.5903),
-        h19: Coordinate(x: 0.7752, y: 0.5951),
-        h20: Coordinate(x: 0.7515, y: 0.5956),
+        h0: Coordinate(x: 0.7852, y: 0.5293),
+        h1: Coordinate(x: 0.7226, y: 0.5445),
+        h2: Coordinate(x: 0.6954, y: 0.5658),
+        h3: Coordinate(x: 0.6812, y: 0.5846),
+        h4: Coordinate(x: 0.6665, y: 0.5984),
+        h5: Coordinate(x: 0.7716, y: 0.5857),
+        h6: Coordinate(x: 0.7378, y: 0.6087),
+        h7: Coordinate(x: 0.7054, y: 0.6135),
+        h8: Coordinate(x: 0.6823, y: 0.6144),
+        h9: Coordinate(x: 0.8051, y: 0.5848),
+        h10: Coordinate(x: 0.766, y: 0.6083),
+        h11: Coordinate(x: 0.7279, y: 0.6114),
+        h12: Coordinate(x: 0.7004, y: 0.61),
+        h13: Coordinate(x: 0.8225, y: 0.5807),
+        h14: Coordinate(x: 0.7882, y: 0.6014),
+        h15: Coordinate(x: 0.7524, y: 0.6051),
+        h16: Coordinate(x: 0.7252, y: 0.6044),
+        h17: Coordinate(x: 0.8276, y: 0.576),
+        h18: Coordinate(x: 0.8053, y: 0.5932),
+        h19: Coordinate(x: 0.7775, y: 0.5982),
+        h20: Coordinate(x: 0.7534, y: 0.5988),
       ),
       leftHand: Hand(
-        h0: Coordinate(x: 0.1402, y: 0.5191),
-        h1: Coordinate(x: 0.204, y: 0.5327),
-        h2: Coordinate(x: 0.235, y: 0.5531),
-        h3: Coordinate(x: 0.2508, y: 0.5716),
-        h4: Coordinate(x: 0.2644, y: 0.5845),
-        h5: Coordinate(x: 0.1582, y: 0.5698),
-        h6: Coordinate(x: 0.1928, y: 0.5932),
-        h7: Coordinate(x: 0.2229, y: 0.5987),
-        h8: Coordinate(x: 0.2452, y: 0.6003),
-        h9: Coordinate(x: 0.1261, y: 0.5704),
-        h10: Coordinate(x: 0.1679, y: 0.5931),
-        h11: Coordinate(x: 0.2034, y: 0.5975),
-        h12: Coordinate(x: 0.2287, y: 0.5971),
-        h13: Coordinate(x: 0.1117, y: 0.5682),
-        h14: Coordinate(x: 0.1503, y: 0.5879),
-        h15: Coordinate(x: 0.1837, y: 0.5922),
-        h16: Coordinate(x: 0.2079, y: 0.5921),
-        h17: Coordinate(x: 0.1096, y: 0.5657),
-        h18: Coordinate(x: 0.1368, y: 0.5815),
-        h19: Coordinate(x: 0.1644, y: 0.5867),
-        h20: Coordinate(x: 0.1863, y: 0.5874),
+        h0: Coordinate(x: 0.1435, y: 0.5162),
+        h1: Coordinate(x: 0.2047, y: 0.5303),
+        h2: Coordinate(x: 0.2335, y: 0.5506),
+        h3: Coordinate(x: 0.2481, y: 0.5687),
+        h4: Coordinate(x: 0.261, y: 0.5815),
+        h5: Coordinate(x: 0.1561, y: 0.5658),
+        h6: Coordinate(x: 0.1869, y: 0.5891),
+        h7: Coordinate(x: 0.2162, y: 0.5949),
+        h8: Coordinate(x: 0.2381, y: 0.5965),
+        h9: Coordinate(x: 0.1241, y: 0.5658),
+        h10: Coordinate(x: 0.1621, y: 0.5887),
+        h11: Coordinate(x: 0.1964, y: 0.5937),
+        h12: Coordinate(x: 0.2215, y: 0.5936),
+        h13: Coordinate(x: 0.1097, y: 0.5633),
+        h14: Coordinate(x: 0.1453, y: 0.5831),
+        h15: Coordinate(x: 0.1775, y: 0.5881),
+        h16: Coordinate(x: 0.2016, y: 0.5884),
+        h17: Coordinate(x: 0.1072, y: 0.5608),
+        h18: Coordinate(x: 0.1326, y: 0.5767),
+        h19: Coordinate(x: 0.1594, y: 0.5823),
+        h20: Coordinate(x: 0.1811, y: 0.5833),
       ),
       leftLeg: Leg(
-        l0: Coordinate(x: 0.1652, y: 0.5063),
-        l1: Coordinate(x: 0.1559, y: 0.7311),
-        l2: Coordinate(x: 0.1127, y: 0.9216),
-        l3: Coordinate(x: 0.1476, y: 0.9432),
-        l4: Coordinate(x: 0.0497, y: 1.0119),
+        l0: Coordinate(x: 0.1692, y: 0.5051),
+        l1: Coordinate(x: 0.1646, y: 0.7309),
+        l2: Coordinate(x: 0.1287, y: 0.9218),
+        l3: Coordinate(x: 0.1628, y: 0.9429),
+        l4: Coordinate(x: 0.0676, y: 1.0112),
       ),
       rightLeg: Leg(
-        l0: Coordinate(x: 0.5263, y: 0.507),
-        l1: Coordinate(x: 0.5015, y: 0.7342),
-        l2: Coordinate(x: 0.5011, y: 0.914),
-        l3: Coordinate(x: 0.4535, y: 0.9361),
-        l4: Coordinate(x: 0.5868, y: 1.0004),
+        l0: Coordinate(x: 0.5303, y: 0.5061),
+        l1: Coordinate(x: 0.5102, y: 0.733),
+        l2: Coordinate(x: 0.507, y: 0.9142),
+        l3: Coordinate(x: 0.4624, y: 0.9356),
+        l4: Coordinate(x: 0.5895, y: 1.0004),
       ),
       rightArm: Arm(
-        a0: Coordinate(x: 0.7058, y: 0.2015),
-        a1: Coordinate(x: 0.7762, y: 0.3714),
-        a2: Coordinate(x: 0.7689, y: 0.5235),
+        a0: Coordinate(x: 0.7075, y: 0.1996),
+        a1: Coordinate(x: 0.778, y: 0.373),
+        a2: Coordinate(x: 0.7735, y: 0.5285),
       ),
       leftArm: Arm(
-        a0: Coordinate(x: 0.2994, y: 0.1999),
-        a1: Coordinate(x: 0.1686, y: 0.3694),
-        a2: Coordinate(x: 0.1631, y: 0.5156),
+        a0: Coordinate(x: 0.3016, y: 0.1979),
+        a1: Coordinate(x: 0.179, y: 0.3693),
+        a2: Coordinate(x: 0.1621, y: 0.5135),
       ),
     );
   }

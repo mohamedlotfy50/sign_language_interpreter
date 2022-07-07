@@ -17,6 +17,7 @@ import '../widgets/account_edit_tile.dart';
 import '../../../asset_locations.dart';
 import '../../../domain/auth/user_model.dart';
 import 'package:path/path.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 import '../widgets/image_provider.dart';
 
@@ -26,13 +27,15 @@ class AccountScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final ThemeData theme = Theme.of(context);
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
         Provider.of<AuthProvider>(context, listen: true);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Account'),
+        title: Text(locale.account),
         elevation: 0,
       ),
       body: ChangeNotifierProvider(
@@ -123,7 +126,7 @@ class AccountScreen extends StatelessWidget {
                               onChanged: read.setUserName,
                               svgIcon: AssetLocations.account,
                               value: provider.user!.username,
-                              lable: 'User Name',
+                              lable: locale.userName,
                               isEditable: watch.useNameEditing),
                           AccountEditTile(
                               validator: (val) {
@@ -136,7 +139,7 @@ class AccountScreen extends StatelessWidget {
                               onChanged: read.setEmail,
                               svgIcon: AssetLocations.editname,
                               value: provider.user!.email,
-                              lable: 'Email',
+                              lable: locale.email,
                               isEditable: watch.useEmailEditing),
                           AccountEditTile(
                               validator: (val) {
@@ -152,7 +155,7 @@ class AccountScreen extends StatelessWidget {
                               onChanged: read.setPhone,
                               svgIcon: AssetLocations.phone,
                               value: provider.user!.phone,
-                              lable: 'Phone',
+                              lable: locale.phone,
                               isEditable: watch.usePhoneEditing),
                           watch.state == AppState.loading
                               ? const CircularProgressIndicator()
@@ -171,7 +174,7 @@ class AccountScreen extends StatelessWidget {
                                           });
                                         }
                                       },
-                                      child: const Text('Submit')))
+                                      child: Text(locale.submit)))
                         ],
                       ),
                     ),

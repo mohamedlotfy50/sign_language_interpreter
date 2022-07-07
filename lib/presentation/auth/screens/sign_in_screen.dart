@@ -14,6 +14,7 @@ import '../widgets/have_account.dart';
 import '../../home/screens/main_wrapper_screen.dart';
 import '../widgets/icon_button.dart';
 import '../..//auth/widgets/clip.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SignInScreen extends StatelessWidget {
   final GlobalKey<FormState> formKey = GlobalKey<FormState>();
@@ -23,6 +24,8 @@ class SignInScreen extends StatelessWidget {
   }) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    final AppLocalizations locale = AppLocalizations.of(context)!;
+
     final Size size = MediaQuery.of(context).size;
     final AuthProvider provider =
         Provider.of<AuthProvider>(context, listen: true);
@@ -33,10 +36,10 @@ class SignInScreen extends StatelessWidget {
           alignment: Alignment.center,
           children: [
             const BackgroundClip(),
-            const Positioned(
+            Positioned(
               top: 70,
               child: Text(
-                'Sign In',
+                locale.signin,
                 style: TextStyle(
                   color: Colors.white,
                   fontSize: 44,
@@ -73,8 +76,8 @@ class SignInScreen extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
                       TextFormField(
-                        decoration: const InputDecoration(
-                          hintText: "Email",
+                        decoration: InputDecoration(
+                          hintText: locale.email,
                           prefixIcon: Icon(Icons.email),
                         ),
                         onChanged: provider.setEmail,
@@ -82,7 +85,7 @@ class SignInScreen extends StatelessWidget {
                           final bool isvalidEmail =
                               Validator.isValidEmail(value);
                           if (!isvalidEmail) {
-                            return 'Please Enter Valid Email';
+                            return locale.enterAValidEmail;
                           }
                           return null;
                         },
@@ -90,7 +93,7 @@ class SignInScreen extends StatelessWidget {
                       TextFormField(
                         obscureText: provider.isObscure,
                         decoration: InputDecoration(
-                          hintText: "Password",
+                          hintText: locale.password,
                           prefixIcon: const Icon(Icons.vpn_key_rounded),
                           suffixIcon: IconButton(
                             icon: Icon(
@@ -107,7 +110,7 @@ class SignInScreen extends StatelessWidget {
                           final bool isvalidPass =
                               Validator.isValidPassword(value);
                           if (!isvalidPass) {
-                            return 'Password must be at least 7 char';
+                            return locale.enterAValidPassword;
                           }
                           return null;
                         },
@@ -122,7 +125,7 @@ class SignInScreen extends StatelessWidget {
                         child: Align(
                           alignment: Alignment.centerRight,
                           child: Text(
-                            "Forgot Password",
+                            locale.forgotpassword,
                             style: TextStyle(
                               color: theme.primaryColor,
                               fontWeight: FontWeight.bold,
@@ -143,10 +146,10 @@ class SignInScreen extends StatelessWidget {
                             onPressed: () async {
                               await provider.loginWithEmailAndPassword();
                             },
-                            child: const Text(
-                              'Sign In',
+                            child: Text(
+                              locale.signin,
                               style: TextStyle(
-                                fontSize: 20,
+                                fontSize: 18,
                               ),
                             ),
                           ),
@@ -181,7 +184,7 @@ class SignInScreen extends StatelessWidget {
                     ThirdPartyButton(
                       onPressed: provider.loginWithGoogle,
                       icon: FontAwesomeIcons.google,
-                      text: 'Sign In with Google',
+                      text: locale.signinWithGoogle,
                       color: const Color(0xFFF86706),
                     ),
                     const SizedBox(
@@ -190,7 +193,7 @@ class SignInScreen extends StatelessWidget {
                     ThirdPartyButton(
                       onPressed: provider.loginWithApple,
                       icon: FontAwesomeIcons.apple,
-                      text: 'Sign In with Apple',
+                      text: locale.signinWithApple,
                       color: Colors.black,
                     ),
                   ],
